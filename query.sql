@@ -1,199 +1,92 @@
-CREATE TABLE [User] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [no_induk] nvarchar(255) UNIQUE,
-  [password] nvarchar(255)
-)
-GO
+CREATE TABLE [user] (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role TINYINT CHECK (role IN (1, 2, 3)) NOT NULL
+);
 
-CREATE TABLE [Admin] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nip] nvarchar(255),
-  [name] nvarchar(255)
-)
-GO
+CREATE TABLE dosen (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  user_id INTEGER ,
+  nip VARCHAR(255) NOT NULL,
+  nama VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES [dbo].[user](id) ON DELETE CASCADE
+);
 
-CREATE TABLE [Student] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255),
-  [prestasi_id] nvarchar(255),
-  [name] nvarchar(255),
-  [study_program_id] nvarchar(255),
-  [major_id] nvarchar(255)
-)
-GO
+CREATE TABLE mahasiswa (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  user_id INTEGER ,
+  nama VARCHAR(255) NOT NULL,
+  nim VARCHAR(255) NOT NULL,
+  prodi VARCHAR(255) NOT NULL,
+  tahun_masuk VARCHAR(4) NOT NULL,
+  total_skor VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES [dbo].[user](id) ON DELETE CASCADE
+);
 
-CREATE TABLE [Lecturer] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nidn] nvarchar(255),
-  [name] nvarchar(255)
-)
-GO
+CREATE TABLE tingkat_lomba (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  tingkat_lomba VARCHAR(255) NOT NULL,
+  skor INTEGER NOT NULL
+);
 
-CREATE TABLE [Prestasi] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [attachment_id] nvarchar(255),
-  [competition_name] nvarchar(255),
-  [category] nvarchar(255),
-  [champion_level] nvarchar(255),
-  [place] nvarchar(255),
-  [start_comp_date] date,
-  [end_comp_date] date,
-  [competition_source] nvarchar(255),
-  [total_college_attended] int,
-  [total_participant] int,
-  [supervisor_id] nvarchar(255),
-  [isValidate] tinyint
-)
-GO
+CREATE TABLE jenis_lomba (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  jenis_lomba VARCHAR(255) NOT NULL
+);
 
-CREATE TABLE [Prestasi_team] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255),
-  [prestasi_id] nvarchar(255),
-  [is_leader] tinyint,
-  [is_member] tinyint,
-  [supervisor_id] nvarchar(255)
-)
-GO
+CREATE TABLE peringkat (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  peringkat INTEGER NOT NULL,
+  skor INTEGER NOT NULL
+);
 
-CREATE TABLE [Loa] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [loa_number] nvarchar(255) UNIQUE,
-  [date] date,
-  [loa_pdf_path] nvarchar(255)
-)
-GO
+CREATE TABLE detail_prestasi (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  id_jenis_kompetisi INTEGER NOT NULL,
+  id_tingkat_kompetisi INTEGER NOT NULL,
+  id_mahasiswa INTEGER NOT NULL,
+  id_dosen INTEGER,
+  id_peringkat INTEGER NOT NULL,
+  tim BIT NOT NULL DEFAULT 0,
+  judul_kompetisi VARCHAR(255) NOT NULL,
+  judul_kompetisi_en VARCHAR(255) NOT NULL,
+  tempat_kompetisi VARCHAR(255) NOT NULL,
+  tempat_kompetisi_en VARCHAR(255) NOT NULL,
+  url_kompetisi VARCHAR(255) NOT NULL,
+  tanggal_mulai DATE NOT NULL,
+  tanggal_akhir DATE NOT NULL,
+  jumlah_pt INTEGER NOT NULL,
+  jumlah_peserta INTEGER NOT NULL,
+  no_surat_tugas VARCHAR(255) NOT NULL,
+  tanggal_surat_tugas DATE NOT NULL,
+  file_surat_tugas VARCHAR(255) NOT NULL,
+  file_sertifikat VARCHAR(255) NOT NULL,
+  foto_kegiatan VARCHAR(255) NOT NULL,
+  file_poster VARCHAR(255) NOT NULL,
+  validasi BIT NOT NULL DEFAULT 0,
+  FOREIGN KEY (id_jenis_kompetisi) REFERENCES jenis_lomba(id),
+  FOREIGN KEY (id_tingkat_kompetisi) REFERENCES tingkat_lomba(id),
+  FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id),
+  FOREIGN KEY (id_dosen) REFERENCES dosen(id),
+  FOREIGN KEY (id_peringkat) REFERENCES peringkat(id)
+);
 
-CREATE TABLE [Attachment] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [loa_id] nvarchar(255),
-  [certificate_path] nvarchar(255),
-  [documentation_photo_path] nvarchar(255),
-  [poster_path] nvarchar(255),
-  [creation_path] nvarchar(255),
-  [caption] text
-)
-GO
+CREATE TABLE log_data (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  id_user INTEGER NOT NULL,
+  id_perubahan INTEGER NOT NULL,
+  tabel_perubahan VARCHAR(255) NOT NULL,
+  keterangan_kegiatan TEXT NOT NULL,
+  tanggal DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_user) REFERENCES [user](id)
+);
 
-CREATE TABLE [Skkm] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [id_prestasi] nvarchar(255),
-  [nim] nvarchar(255),
-  [certificate_number] nvarchar(255) UNIQUE,
-  [activity_name] nvarchar(255),
-  [level] nvarchar(255),
-  [certificate_path] nvarchar(255),
-  [point] decimal
-)
-GO
-
-CREATE TABLE [Prestasi_statistic] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [study_program_id] nvarchar(255),
-  [major_id] nvarchar(255),
-  [total_victory_all] int,
-  [year] int
-)
-GO
-
-CREATE TABLE [Study_program] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [major_id] nvarchar(255),
-  [study_program_name] nvarchar(255),
-  [total_study_program_victory] int
-)
-GO
-
-CREATE TABLE [Major] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [major_name] nvarchar(255),
-  [total_major_victory] int
-)
-GO
-
-CREATE TABLE [International_champ] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255)
-)
-GO
-
-CREATE TABLE [National_champ] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255)
-)
-GO
-
-CREATE TABLE [Province_champ] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255)
-)
-GO
-
-CREATE TABLE [Regency_champ] (
-  [id] nvarchar(255) PRIMARY KEY,
-  [nim] nvarchar(255)
-)
-GO
-
-ALTER TABLE [Admin] ADD FOREIGN KEY ([nip]) REFERENCES [User] ([no_induk])
-GO
-
-ALTER TABLE [Student] ADD FOREIGN KEY ([nim]) REFERENCES [User] ([no_induk])
-GO
-
-ALTER TABLE [Student] ADD FOREIGN KEY ([prestasi_id]) REFERENCES [Prestasi] ([id])
-GO
-
-ALTER TABLE [Student] ADD FOREIGN KEY ([study_program_id]) REFERENCES [Study_program] ([id])
-GO
-
-ALTER TABLE [Student] ADD FOREIGN KEY ([major_id]) REFERENCES [Major] ([id])
-GO
-
-ALTER TABLE [Lecturer] ADD FOREIGN KEY ([nidn]) REFERENCES [User] ([no_induk])
-GO
-
-ALTER TABLE [Prestasi] ADD FOREIGN KEY ([attachment_id]) REFERENCES [Attachment] ([id])
-GO
-
-ALTER TABLE [Prestasi] ADD FOREIGN KEY ([supervisor_id]) REFERENCES [Lecturer] ([nidn])
-GO
-
-ALTER TABLE [Prestasi_team] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
-
-ALTER TABLE [Prestasi_team] ADD FOREIGN KEY ([prestasi_id]) REFERENCES [Prestasi] ([id])
-GO
-
-ALTER TABLE [Prestasi_team] ADD FOREIGN KEY ([supervisor_id]) REFERENCES [Lecturer] ([nidn])
-GO
-
-ALTER TABLE [Attachment] ADD FOREIGN KEY ([loa_id]) REFERENCES [Loa] ([loa_number])
-GO
-
-ALTER TABLE [Skkm] ADD FOREIGN KEY ([id_prestasi]) REFERENCES [Prestasi] ([id])
-GO
-
-ALTER TABLE [Skkm] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
-
-ALTER TABLE [Prestasi_statistic] ADD FOREIGN KEY ([study_program_id]) REFERENCES [Study_program] ([id])
-GO
-
-ALTER TABLE [Prestasi_statistic] ADD FOREIGN KEY ([major_id]) REFERENCES [Major] ([id])
-GO
-
-ALTER TABLE [Study_program] ADD FOREIGN KEY ([major_id]) REFERENCES [Major] ([id])
-GO
-
-ALTER TABLE [International_champ] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
-
-ALTER TABLE [National_champ] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
-
-ALTER TABLE [Province_champ] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
-
-ALTER TABLE [Regency_champ] ADD FOREIGN KEY ([nim]) REFERENCES [Student] ([nim])
-GO
+CREATE TABLE info_lomba (
+  id INTEGER IDENTITY(1,1) PRIMARY KEY NOT NULL,
+  judul VARCHAR(255) NOT NULL,
+  deskripsi_lomba TEXT NOT NULL,
+  tanggal_akhir_pendaftaran DATE NOT NULL,
+  link_perlombaan VARCHAR(255) NOT NULL,
+  file_poster VARCHAR(255) NOT NULL
+);
