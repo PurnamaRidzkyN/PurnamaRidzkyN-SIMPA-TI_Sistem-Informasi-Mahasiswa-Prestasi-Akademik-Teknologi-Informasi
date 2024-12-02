@@ -1,7 +1,7 @@
 <h1>Login page</h1>
 
 
-<form action="/login" method="post">
+<form action="/dashboard" method="post">
 
     <label for="username">
         <input type="text" name="username" placeholder="Username">

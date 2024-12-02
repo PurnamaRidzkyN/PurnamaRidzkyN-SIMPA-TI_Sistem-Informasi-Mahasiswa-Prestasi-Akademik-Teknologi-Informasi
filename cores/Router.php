@@ -75,6 +75,7 @@ class Router
         // filter out empty string
         $routeParts = array_filter(explode("/", $path), fn($value) => !empty($value));
 
+
         $dynamicParams = [];
 
         foreach ($routeParts as $segment) {

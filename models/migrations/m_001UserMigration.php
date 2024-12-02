@@ -8,18 +8,18 @@ class m_001AdminMigration implements BaseMigration
 {
     public function up(): array
     {
-        return Schema::createTableIfNotExist("admin", function (Blueprint $table) {
+        return Schema::createTableIfNotExist("[user]", function (Blueprint $table) {
             $table->string("id");
-            $table->string("nip");
-            $table->string("name");
+            $table->string("username");
+            $table->string("password");
 
             $table->primary("id");
-            $table->unique("nip");
+            $table->unique("username");
         });
     }
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("Admin");
+        return Schema::dropTableIfExist("[user]");
     }
 }
