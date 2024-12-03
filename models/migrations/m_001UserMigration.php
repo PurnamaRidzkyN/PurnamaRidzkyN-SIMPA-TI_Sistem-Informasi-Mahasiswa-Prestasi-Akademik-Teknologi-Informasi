@@ -15,6 +15,7 @@ class m_001AdminMigration implements BaseMigration
 
             $table->primary("id");
             $table->unique("username");
+            $table->unique("id");
         });
     }
 

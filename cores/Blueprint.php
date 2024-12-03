@@ -43,11 +43,22 @@ class Blueprint
     {
         $this->columns[] = "[$column] datetime";
     }
-
-    public function decimal(string $column): void
+    public function text(string $column): void
     {
-        $this->columns[] = "[$column] decimal";
+        $this->columns[] = "[$column] text";
     }
+    public function bool(string $column): void
+    {
+        $this->columns[] = "[$column] Bit";
+    }
+
+    
+    public function check(string $column, array $values): void
+    {
+        $valueList = implode(", ", $values);
+        $this->constraints[] = "CHECK ([$column] IN ($valueList))";
+    }
+
 
     public function unique($column): void
     {
@@ -61,13 +72,17 @@ class Blueprint
 
     public function foreign(string $column, string $referencesTable, string $referencesColumn): void
     {
-        $this->constraints[] = "FOREIGN KEY([$column]) REFERENCES $referencesTable ([$referencesColumn])";
+        $this->constraints[] = "FOREIGN KEY([$column]) REFERENCES $referencesTable ([$referencesColumn]) ON DELETE CASCADE";
     }
 
     public function alterAddForeignKey(
-        string $columnName, string $referenceTable,
-        string $referenceColumn, string $constraintName, string $onDelete = "NO ACTION", string $onUpdate = "NO ACTION"): void
-    {
+        string $columnName,
+        string $referenceTable,
+        string $referenceColumn,
+        string $constraintName,
+        string $onDelete = "NO ACTION",
+        string $onUpdate = "NO ACTION"
+    ): void {
 
         $this->alterations[] = "ALTER TABLE [$this->tableName]
                 ADD CONSTRAINT [$constraintName] FOREIGN KEY ([$columnName]) 

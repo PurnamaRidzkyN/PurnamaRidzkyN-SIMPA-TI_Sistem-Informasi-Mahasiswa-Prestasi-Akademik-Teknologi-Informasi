@@ -15,7 +15,7 @@ class Schema
         $tsql = "IF NOT EXISTS (
                 SELECT *
                 FROM sysobjects
-                WHERE name = '$tableName' AND xtype = 'U'
+                WHERE name = '[$tableName]' AND xtype = 'U'
             )
             BEGIN
                 CREATE TABLE [$tableName] ($column
