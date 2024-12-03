@@ -9,7 +9,7 @@ class Auth extends BaseController
 {
     public function login(Request $req, Response $res): void
     {
-        $body = $req->body();
+        
 
         echo $body;
     }

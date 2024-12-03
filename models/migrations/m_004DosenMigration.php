@@ -11,7 +11,7 @@ class m_004DosenMigration implements BaseMigration
         return Schema::createTableIfNotExist("dosen", function (Blueprint $table) {
             $table->int("id");
             $table->int("user_id"); // Sesuai SQL, bisa null
-            $table->string("nip");
+            $table->string("nidn");
             $table->string("nama");
 
             $table->primary("id");

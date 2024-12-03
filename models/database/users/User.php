@@ -6,7 +6,7 @@ class User
 {
     public const TABLE = "user";
     public const ID = "id";
-    public const NO_INDUK = "no_induk";
+    public const USERNAME = "username";
     public const PASSWORD = "password";
 
 }

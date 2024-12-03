@@ -2,9 +2,9 @@
 
 namespace app\models\database\users;
 
-class Lecturer
+class Dosen
 {
-    public const TABLE = "lecturer";
+    public const TABLE = "dosen";
     public const ID = "id";
     public const NIDN = "nidn";
     public const NAMA = "name";

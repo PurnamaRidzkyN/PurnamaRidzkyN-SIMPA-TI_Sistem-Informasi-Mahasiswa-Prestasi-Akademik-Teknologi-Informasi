@@ -1,5 +1,4 @@
 vendor
 .env
 node_modules
-/public/css/output.css
 query.sql

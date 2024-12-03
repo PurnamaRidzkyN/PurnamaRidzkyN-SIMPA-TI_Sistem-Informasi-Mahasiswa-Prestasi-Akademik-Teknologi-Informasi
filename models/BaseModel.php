@@ -16,5 +16,4 @@ abstract class BaseModel extends Database
 
     abstract protected function read();
 
-    abstract protected function readOne();
 }
