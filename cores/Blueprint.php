@@ -70,17 +70,12 @@ class Blueprint
         $this->constraints[] = "PRIMARY KEY([$column])";
     }
 
-    public function foreign(string $column, string $referencesTable, string $referencesColumn): void
-    {
-        $this->constraints[] = "FOREIGN KEY([$column]) REFERENCES $referencesTable ([$referencesColumn]) ON DELETE CASCADE";
-    }
-
     public function alterAddForeignKey(
         string $columnName,
         string $referenceTable,
         string $referenceColumn,
         string $constraintName,
-        string $onDelete = "NO ACTION",
+        string $onDelete = "CASCADE",
         string $onUpdate = "NO ACTION"
     ): void {
 

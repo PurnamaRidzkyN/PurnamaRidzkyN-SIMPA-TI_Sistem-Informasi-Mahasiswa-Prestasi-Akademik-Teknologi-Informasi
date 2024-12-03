@@ -15,7 +15,7 @@ class m_008DetailPrestasiMigration implements BaseMigration
             $table->int("id_mahasiswa");
             $table->int("id_dosen");
             $table->int("id_peringkat");
-            $table->tinyInt("tim");
+            $table->bool("tim");
             $table->string("judul_kompetisi");
             $table->string("judul_kompetisi_en");
             $table->string("tempat_kompetisi");

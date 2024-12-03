@@ -13,7 +13,7 @@ class m_002AttachmentMigration implements BaseMigration
             $table->int("id_user");
             $table->int("id_perubahan");
             $table->string("tabel_perubahan");
-            $table->string("keterangan_kegiatan");
+            $table->text("keterangan_kegiatan");
             $table->dateTime("tanggal");
 
             $table->primary("id");

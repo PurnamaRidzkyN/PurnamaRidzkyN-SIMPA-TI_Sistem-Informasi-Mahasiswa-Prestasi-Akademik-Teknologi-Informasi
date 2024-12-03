@@ -12,7 +12,7 @@ class m_003InfoLombaMigration implements BaseMigration
         return Schema::createTableIfNotExist("info_lomba", function (Blueprint $table) {
             $table->int("id");
             $table->string("judul");
-            $table->string("deskripsi_lomba");
+            $table->text("deskripsi_lomba");
             $table->date("tanggal_akhir_pendaftaran");
             $table->string("link_perlombaan");
             $table->string("file_poster");

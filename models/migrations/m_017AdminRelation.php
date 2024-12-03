@@ -9,15 +9,15 @@ class m_017AdminRelation implements BaseMigration
 {
     public function up(): array
     {
-        return Schema::alterTable("admin", function (Blueprint $table) {
-            $table->alterAddForeignKey("nip", "user", "no_induk", "fk_nip_admin");
+        return Schema::alterTable("dosen", function (Blueprint $table) {
+            $table->alterAddForeignKey("user_id", "user", "id", "Fk_user_id_admin");
         });
     }
 
     public function down(): array
     {
-      return Schema::alterTable("admin", function (Blueprint $table) {
-          $table->alterDropConstraint("FK_nip");
+      return Schema::alterTable("dosen", function (Blueprint $table) {
+          $table->alterDropConstraint("FK_user_id_admin");
       });
     }
 }
