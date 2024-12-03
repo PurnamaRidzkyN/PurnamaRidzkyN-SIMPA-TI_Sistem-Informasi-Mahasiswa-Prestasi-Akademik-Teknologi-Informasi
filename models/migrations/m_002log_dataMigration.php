@@ -4,7 +4,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_002AttachmentMigration implements BaseMigration
+class m_002log_dataMigration implements BaseMigration
 {
     public function up(): array
     {

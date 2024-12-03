@@ -4,7 +4,7 @@ use app\models\BaseMigration;
 use app\cores\Schema;
 use app\cores\Blueprint;
 
-class m_001AdminMigration implements BaseMigration
+class m_001UserMigration implements BaseMigration
 {
     public function up(): array
     {
@@ -23,6 +23,6 @@ class m_001AdminMigration implements BaseMigration
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("[user]");
+        return Schema::dropTableIfExist("[use]");
     }
 }
