@@ -5,7 +5,7 @@ use app\cores\Schema;
 use app\models\BaseMigration;
 
 
-class m_017AdminRelation implements BaseMigration
+class m_011DosenRelation implements BaseMigration
 {
     public function up(): array
     {
