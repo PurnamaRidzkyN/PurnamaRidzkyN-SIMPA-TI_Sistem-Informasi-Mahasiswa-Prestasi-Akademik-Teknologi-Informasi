@@ -8,7 +8,7 @@ class m_011DosenPembimbingMigration implements BaseMigration
 {
     public function up(): array
     {
-        return Schema::createTableIfNotExist("dosen", function (Blueprint $table) {
+        return Schema::createTableIfNotExist("dosen_pembimbing", function (Blueprint $table) {
             $table->string("id",6);
             $table->string("id_dosen",6);
             $table->string("id_prestasi", 6);
@@ -20,6 +20,6 @@ class m_011DosenPembimbingMigration implements BaseMigration
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("dosen");
+        return Schema::dropTableIfExist("dosen_pembimbing");
     }
 }

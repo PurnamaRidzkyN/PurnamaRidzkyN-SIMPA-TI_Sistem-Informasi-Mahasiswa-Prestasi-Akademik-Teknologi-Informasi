@@ -4,16 +4,15 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_008DetailPrestasiMigration implements BaseMigration
+class m_008PrestasiMigration implements BaseMigration
 {
     public function up(): array
     {
-        return Schema::createTableIfNotExist("detail_prestasi", function (Blueprint $table) {
+        return Schema::createTableIfNotExist("prestasi", function (Blueprint $table) {
             $table->string("id",6);
             $table->string("id_jenis_kompetisi",6);
             $table->string("id_tingkat_kompetisi",6);
             $table->string("id_mahasiswa",6);
-            $table->string("id_dosen",6);
             $table->string("id_peringkat",6);
             $table->tinyInt("tim");
             $table->string("judul_kompetisi");
@@ -41,6 +40,6 @@ class m_008DetailPrestasiMigration implements BaseMigration
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("detail_prestasi");
+        return Schema::dropTableIfExist("prestasi");
     }
 }
