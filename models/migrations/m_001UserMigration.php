@@ -22,6 +22,6 @@ class m_001UserMigration implements BaseMigration
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("use");
+        return Schema::dropTableIfExist("user");
     }
 }

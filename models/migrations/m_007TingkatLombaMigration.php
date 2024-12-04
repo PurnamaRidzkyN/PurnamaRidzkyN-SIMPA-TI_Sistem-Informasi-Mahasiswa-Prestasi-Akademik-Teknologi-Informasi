@@ -14,6 +14,7 @@ class m_007TingkatLombaMigration implements BaseMigration
             $table->int("skor");
 
             $table->primary("id");
+            $table->unique("id");
         });
     }
 

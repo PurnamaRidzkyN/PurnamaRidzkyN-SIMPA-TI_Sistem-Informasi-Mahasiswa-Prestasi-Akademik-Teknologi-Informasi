@@ -34,11 +34,7 @@ class m_008DetailPrestasiMigration implements BaseMigration
             $table->tinyInt("validasi");
 
             $table->primary("id");
-            $table->unique("id_jenis_kompetisi");
-            $table->unique("id_tingkat_kompetisi");
-            $table->unique("id_mahasiswa");
-            $table->unique("id_dosen");
-            $table->unique("id_peringkat");
+            $table->unique("id");
             
         });
     }
