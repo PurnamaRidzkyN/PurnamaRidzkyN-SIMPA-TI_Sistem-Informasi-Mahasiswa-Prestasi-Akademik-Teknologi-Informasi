@@ -10,13 +10,10 @@ class m_010AdminMigration implements BaseMigration
     {
         return Schema::createTableIfNotExist("admin", function (Blueprint $table) {
             $table->string("id",6);
-            $table->string("id_user",6);
+            $table->string("user_id",6); // Sesuai SQL, bisa null
             $table->string("nip");
-            $table->string("foto");
-            $table->string("email");
 
             $table->primary("id");
-            $table->unique("id");
         });
     }
 

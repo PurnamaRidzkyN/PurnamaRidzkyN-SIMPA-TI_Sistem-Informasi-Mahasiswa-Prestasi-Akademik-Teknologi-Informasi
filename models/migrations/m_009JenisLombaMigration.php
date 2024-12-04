@@ -13,7 +13,6 @@ class m_009JenisLombaMigration implements BaseMigration
             $table->string("jenis_lomba");
 
             $table->primary("id");
-            $table->unique("id");
         });
     }
 
