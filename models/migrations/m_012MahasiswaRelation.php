@@ -9,14 +9,15 @@ class m_012MahasiswaRelation implements BaseMigration
     public function up(): array
     {
         return Schema::alterTable("mahasiswa", function (Blueprint $table) {
-            $table->alterAddForeignKey("user_id", "user", "id", "FK_user_id_mahasiswa");
+            //relasi mahasiswa dengan tabel user
+            $table->alterAddForeignKey("user_id", "user", "id", "Fk_user_id_mahasiswa");
         });
     }
 
     public function down(): array
     {
         return Schema::alterTable("mahasiswa", function (Blueprint $table) {
-            $table->alterDropConstraint("FK_user_id_mahasiswa");
+            $table->alterDropConstraint("Fk_user_id_mahasiswa");
         });
     }
 }
