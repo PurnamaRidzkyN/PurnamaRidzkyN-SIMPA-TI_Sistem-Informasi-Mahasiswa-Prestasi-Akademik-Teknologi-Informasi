@@ -11,12 +11,13 @@ class m_005MahasiswaMigration implements BaseMigration
     {
         return Schema::createTableIfNotExist("mahasiswa", function (Blueprint $table) {
             $table->string("id",6);
-            $table->string("user_id",6);
+            $table->string("id_user",6);
             $table->string("nama");
             $table->string("nim");
             $table->string("prodi");
             $table->string("tahun_masuk", 4);
             $table->string("total_skor");
+            $table->string("foto");
 
             $table->primary("id");
         });

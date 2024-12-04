@@ -4,7 +4,9 @@ namespace app\cores;
 
 class View
 {
-    private static string $title = "PBL";
+    private static string $title = "SIMPA-TI";
+    private static array $data = [];
+
 
     public function render(string $viewPath, array $data = []): void
     {
@@ -17,6 +19,11 @@ class View
     public static function getTitle(): string
     {
         return self::$title;
+    }
+
+    public static function getData(): array
+    {
+        return self::$data;
     }
 
     private static function setTitle(string $title): void

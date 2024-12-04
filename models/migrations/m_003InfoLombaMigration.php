@@ -18,6 +18,7 @@ class m_003InfoLombaMigration implements BaseMigration
             $table->string("file_poster");
 
             $table->primary("id");
+            $table->unique("id");
         });
     }
 
