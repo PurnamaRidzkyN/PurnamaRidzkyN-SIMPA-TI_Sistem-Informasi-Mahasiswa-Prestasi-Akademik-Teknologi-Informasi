@@ -14,7 +14,6 @@ class m_006PeringkatMigration implements BaseMigration
             $table->int("skor");
 
             $table->primary("id");
-            $table->unique("id");
         });
     }
 

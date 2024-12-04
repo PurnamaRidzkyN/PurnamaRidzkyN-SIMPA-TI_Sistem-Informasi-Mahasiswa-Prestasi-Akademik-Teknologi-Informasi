@@ -17,7 +17,6 @@ class m_002log_dataMigration implements BaseMigration
             $table->dateTime("tanggal");
 
             $table->primary("id");
-            $table->unique("id");
 
         });
     }
