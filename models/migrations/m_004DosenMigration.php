@@ -9,8 +9,8 @@ class m_004DosenMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("dosen", function (Blueprint $table) {
-            $table->int("id");
-            $table->int("user_id"); // Sesuai SQL, bisa null
+            $table->string("id",6);
+            $table->string("user_id",6); // Sesuai SQL, bisa null
             $table->string("nidn");
             $table->string("nama");
 

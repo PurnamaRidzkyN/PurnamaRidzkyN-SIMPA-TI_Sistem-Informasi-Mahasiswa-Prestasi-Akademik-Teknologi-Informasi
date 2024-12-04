@@ -9,7 +9,7 @@ class m_007TingkatLombaMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("tingkat_lomba", function (Blueprint $table) {
-            $table->int("id");
+            $table->string("id",6);
             $table->string("tingkat_lomba");
             $table->int("skor");
 

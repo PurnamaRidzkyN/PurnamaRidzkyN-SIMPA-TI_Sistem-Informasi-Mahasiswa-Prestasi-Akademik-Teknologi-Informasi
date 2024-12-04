@@ -9,7 +9,7 @@ class m_009JenisLombaMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("jenis_lomba", function (Blueprint $table) {
-            $table->int("id");
+            $table->string("id",6);
             $table->string("jenis_lomba");
 
             $table->primary("id");

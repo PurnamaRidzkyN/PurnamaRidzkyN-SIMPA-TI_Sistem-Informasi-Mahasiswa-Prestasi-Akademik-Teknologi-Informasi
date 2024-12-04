@@ -9,8 +9,8 @@ class m_010AdminMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("admin", function (Blueprint $table) {
-            $table->int("id");
-            $table->int("user_id"); // Sesuai SQL, bisa null
+            $table->string("id",6);
+            $table->string("user_id",6); // Sesuai SQL, bisa null
             $table->string("nip");
 
             $table->primary("id");

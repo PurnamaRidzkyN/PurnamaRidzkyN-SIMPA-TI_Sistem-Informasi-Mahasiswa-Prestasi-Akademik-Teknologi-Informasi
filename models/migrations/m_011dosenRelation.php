@@ -10,7 +10,7 @@ class m_011DosenRelation implements BaseMigration
     public function up(): array
     {
         return Schema::alterTable("dosen", function (Blueprint $table) {
-            $table->alterAddForeignKey("user_id", "user", "id", "Fk_user_id_dosen");
+            $table->alterAddForeignKey("user_id", "user", "id", "FK_user_id_dosen");
         });
     }
 

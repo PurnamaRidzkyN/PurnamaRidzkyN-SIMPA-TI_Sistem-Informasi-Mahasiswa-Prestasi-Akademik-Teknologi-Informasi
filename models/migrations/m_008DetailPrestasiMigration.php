@@ -9,13 +9,13 @@ class m_008DetailPrestasiMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("detail_prestasi", function (Blueprint $table) {
-            $table->int("id");
-            $table->int("id_jenis_kompetisi");
-            $table->int("id_tingkat_kompetisi");
-            $table->int("id_mahasiswa");
-            $table->int("id_dosen");
-            $table->int("id_peringkat");
-            $table->bool("tim");
+            $table->string("id",6);
+            $table->string("id_jenis_kompetisi",6);
+            $table->string("id_tingkat_kompetisi",6);
+            $table->string("id_mahasiswa",6);
+            $table->string("id_dosen",6);
+            $table->string("id_peringkat",6);
+            $table->tinyInt("tim");
             $table->string("judul_kompetisi");
             $table->string("judul_kompetisi_en");
             $table->string("tempat_kompetisi");

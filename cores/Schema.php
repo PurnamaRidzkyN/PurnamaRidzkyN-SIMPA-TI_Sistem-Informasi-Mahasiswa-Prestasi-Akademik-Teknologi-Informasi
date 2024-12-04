@@ -6,7 +6,7 @@ class Schema
 {
     public static function createTableIfNotExist(string $tableName, callable $callback): array
     {
-        $blueprint = new Blueprint();
+        $blueprint = new Blueprint($tableName);
         $callback($blueprint);
         $query = $blueprint->getColumnsAndConstraints();
         $column = $query["columns"];
@@ -15,7 +15,7 @@ class Schema
         $tsql = "IF NOT EXISTS (
                 SELECT *
                 FROM sysobjects
-                WHERE name = '[$tableName]' AND xtype = 'U'
+                WHERE name = '$tableName' AND xtype = 'U'
             )
             BEGIN
                 CREATE TABLE [$tableName] ($column
@@ -29,10 +29,25 @@ class Schema
 
         return $blueprint->execute($tsql);
     }
+  
+
+
+    public static function insertInto(string $tableName, callable $callback): array
+    {
+        $blueprint = new Blueprint($tableName);
+        $callback($blueprint);
+        $insertions = $blueprint->getInsertions();
+
+        foreach ($insertions as $insertion) {
+            return $blueprint->execute($insertion["query"], $insertion["params"]);
+        }
+
+        return [];
+    }
 
     public static function dropTableIfExist(string $tableName): array
     {
-        $blueprint = new Blueprint();
+        $blueprint = new Blueprint($tableName);
         $tsql = "DROP TABLE IF EXISTS [$tableName];";
         return $blueprint->execute($tsql);
     }
@@ -41,12 +56,44 @@ class Schema
     {
         $blueprint = new Blueprint($tableName);
         $callback($blueprint);
-        $alterationQueries = $blueprint->getAlterations();
+        $tsql = $blueprint->getAlterations();
 
-        foreach ($alterationQueries as $query) {
+        foreach ($tsql as $query) {
             return $blueprint->execute($query);
         }
 
         return [];
     }
+
+    public static function deleteFrom(string $tableName): array
+    {
+        $blueprint = new Blueprint($tableName);
+        $tsql = "DELETE FROM [$tableName];";
+        return $blueprint->execute($tsql);
+    }
+
+    public static function selectFrom(string $tableName, callable $callback): array
+    {
+        $blueprint = new Blueprint($tableName);
+        $callback($blueprint);
+        $selections = $blueprint->getSelection();
+
+        return $blueprint->execute($selections["query"]);
+    }
+
+    public static function selectWhereFrom(string $tableName, callable $callback): array
+    {
+        $blueprint = new Blueprint($tableName);
+        $callback($blueprint);
+        $selections = $blueprint->getSelection();
+
+        return $blueprint->execute($selections["query"], $selections["params"]);
+    }
+
+    public static function query(string $tableName, string $query): array
+    {
+        $blueprint = new Blueprint($query);
+        return $blueprint->execute($query);
+    }
+    
 }

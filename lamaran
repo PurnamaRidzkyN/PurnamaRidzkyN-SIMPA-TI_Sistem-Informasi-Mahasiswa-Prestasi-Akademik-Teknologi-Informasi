@@ -4,6 +4,7 @@
 
 use app\constant\Config;
 use app\cores\Migration;
+use app\cores\Seeder;
 
 require_once "vendor/autoload.php";
 
@@ -24,9 +25,16 @@ $commands = [
             $migration->rollback();
         }
     ],
-    "seeder" => function () use ($config) {
-
-    }
+    "seed" => [
+        "create" => function () use ($config) {
+            $seeder = new Seeder($config);
+            $seeder->create();
+        },
+        "delete" => function () use ($config) {
+            $seeder = new Seeder($config);
+            $seeder->delete();
+        }
+    ]
 ];
 
 function execute($command): void

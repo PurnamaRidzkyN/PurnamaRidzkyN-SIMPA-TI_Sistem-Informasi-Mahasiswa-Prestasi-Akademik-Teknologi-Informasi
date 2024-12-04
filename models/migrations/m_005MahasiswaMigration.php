@@ -10,8 +10,8 @@ class m_005MahasiswaMigration implements BaseMigration
     public function up(): array
     {
         return Schema::createTableIfNotExist("mahasiswa", function (Blueprint $table) {
-            $table->int("id");
-            $table->int("user_id");
+            $table->string("id",6);
+            $table->string("user_id",6);
             $table->string("nama");
             $table->string("nim");
             $table->string("prodi");

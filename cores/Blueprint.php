@@ -10,6 +10,9 @@ class Blueprint
     private array $columns = [];
     private array $constraints = [];
     private array $alterations = [];
+    private array $insertions = [];
+    private array $selections = [];
+
 
     private Database $db;
 
@@ -47,12 +50,7 @@ class Blueprint
     {
         $this->columns[] = "[$column] text";
     }
-    public function bool(string $column): void
-    {
-        $this->columns[] = "[$column] Bit";
-    }
 
-    
     public function check(string $column, array $values): void
     {
         $valueList = implode(", ", $values);
@@ -108,17 +106,81 @@ class Blueprint
     }
 
 
-    public function execute($query): array
+    public function insert(array $columns, array $values): void
     {
-        $execute = $this->db::getConnection()->prepare($query)->execute();
+        $placeholders = array_map(fn($col) => ":$col", $columns);
+        $columnsSql = implode(", ", $columns);
+        $placeholdersSql = implode(", ", $placeholders);
+
+
+        $this->insertions[] = [
+            "query" => "INSERT INTO [$this->tableName] ($columnsSql) VALUES ($placeholdersSql)",
+            "params" => array_combine($placeholders, $values)
+        ];
+    }
+    
+
+    public function getInsertions(): array
+    {
+        return $this->insertions;
+    }
+
+    public function select(array|string $columns = "*"): void
+    {
+        $columnsSql = is_array($columns) ? implode(", ", $columns) : $columns;
+
+        $query = "SELECT $columnsSql FROM [$this->tableName]";
+        $this->selections = ["query" => $query];
+    }
+
+
+    public function selectWhere(array|string $conditions, array|string $columns = "*"): void
+    {
+        $columnsTsql = is_array($columns) ? implode(",", $columns) : $columns;
+        $whereClauses = [];
+        $params = [];
+
+        foreach ($conditions as $column => $value) {
+            $paramKey = ":$column";
+            $whereClauses[] = "$column = $paramKey";
+            $params[$paramKey] = $value;
+        }
+
+        $whereTsql = implode(" AND ", $whereClauses);
+
+        $this->selections = [
+            "query" => "SELECT $columnsTsql FROM [$this->tableName] WHERE $whereTsql;",
+            "params" => $params
+        ];
+    }
+
+    public function getSelection(): array
+    {
+        return $this->selections;
+    }
+
+    public function execute($query, $params = null): array
+    {
+        $prepare = $this->db::getConnection()->prepare($query);
+        $execute = $prepare->execute($params);
 
         if (!$execute) {
             return [
-                "errors" => $this->db::getConnection()->errorInfo(),
+                "errors" => $prepare->errorInfo(),
             ];
         }
 
+        // Check if the query is a SELECT or similar query
+        if (preg_match('/^\s*(SELECT|SHOW|DESCRIBE|EXPLAIN)/i', $query)) {
+            return [
+                "result" => $prepare->fetchAll(\PDO::FETCH_ASSOC) ?: null,
+                "errors" => null
+            ];
+        }
+
+        // For non-select queries, return success
         return [
+            "result" => null,
             "errors" => null
         ];
     }

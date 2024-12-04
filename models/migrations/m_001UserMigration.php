@@ -8,8 +8,8 @@ class m_001UserMigration implements BaseMigration
 {
     public function up(): array
     {
-        return Schema::createTableIfNotExist("[user]", function (Blueprint $table) {
-            $table->string("id");
+        return Schema::createTableIfNotExist("user", function (Blueprint $table) {
+            $table->string("id",6);
             $table->string("username");
             $table->string("password");
 
@@ -17,12 +17,11 @@ class m_001UserMigration implements BaseMigration
             $table->unique("username");
             $table->unique("id");
             $table->tinyInt('role');
-            $table->check('role', [1, 2, 3]);
         });
     }
 
     public function down(): array
     {
-        return Schema::dropTableIfExist("[use]");
+        return Schema::dropTableIfExist("use");
     }
 }

@@ -2,8 +2,8 @@
     <h3 class="text-center text-primary mb-4">Login</h3>
     <form>
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Masukkan email Anda" required>
+            <label for="username">Email</label>
+            <input type="username" class="form-control" id="username" placeholder="Masukkan username Anda" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
