@@ -8,13 +8,15 @@ class View
     private static array $data = [];
 
 
-    public function render(string $viewPath, array $data = []): void
+    public function render(string $viewPath, string $title, array $data = []): void
     {
-        self::setTitle($data["title"]);
+        self::$title = $title;
+        self::$data = $data;
         require_once "./views/layouts/header.php";
         require_once "./views/{$viewPath}.php";
         require_once "./views/layouts/footer.php";
     }
+
 
     public static function getTitle(): string
     {

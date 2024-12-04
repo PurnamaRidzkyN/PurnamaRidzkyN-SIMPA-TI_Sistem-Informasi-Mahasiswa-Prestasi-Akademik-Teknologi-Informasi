@@ -12,22 +12,41 @@ class Auth extends BaseController
     public function login(Request $req, Response $res): void
     {
         $body = $req->body();
-        $username = $body['username'];
-        $password = $body(['password']);
+        $username = $body["username"];
+        $password = $body["password"];
 
+        // handle login logic
         try {
             $user = User::findOne($username)["result"][0];
+
             if (!$user) {
-                $this->view("login/login", ["title" => "Login"]);
+                $this->view("login/login", "login", ["error" => "user not found"]);
                 return;
             }
+
             if (!password_verify($password, $user["password"])) {
-                $this->view("login/login", ["title" => "Login"]);
+                $this->view("login/login", "login", ["error" => "wrong password"]);
                 return;
             }
-            Session::set("user", $user["no_induk"]);
+
+            Session::set("user", $user["username"]);
             Session::set("role", $user["role"]);
-            $res->redirect(getenv("BASE_URL") . "/");
+
+            // redirect each user to their page
+            switch ($user["role"]) {
+                case 1:
+                    $res->redirect("/dashboard/admin/{$user["username"]}");
+                    break;
+
+                case 2:
+                    $res->redirect("/dashboard/mahasiswa/{$user["username"]}");
+                    break;
+                default:
+                    $res->redirect("/");
+                    break;
+            }
+
+
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
@@ -35,6 +54,12 @@ class Auth extends BaseController
 
     public function renderLogin(): void
     {
-        $this->view("login/login", ["title" => "Login"]);
+        $this->view("login/login", "login");
+    }
+
+    public function logout(Request $req, Response $res): void
+    {
+        Session::destroy();
+        $res->redirect("/login");
     }
 }

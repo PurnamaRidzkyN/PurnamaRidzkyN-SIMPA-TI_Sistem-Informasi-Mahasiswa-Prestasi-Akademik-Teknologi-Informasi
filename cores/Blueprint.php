@@ -73,7 +73,7 @@ class Blueprint
         string $referenceTable,
         string $referenceColumn,
         string $constraintName,
-        string $onDelete = "CASCADE",
+        string $onDelete = "NO ACTION",
         string $onUpdate = "NO ACTION"
     ): void {
 
@@ -118,7 +118,7 @@ class Blueprint
             "params" => array_combine($placeholders, $values)
         ];
     }
-    
+
 
     public function getInsertions(): array
     {

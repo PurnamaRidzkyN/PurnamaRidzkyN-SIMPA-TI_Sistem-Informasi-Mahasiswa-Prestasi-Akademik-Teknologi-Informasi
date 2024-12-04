@@ -4,7 +4,7 @@ use app\models\BaseMigration;
 use app\cores\Schema;
 use app\cores\Blueprint;
 
-class m_001UserMigration implements BaseMigration
+class m_011UserMigration implements BaseMigration
 {
     public function up(): array
     {
@@ -12,11 +12,11 @@ class m_001UserMigration implements BaseMigration
             $table->string("id",6);
             $table->string("username");
             $table->string("password");
+            $table->tinyInt('role');
 
             $table->primary("id");
             $table->unique("username");
             $table->unique("id");
-            $table->tinyInt('role');
         });
     }
 

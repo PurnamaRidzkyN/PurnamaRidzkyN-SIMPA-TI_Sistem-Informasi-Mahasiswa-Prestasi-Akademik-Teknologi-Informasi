@@ -2,7 +2,9 @@
 
 namespace app\middlewares;
 
+use app\cores\Request;
+use app\cores\Response;
 interface Middleware
 {
-    public function before();
+    public function before(Request $req, Response $res);
 }

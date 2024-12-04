@@ -5,7 +5,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_005MahasiswaMigration implements BaseMigration
+class m_008MahasiswaMigration implements BaseMigration
 {
     public function up(): array
     {
@@ -20,6 +20,7 @@ class m_005MahasiswaMigration implements BaseMigration
             $table->string("foto");
 
             $table->primary("id");
+            $table->unique("id");
         });
     }
 

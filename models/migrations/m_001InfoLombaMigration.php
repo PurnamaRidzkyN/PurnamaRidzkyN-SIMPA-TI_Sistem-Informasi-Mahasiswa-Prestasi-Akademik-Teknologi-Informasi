@@ -5,7 +5,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_003InfoLombaMigration implements BaseMigration
+class m_001InfoLombaMigration implements BaseMigration
 {
     public function up(): array
     {

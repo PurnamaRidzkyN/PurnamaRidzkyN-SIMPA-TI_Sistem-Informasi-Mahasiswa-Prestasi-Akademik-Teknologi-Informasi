@@ -4,7 +4,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_007TingkatLombaMigration implements BaseMigration
+class m_005TingkatLombaMigration implements BaseMigration
 {
     public function up(): array
     {

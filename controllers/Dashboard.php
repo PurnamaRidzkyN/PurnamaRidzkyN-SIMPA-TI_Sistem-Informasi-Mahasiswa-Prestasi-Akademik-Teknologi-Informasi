@@ -2,14 +2,19 @@
 
 namespace app\controllers;
 
-use app\controllers\BaseController;
+use app\cores\Request;
+use app\cores\Response;
 
 class Dashboard extends BaseController
 {
-
-    public function renderDashboard(): void
+    public function studentDashboard(Request $req, Response $res): void
     {
-
-        $this->view("dashboard/dashboard", ["title" => "dashboard"]);
+        $this->view("dashboard/student", "Dashboard Mahasiswa");
     }
+
+    public function adminDashboard(Request $req, Response $res): void
+    {
+        $this->view("dashboard/admin", "Dashboard Admin");
+    }
+
 }

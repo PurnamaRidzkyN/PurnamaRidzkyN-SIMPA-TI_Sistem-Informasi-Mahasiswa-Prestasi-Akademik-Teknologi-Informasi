@@ -6,7 +6,7 @@ class Response
 {
     public function redirect(string $url): void
     {
-        header('Location: ' . $url);
+        header('Location: '. getenv("BASE_URL") . $url);
     }
 
     public function setStatusCode(int $code, string $message = ""): void

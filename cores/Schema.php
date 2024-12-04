@@ -29,6 +29,35 @@ class Schema
 
         return $blueprint->execute($tsql);
     }
+    public static function createTriggerIfNotExist(string $tableName, string $triggerName,string $trigerLogic,string $event): array
+{
+    $tsql = "
+        IF NOT EXISTS (
+            SELECT * 
+            FROM sysobjects
+            WHERE name = '$triggerName'
+        )
+        BEGIN
+         EXEC('
+            CREATE TRIGGER [$triggerName]
+            ON [$tableName]
+            AFTER $event
+            AS
+            BEGIN
+                $trigerLogic
+        END');
+    END;";
+    $blueprint = new Blueprint($tsql);
+    return $blueprint->execute($tsql );
+
+  
+}
+public static function dropTriggerIfExist(string $triggerName): array
+    {
+        $blueprint = new Blueprint($triggerName);
+        $tsql = "DROP TRIGGER IF EXISTS [$triggerName];";
+        return $blueprint->execute($tsql);
+    }
   
 
 
@@ -90,7 +119,7 @@ class Schema
         return $blueprint->execute($selections["query"], $selections["params"]);
     }
 
-    public static function query(string $tableName, string $query): array
+    public static function query( string $query): array
     {
         $blueprint = new Blueprint($query);
         return $blueprint->execute($query);

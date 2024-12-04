@@ -17,20 +17,20 @@ class User extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::USERNAME, self::PASSWORD], $data);
-            $table->insert([self::USERNAME, self::ROLE, self::PASSWORD], $data);
+            $table->insert([self::ID,self::USERNAME, self::PASSWORD,self::ROLE], $data);
+            
         });
     }
     public static function findOne(string $username): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($username) {
-            $table->selectWhere(["username" => $username], [self::USERNAME, self::ROLE, self::PASSWORD]);
+            $table->selectWhere(["username" => $username], [self::ID,self::USERNAME,self::PASSWORD,self::ROLE,]);
         });
     }
     public static function findAll(): array
     {
         return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
-            $table->select([self::USERNAME, self::ROLE, self::PASSWORD]);
+            $table->select([self::ID,self::USERNAME, self::PASSWORD,self::ROLE,]);
         });
     }
 
