@@ -10,7 +10,6 @@ class m_007DosenMigration implements BaseMigration
     {
         return Schema::createTableIfNotExist("dosen", function (Blueprint $table) {
             $table->string("id",6);
-            $table->string("id_user",6);
             $table->string("nidn");
             $table->string("nama");
 

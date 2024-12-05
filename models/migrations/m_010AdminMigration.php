@@ -12,6 +12,7 @@ class m_010AdminMigration implements BaseMigration
             $table->string("id",6);
             $table->string("id_user",6);
             $table->string("nip");
+            $table->string("nama");
             $table->string("foto");
             $table->string("email");
 
