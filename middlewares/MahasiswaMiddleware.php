@@ -7,7 +7,9 @@ class StudentMiddleware implements Middleware
 {
     public function before(Request $req, Response $res): void
     {
-        if (Session::get("role") !== "student") {
+
+        var_dump("ini roleku nrooooooooooooooooo".Session::get("role"));
+        if (Session::get("role") !== 2) {
             $res->redirect("/login");
         }
     }

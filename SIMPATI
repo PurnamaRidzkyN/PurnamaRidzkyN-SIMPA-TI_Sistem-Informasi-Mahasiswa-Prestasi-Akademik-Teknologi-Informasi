@@ -13,7 +13,7 @@ $config = Config::getConfig();
 $commands = [
 
     "listen" => function () {
-        execute("php -S localhost:5173");
+        execute("php -S localhost:2023");
     },
     "migration" => [
         "up" => function () use ($config) {

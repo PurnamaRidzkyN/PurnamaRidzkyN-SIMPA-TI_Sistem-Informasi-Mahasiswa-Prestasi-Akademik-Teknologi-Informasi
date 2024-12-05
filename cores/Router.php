@@ -10,9 +10,10 @@ class Router
     private static Request $request;
     private static Response $response;
     private static View $view;
-
+    public static array $params = [];
     public function __construct()
     {
+        new Session();
         self::$root = new RouteNode();
         self::$request = new Request();
         self::$response = new Response();
@@ -38,7 +39,7 @@ class Router
 
         if (!$route || !is_array($route["handler"])) {
             self::$response->setStatusCode(404);
-            self::$view->renderException("_404", ["title" => "Not Found"]);
+            self::$view->renderException("_404", "Not Found");
             return;
         }
 
@@ -48,24 +49,25 @@ class Router
         // Check if the controller class exists
         if (!class_exists($controllerClass)) {
             self::$response->setStatusCode(404);
-            self::$view->renderException("_404", ["title" => "Not Found"]);
+            self::$view->renderException("_404", "Not Found");
             return;
         }
 
         // Check if the method exists in the controller
         if (!method_exists($controllerClass, $handler)) {
             self::$response->setStatusCode(404);
-            self::$view->renderException("_404", ["title" => "Not Found"]);
+            self::$view->renderException("_404", "Not Found");
             return;
         }
 
         // call the middlewares
         foreach ($route["middlewares"] as $middleware) {
             $instance = new $middleware();
-            $instance->before();
+            $instance->before(self::$request, self::$response);
         }
+        self::$params = $route["params"];
 
-        call_user_func([$controller, $handler], self::$request, self::$response, ...$route["params"]);
+        call_user_func([$controller, $handler], self::$request, self::$response);
     }
 
     private static function addRoute(string $path, string $method, $callback, array $middlewares): void

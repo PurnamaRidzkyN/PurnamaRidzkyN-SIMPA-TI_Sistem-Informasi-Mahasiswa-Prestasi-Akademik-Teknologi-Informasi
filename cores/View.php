@@ -33,9 +33,10 @@ class View
         self::$title = $title;
     }
 
-    public function renderException(string $viewPath, array $data = []): void
+    public function renderException(string $viewPath,string $title, array $data = []): void
     {
-        self::setTitle($data["title"]);
+        self::$title = $title;
+        self::$data = $data;
         require_once "./views/layouts/header.php";
         require_once "./views/exceptions/{$viewPath}.php";
         require_once "./views/layouts/footer.php";

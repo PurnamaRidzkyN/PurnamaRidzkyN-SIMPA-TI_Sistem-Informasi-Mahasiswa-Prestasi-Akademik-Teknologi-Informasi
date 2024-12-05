@@ -28,25 +28,23 @@ class Auth extends BaseController
                 $this->view("login/login", "login", ["error" => "wrong password"]);
                 return;
             }
-
+          
             Session::set("user", $user["username"]);
             Session::set("role", $user["role"]);
-
+        
             // redirect each user to their page
             switch ($user["role"]) {
-                case 1:
+                case "1":
                     $res->redirect("/dashboard/admin/{$user["username"]}");
                     break;
 
-                case 2:
+                case "2":
                     $res->redirect("/dashboard/mahasiswa/{$user["username"]}");
                     break;
                 default:
                     $res->redirect("/");
                     break;
             }
-
-
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }

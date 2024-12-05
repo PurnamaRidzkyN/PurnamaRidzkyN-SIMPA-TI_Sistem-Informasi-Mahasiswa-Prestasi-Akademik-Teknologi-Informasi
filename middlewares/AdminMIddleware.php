@@ -7,7 +7,7 @@ class AdminMiddleware implements Middleware
 {
     public function before(Request $req, Response $res): void
     {
-        if (Session::get("role") !== "admin") {
+        if (Session::get("role") !== "1") {
             $res->redirect("/login");
         }
     }
