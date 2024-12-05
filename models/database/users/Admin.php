@@ -17,14 +17,14 @@ class Admin extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::ID_USER,self::NIP,self::NAMA,self::FOTO,self::EMAIL], $data);
-            
+            $table->insert([self::ID, self::ID_USER, self::NIP, self::NAMA, self::FOTO, self::EMAIL], $data);
         });
     }
-    public static function findEmail($email) : array 
+
+    public static function findEmail($email): array 
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($email) {
-            $table->selectWhere(["email" => $email], [self::ID,self::ID_USER,self::NIP,self::EMAIL]);
+            $table->selectWhere(["email" => $email], [self::ID, self::ID_USER, self::NIP, self::EMAIL]);
         });   
     }
 
@@ -32,5 +32,4 @@ class Admin extends BaseModel
     {
         return Schema::deleteFrom(self::TABLE);
     }
-    
 }
