@@ -21,16 +21,16 @@ class Admin extends BaseModel
             
         });
     }
-
-    public static function deleteAll(): array
-    {
-        return Schema::deleteFrom(self::TABLE);
-    }
     public static function findEmail($email) : array 
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($email) {
             $table->selectWhere(["email" => $email], [self::ID,self::ID_USER,self::NIP,self::EMAIL]);
         });   
+    }
+
+    public static function deleteAll(): array
+    {
+        return Schema::deleteFrom(self::TABLE);
     }
     
 }
