@@ -44,7 +44,7 @@ class Blueprint
 
     public function datetime(string $column): void
     {
-        $this->columns[] = "[$column] datetime";
+        $this->columns[] = "[$column] datetime DEFAULT CURRENT_TIMESTAMP";
     }
     public function text(string $column): void
     {
@@ -123,6 +123,13 @@ class Blueprint
     public function getInsertions(): array
     {
         return $this->insertions;
+    }
+
+    public function update(string $columnSql, string $value, string $columnWhere, string $where): void
+    {
+        $query = "UPDATE [$this->tableName] SET $columnSql = '$value' WHERE $columnWhere = '$where';";
+
+        $this->alterations = ["query" => $query];
     }
 
     public function select(array|string $columns = "*"): void

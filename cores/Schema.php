@@ -29,9 +29,9 @@ class Schema
 
         return $blueprint->execute($tsql);
     }
-    public static function createTriggerIfNotExist(string $tableName, string $triggerName,string $trigerLogic,string $event): array
-{
-    $tsql = "
+    public static function createTriggerIfNotExist(string $tableName, string $triggerName, string $trigerLogic, string $event): array
+    {
+        $tsql = "
         IF NOT EXISTS (
             SELECT * 
             FROM sysobjects
@@ -47,18 +47,25 @@ class Schema
                 $trigerLogic
         END');
     END;";
-    $blueprint = new Blueprint($tsql);
-    return $blueprint->execute($tsql );
-
-  
-}
-public static function dropTriggerIfExist(string $triggerName): array
+        $blueprint = new Blueprint($tsql);
+        return $blueprint->execute($tsql);
+    }
+    public static function dropTriggerIfExist(string $triggerName): array
     {
         $blueprint = new Blueprint($triggerName);
         $tsql = "DROP TRIGGER IF EXISTS [$triggerName];";
         return $blueprint->execute($tsql);
     }
-  
+
+    public static function update(string $tableName, callable $callback)
+    {
+        $blueprint = new Blueprint($tableName);
+        $callback($blueprint);
+        $update = $blueprint->getAlterations();
+        return $blueprint->execute($update["query"]);
+    }
+
+
 
 
     public static function insertInto(string $tableName, callable $callback): array
@@ -67,11 +74,13 @@ public static function dropTriggerIfExist(string $triggerName): array
         $callback($blueprint);
         $insertions = $blueprint->getInsertions();
 
+        $results = [];
+
         foreach ($insertions as $insertion) {
-            return $blueprint->execute($insertion["query"], $insertion["params"]);
+            $results[] = $blueprint->execute($insertion["query"], $insertion["params"]);
         }
 
-        return [];
+        return $results;
     }
 
     public static function dropTableIfExist(string $tableName): array
@@ -119,10 +128,9 @@ public static function dropTriggerIfExist(string $triggerName): array
         return $blueprint->execute($selections["query"], $selections["params"]);
     }
 
-    public static function query( string $query): array
+    public static function query(string $query): array
     {
         $blueprint = new Blueprint($query);
         return $blueprint->execute($query);
     }
-    
 }

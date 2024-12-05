@@ -5,6 +5,7 @@ use app\controllers\Home;
 use app\cores\Database;
 use app\cores\Router;
 use app\constant\Config;
+use app\controllers\ChangePassword;
 use app\controllers\Dashboard;
 use app\middlewares\AdminMiddleware;
 use app\middlewares\StudentMiddleware;
@@ -18,6 +19,8 @@ $app = new Router();
 $app::get("/", [Home::class, "index"]);
 $app::get("/login", [Auth::class, "renderLogin"]);
 $app::post("/post-login", [Auth::class, "login"]);
+$app::get("/forgot-password",[ChangePassword::class,"renderForgotPassword"]);
+$app::post("/change-password",[ChangePassword::class,"forgotPassword"]);
 
 $app::get("/dashboard/admin/:nip", [Dashboard::class, "adminDashboard"], [AdminMiddleware::class]);
 $app::post("/logout", [Auth::class, "logout"]);
