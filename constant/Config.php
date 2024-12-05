@@ -18,5 +18,11 @@ class Config
             ]
         ];
     }
+    public static function getEmail():array{
+        return[
+            "email"=> getenv("EMAIL"),
+            "PWD"=> getenv("PASSWORD")
+        ];
+    }
 }
 

@@ -2,7 +2,7 @@
     <div class="bg-white rounded-4 px-5 py-4 shadow-lg text-center">
         <h1 class="fw-bold text-primary">SIMPA-TI</h1>
         <p class="fs-4 mt-3">Silahkan Masuk</p>
-        <p class="text-secondary">Masukan username dan kata sandi Anda</p>
+        <p class="text-secondary">Masukkan username dan kata sandi Anda</p>
 
         <form action="/post-login" method="post" class="mt-4">
             <!-- Username -->
@@ -30,9 +30,15 @@
 
             <!-- Tombol Masuk -->
             <button type="submit" class="btn btn-primary w-100 py-2">Masuk</button>
+
+            <!-- Link Lupa Kata Sandi -->
+            <div class="mt-3">
+                <a href="/forgot-password" class="text-decoration-none text-primary">Lupa Kata Sandi?</a>
+            </div>
         </form>
     </div>
 
+    <!-- jQuery Library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -43,3 +49,4 @@
             });
         });
     </script>
+</body>

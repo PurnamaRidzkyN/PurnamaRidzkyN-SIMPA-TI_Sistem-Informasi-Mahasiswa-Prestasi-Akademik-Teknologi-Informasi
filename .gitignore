@@ -1,4 +1,5 @@
 vendor
 .env
-node_modules
 query.sql
+composer.json
+composer.lock
