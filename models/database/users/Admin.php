@@ -14,6 +14,7 @@ class Admin extends BaseModel
     public const FOTO = "foto";
     public const EMAIL = "email";
 
+
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
@@ -27,6 +28,7 @@ class Admin extends BaseModel
             $table->selectWhere(["email" => $email], [self::ID, self::ID_USER, self::NIP, self::EMAIL]);
         });   
     }
+
 
     public static function deleteAll(): array
     {

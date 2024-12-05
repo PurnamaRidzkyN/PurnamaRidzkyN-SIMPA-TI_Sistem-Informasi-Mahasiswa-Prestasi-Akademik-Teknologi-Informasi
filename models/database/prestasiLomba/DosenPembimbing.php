@@ -6,17 +6,17 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseModel;
 
-class TingkatLomba extends BaseModel
+class DosenPembimbing extends BaseModel
 {
-    public const TABLE = "tingkat_lomba";
+    public const TABLE = "dosen_Pembimbing";
     public const ID = "id";
-    public const TINGKAT_LOMBA = "tingkat_lomba";
-    public const SKOR = "skor";
+    public const ID_Dosen = "id_dosen";
+    public const ID_PRESTASI = "id_prestasi";
 
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::TINGKAT_LOMBA,self::SKOR], $data);
+            $table->insert([self::ID,self::ID_Dosen,self::ID_PRESTASI], $data);
             
         });
     }
