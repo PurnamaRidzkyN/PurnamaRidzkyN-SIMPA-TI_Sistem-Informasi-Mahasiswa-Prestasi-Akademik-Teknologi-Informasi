@@ -124,7 +124,6 @@ class Schema
         $blueprint = new Blueprint($tableName);
         $callback($blueprint);
         $selections = $blueprint->getSelection();
-
         return $blueprint->execute($selections["query"], $selections["params"]);
     }
 

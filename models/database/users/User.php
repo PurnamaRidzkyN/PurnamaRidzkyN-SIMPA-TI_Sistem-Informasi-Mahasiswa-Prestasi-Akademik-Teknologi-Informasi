@@ -26,7 +26,7 @@ class User extends BaseModel
             $table->selectWhere(["username" => $username], [self::ID, self::USERNAME, self::PASSWORD, self::ROLE,]);
         });
     }
-    public static function update($value, string $columnWhere, string $where): array
+    public static function updatePassword($value, string $columnWhere, string $where): array
     {
         return Schema::update(self::TABLE, function (Blueprint $table) use ($value, $columnWhere, $where) {
             $table->update(self::PASSWORD, $value, $columnWhere, $where);

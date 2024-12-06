@@ -43,11 +43,14 @@ class Request
 
         return $data;
     }
+
     public function getParams(array|string $param): array|string
     {
+
         if (is_string($param)) {
             return Router::$params[$param] ?? "";
         }
+
         return array_map(fn($value) => $value, Router::$params);
     }
 }

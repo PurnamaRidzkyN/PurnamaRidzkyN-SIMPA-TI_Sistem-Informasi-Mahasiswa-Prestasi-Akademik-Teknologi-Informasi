@@ -159,6 +159,7 @@ class Blueprint
             "query" => "SELECT $columnsTsql FROM [$this->tableName] WHERE $whereTsql;",
             "params" => $params
         ];
+        
     }
 
     public function getSelection(): array

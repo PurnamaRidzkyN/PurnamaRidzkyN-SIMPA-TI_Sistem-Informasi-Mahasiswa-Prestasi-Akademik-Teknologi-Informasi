@@ -11,6 +11,7 @@ class Router
     private static Response $response;
     private static View $view;
     public static array $params = [];
+
     public function __construct()
     {
         new Session();
@@ -60,12 +61,14 @@ class Router
             return;
         }
 
+        self::$params = $route["params"];
+
         // call the middlewares
         foreach ($route["middlewares"] as $middleware) {
             $instance = new $middleware();
             $instance->before(self::$request, self::$response);
         }
-        self::$params = $route["params"];
+
 
         call_user_func([$controller, $handler], self::$request, self::$response);
     }
@@ -76,7 +79,6 @@ class Router
 
         // filter out empty string
         $routeParts = array_filter(explode("/", $path), fn($value) => !empty($value));
-
 
         $dynamicParams = [];
 
@@ -108,7 +110,7 @@ class Router
     private static function findRoute(string $path, string $method): ?array
     {
         $currentNode = self::$root;
-
+       
         $segments = array_filter(explode("/", $path), function ($value) {
             return !empty($value);
         });
@@ -127,7 +129,7 @@ class Router
                 return null;
             }
         }
-
+        
         $params = [];
 
         for ($i = 0; $i < count($extractedParams); $i++) {
@@ -136,7 +138,7 @@ class Router
 
             $params[$key] = $value;
         }
-
+        
         return [
             "params" => $params,
             "handler" => $currentNode->handler[$method],

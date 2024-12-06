@@ -9,10 +9,10 @@ class s_004AdminSeeder implements BaseSeeder
     {
         $id = ["A001", "A002", "A003"];
         $id_user = ["U001", "U002", "U003"];
-        $nip = ["1987654321", "1987654322", "1987654323"];
+        $nip = ["100321104","100321105","100321106",];
         $name = ["Admin One", "Admin Two", "Admin Three"];
         $foto = ["Admin1.jpg", "Admin2.jpg", "Admin3.jpg"];
-        $email = ["admin1@example.com", "admin2@example.com", "admin3@example.com"];
+        $email = ["naotomori220405@gmail.com", "admin2@example.com", "admin3@example.com"];
 
         $res = [];
 

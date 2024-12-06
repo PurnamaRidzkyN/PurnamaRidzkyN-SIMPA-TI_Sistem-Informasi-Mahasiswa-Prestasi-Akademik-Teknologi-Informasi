@@ -18,16 +18,31 @@ class Mahasiswa extends BaseModel
     public const TAHUN_MASUK = "tahun_masuk";
     public const TOTAL_SKOR = "total_skor";
     public const FOTO = "foto";
+    public const EMAIL = "email";
     
 
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
             $table->insert([self::ID,self::ID_USER,self::NAMA,self::NIM,self:: PRODI,
-        self::TAHUN_MASUK,self::TOTAL_SKOR,self::FOTO], $data);
+        self::TAHUN_MASUK,self::TOTAL_SKOR,self::FOTO,self::EMAIL], $data);
             
         });
     }
+    public static function findEmail($email): array 
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($email) {
+            $table->selectWhere(["email" => $email], [self::ID_USER,self::NAMA,self::EMAIL]);
+        });   
+    }
+    public static function findNim($nim): array 
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nim) {
+            $table->selectWhere(["nim" => $nim], [self::ID,self::ID_USER,self::NAMA,self::NIM,self:: PRODI,
+            self::TAHUN_MASUK,self::TOTAL_SKOR,self::FOTO,self::EMAIL]);
+        });   
+    }
+
 
     public static function deleteAll(): array
     {

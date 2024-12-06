@@ -33,6 +33,11 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "bob.jpg",
             "charlie.jpg"
         ];
+        $email = [
+            "alice.johnson@example.com",
+            "bob.williams@example.com",
+            "charlie.brown@example.com"
+        ];
 
         $res = [];
 
@@ -46,6 +51,7 @@ class s_003MahasiswaSeeder implements BaseSeeder
                 "tahun_masuk" => $tahun_masuk[$i],
                 "total_skor" => $total_skor[$i],
                 "foto" => $foto[$i],
+                "email"=> $email[$i]
             ]);
         }
 

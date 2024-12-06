@@ -1,4 +1,5 @@
 <?php
+namespace app\models\database\users;
 
 use app\cores\Blueprint;
 use app\cores\Schema;
@@ -22,10 +23,16 @@ class Admin extends BaseModel
         });
     }
 
-    public static function findEmail($email): array 
+    public static function findEmail(string $email): array 
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($email) {
-            $table->selectWhere(["email" => $email], [self::ID, self::ID_USER, self::NIP, self::EMAIL]);
+            $table->selectWhere(["email" => $email], [self::ID, self::ID_USER,self::NAMA, self::NIP, self::EMAIL]);
+        });   
+    }
+    public static function findNip(string $nip): array 
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nip) {
+            $table->selectWhere(["nip" => $nip], [self::ID, self::ID_USER, self::NIP,self::NAMA,self::FOTO, self::EMAIL]);
         });   
     }
 
