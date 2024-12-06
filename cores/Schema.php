@@ -64,10 +64,6 @@ class Schema
         $update = $blueprint->getAlterations();
         return $blueprint->execute($update["query"]);
     }
-
-
-
-
     public static function insertInto(string $tableName, callable $callback): array
     {
         $blueprint = new Blueprint($tableName);

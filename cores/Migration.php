@@ -50,6 +50,7 @@ class Migration
     {
         $migrationPath = realpath(__DIR__ . '/../models/migrations');
         $files = scandir($migrationPath);
+        rsort($files);
         foreach ($files as $file) {
             if ($file === '.' || $file === '..') {
                 continue;
@@ -61,7 +62,7 @@ class Migration
 
             echo "rollback migration $file\n";
             $query = $migration->down();
-
+            
             if (isset($query["errors"])) {
                 echo "failed to rollback migration $file\n";
                 $errMessage = $query["errors"];

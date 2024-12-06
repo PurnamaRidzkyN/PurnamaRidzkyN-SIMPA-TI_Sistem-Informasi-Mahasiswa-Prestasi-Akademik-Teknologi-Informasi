@@ -11,6 +11,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use app\constant\Config;
 use app\models\database\users\Mahasiswa;
+use app\models\database\logData\LogData;
+use app\helpers\UUID;
 
 
 require_once "vendor/autoload.php";
@@ -74,7 +76,7 @@ class NewPassword extends BaseController
             $password = bin2hex(random_bytes(5));
             $hashpassword = password_hash($password, PASSWORD_BCRYPT);
             User::updatePassword($hashpassword, "username", $user['username']);
-
+            LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
 
             $mail->SMTPDebug = 0;
             $mail->isSMTP();
@@ -126,13 +128,17 @@ class NewPassword extends BaseController
                     if($email==($admin["result"][0]["email"])){
                         $hashpassword = password_hash($newPassword, PASSWORD_BCRYPT);
                         User::updatePassword($hashpassword, "username", $user['username']);
-                        $res->redirect("/dashboard/admin/:".$user["username"]);
+                        LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
+                        $res->redirect("/dashboard/admin/{$user["username"]}");
+                        
                     }
                     break;
                 case '2':
                     $hashpassword = password_hash($newPassword, PASSWORD_BCRYPT);
                         User::updatePassword($hashpassword, "username", $user['username']);
-                        $res->redirect("/dashboard/mahasiswa/:nim");
+                        LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
+
+                        $res->redirect("/dashboard/mahasiswa/{$user["username"]}");
                 default:
                     # code...
                     break;

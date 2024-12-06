@@ -5,6 +5,7 @@ use app\controllers\Home;
 use app\cores\Database;
 use app\cores\Router;
 use app\constant\Config;
+use app\controllers\AuditLogController;
 use app\controllers\NewPassword;
 use app\controllers\Dashboard;
 use app\middlewares\AdminMiddleware;
@@ -30,6 +31,9 @@ $app::post("/change-password/new-password",[NewPassword::class,"changePassword"]
 
 $app::get("/dashboard/admin/:nip", [Dashboard::class, "adminDashboard"], [AdminMiddleware::class]);
 $app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "mahasiswaDashboard"], [StudentMiddleware::class]);
+
+$app::get("/dashboard/admin/:nip/log-data",[AuditLogController::class,"renderLogData",[AdminMiddleware::class]]);
+
 
 $app::get("/logout", [Auth::class, "logout"]);
 $app::run();

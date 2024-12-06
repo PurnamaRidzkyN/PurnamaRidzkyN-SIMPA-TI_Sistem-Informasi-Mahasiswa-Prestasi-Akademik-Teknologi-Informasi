@@ -16,9 +16,11 @@ class User extends BaseModel
 
     public static function insert(array $data): array
     {
+        
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
             $table->insert([self::ID, self::USERNAME, self::PASSWORD, self::ROLE], $data);
-        });
+        }
+    );
     }
     public static function findOne(string $username): array
     {
@@ -35,7 +37,7 @@ class User extends BaseModel
     public static function findAll(): array
     {
         return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
-            $table->select([self::ID, self::USERNAME, self::PASSWORD, self::ROLE,]);
+            $table->select([self::ID, self::USERNAME, self::PASSWORD, self::ROLE]);
         });
     }
 
