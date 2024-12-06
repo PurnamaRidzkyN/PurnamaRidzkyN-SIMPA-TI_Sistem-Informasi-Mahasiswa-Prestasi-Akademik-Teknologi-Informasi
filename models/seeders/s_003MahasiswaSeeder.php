@@ -17,9 +17,9 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "Charlie Brown"
         ];
         $nim = [
-            "210101001",
-            "210101002",
-            "210101003"
+            "234176001",
+            "234176002",
+            "234176003"
         ];
         $prodi = [
             "Teknik Informatika",
