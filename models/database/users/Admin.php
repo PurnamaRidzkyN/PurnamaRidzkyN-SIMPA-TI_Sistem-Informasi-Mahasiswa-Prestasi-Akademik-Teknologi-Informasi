@@ -1,5 +1,7 @@
 <?php
 
+namespace app\models\database\users;
+
 use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseModel;
