@@ -154,12 +154,10 @@ class Blueprint
         }
 
         $whereTsql = implode(" AND ", $whereClauses);
-
         $this->selections = [
             "query" => "SELECT $columnsTsql FROM [$this->tableName] WHERE $whereTsql;",
             "params" => $params
         ];
-        
     }
 
     public function getSelection(): array

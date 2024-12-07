@@ -12,6 +12,7 @@ class s_007PrestasiSeeder implements BaseSeeder
         $id_tingkat_kompetisi = ["TK001", "TK002", "TK003"];
         $id_mahasiswa = ["M001", "M002", "M003"];
         $id_peringkat = ["P001", "P002", "P003"];
+        $id_admin = ["U001","U001"];
 
         $tim = [0, 0, 0];
         $judul_kompetisi = [
@@ -60,6 +61,7 @@ class s_007PrestasiSeeder implements BaseSeeder
                 Prestasi::ID_TINGKAT_KOMPETISI => $id_tingkat_kompetisi[$i],
                 Prestasi::ID_MAHASISWA => $id_mahasiswa[$i],
                 Prestasi::ID_PERINGKAT => $id_peringkat[$i],
+                Prestasi::ID_ADMIN=>$id_admin[$i],
                 Prestasi::TIM => $tim[$i],
                 Prestasi::JUDUL_KOMPETISI => $judul_kompetisi[$i],
                 Prestasi::JUDUL_KOMPETISI_EN => $judul_kompetisi_en[$i],

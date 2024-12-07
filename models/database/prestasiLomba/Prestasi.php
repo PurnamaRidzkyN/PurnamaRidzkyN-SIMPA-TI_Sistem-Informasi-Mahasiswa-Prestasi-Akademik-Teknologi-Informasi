@@ -13,6 +13,7 @@ class Prestasi extends BaseModel
     public const ID_TINGKAT_KOMPETISI = "id_tingkat_kompetisi";
     public const ID_MAHASISWA = "id_mahasiswa";
     public const ID_PERINGKAT = "id_peringkat";
+    public const ID_ADMIN = "id_admin";
     public const TIM = "tim";
     public const JUDUL_KOMPETISI = "judul_kompetisi";
     public const JUDUL_KOMPETISI_EN = "judul_kompetisi_en";
@@ -40,6 +41,7 @@ class Prestasi extends BaseModel
                 self::ID_TINGKAT_KOMPETISI,
                 self::ID_MAHASISWA,
                 self::ID_PERINGKAT,
+                self::ID_ADMIN,
                 self::TIM,
                 self::JUDUL_KOMPETISI,
                 self::JUDUL_KOMPETISI_EN,
