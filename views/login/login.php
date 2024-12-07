@@ -1,52 +1,64 @@
-<body class="bg-primary d-flex align-items-center justify-content-center h-screen">
-    <div class="bg-white rounded-4 px-5 py-4 shadow-lg text-center">
-        <h1 class="fw-bold text-primary">SIMPA-TI</h1>
-        <p class="fs-4 mt-3">Silahkan Masuk</p>
-        <p class="text-secondary">Masukkan username dan kata sandi Anda</p>
-
-        <form action="/post-login" method="post" class="mt-4">
-            <!-- Username -->
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username">
+<div class="loading-overlay">
+    <div class="spinner"></div>
+</div>
+<div class="container">
+    <div class="left-section">
+        <div class="app-name-container">
+            <img class="logo" src="../public/component/logoHijau.png" alt="Logo">
+            <div class="app-name">
+                <span class="simpa">SIMPA</span><span class="dash">-</span><span class="ti">TI</span>
             </div>
+        </div>
+        <p class="system-description">
+            SISTEM INFORMASI MAHASISWA BERPRESTASI TEKNOLOGI INFORMASI
+        </p>
+    </div>
 
-            <!-- Password -->
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi">
+    <div class="right-section">
+        <div class="header">
+            <h1>LOGIN</h1>
+        </div>
+        <form action="/post-login" method="post" class="login-form" id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Masukkan username">
             </div>
-
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Masukkan password">
+            </div>
+            
             <!-- Checkbox untuk Tampilkan Password -->
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="viewPassword">
-                <label class="form-check-label text-secondary" for="viewPassword">Tampilkan Kata Sandi</label>
+                <label class="form-check-label" for="viewPassword">Tampilkan kata sandi</label>
             </div>
 
             <!-- Pesan Error -->
-            <div class="text-danger mb-3">
+            <div class="text-danger mb-3" id="error-message">
+                <!-- PHP error message will be inserted here -->
                 <?php echo app\cores\View::getData()["error"] ?? "" ?>
             </div>
 
-            <!-- Tombol Masuk -->
-            <button type="submit" class="btn btn-primary w-100 py-2">Masuk</button>
-
+            <button type="submit" class="login-button">LOGIN</button>
+            
             <!-- Link Lupa Kata Sandi -->
-            <div class="mt-3">
-                <a href="/forgot-password" class="text-decoration-none text-primary">Lupa Kata Sandi?</a>
+            <div class="forgot-password">
+                <a href="/forgot-password">*Lupa kata sandi?</a>
             </div>
         </form>
     </div>
+</div>
 
-    <!-- jQuery Library -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#viewPassword').on('change', function() {
-                const passwordField = $('#password');
-                const isChecked = $(this).is(':checked');
-                passwordField.attr('type', isChecked ? 'text' : 'password');
-            });
+<!-- jQuery Library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Fungsi untuk mengubah jenis input password menjadi teks
+        $('#viewPassword').on('change', function() {
+            const passwordField = $('#password');
+            const isChecked = $(this).is(':checked');
+            passwordField.attr('type', isChecked ? 'text' : 'password');
         });
-    </script>
-</body>
+    });
+</script>
