@@ -38,6 +38,9 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "bob.williams@example.com",
             "charlie.brown@example.com"
         ];
+        $jurusan=[
+            "teknologi informasi","teknologi informasi","teknologi informasi"
+        ];
 
         $res = [];
 
@@ -48,6 +51,7 @@ class s_003MahasiswaSeeder implements BaseSeeder
                 "nama" => $nama[$i],
                 "nim" => $nim[$i],
                 "prodi" => $prodi[$i],
+                "jurusan"=> $jurusan[$i],
                 "tahun_masuk" => $tahun_masuk[$i],
                 "total_skor" => $total_skor[$i],
                 "foto" => $foto[$i],

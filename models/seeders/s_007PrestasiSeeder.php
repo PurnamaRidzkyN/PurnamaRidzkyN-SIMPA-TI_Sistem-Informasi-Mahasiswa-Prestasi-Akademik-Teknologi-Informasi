@@ -12,7 +12,7 @@ class s_007PrestasiSeeder implements BaseSeeder
         $id_tingkat_kompetisi = ["TK001", "TK002", "TK003"];
         $id_mahasiswa = ["M001", "M002", "M003"];
         $id_peringkat = ["P001", "P002", "P003"];
-        $id_admin = ["U001","U001"];
+        $id_admin = ["U001","U001","U002"];
 
         $tim = [0, 0, 0];
         $judul_kompetisi = [

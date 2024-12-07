@@ -22,7 +22,7 @@ require_once "helpers/env.php";
 
 class NewPassword extends BaseController
 {
-    public function forgotPassword(Request $req, Response $res): void
+    public function handleForgotPassword(Request $req, Response $res): void
     {
         $body = $req->body();
         $username = $body["username"];
@@ -76,7 +76,7 @@ class NewPassword extends BaseController
             $password = bin2hex(random_bytes(5));
             $hashpassword = password_hash($password, PASSWORD_BCRYPT);
             User::updatePassword($hashpassword, "username", $user['username']);
-            LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
+            LogData::insert(UUID::generate("log_data","LD"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
 
             $mail->SMTPDebug = 0;
             $mail->isSMTP();
@@ -128,7 +128,7 @@ class NewPassword extends BaseController
                     if($email==($admin["result"][0]["email"])){
                         $hashpassword = password_hash($newPassword, PASSWORD_BCRYPT);
                         User::updatePassword($hashpassword, "username", $user['username']);
-                        LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
+                        LogData::insert(UUID::generate("log_data","LD"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
                         $res->redirect("/dashboard/admin/{$user["username"]}");
                         
                     }
@@ -136,7 +136,7 @@ class NewPassword extends BaseController
                 case '2':
                     $hashpassword = password_hash($newPassword, PASSWORD_BCRYPT);
                         User::updatePassword($hashpassword, "username", $user['username']);
-                        LogData::insert(UUID::generate("log_data","LG"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
+                        LogData::insert(UUID::generate("log_data","LD"), $user["id"],$user["id"], "user", "update", "[passsword]", "merubah password baru", "null");
 
                         $res->redirect("/dashboard/mahasiswa/{$user["username"]}");
                 default:

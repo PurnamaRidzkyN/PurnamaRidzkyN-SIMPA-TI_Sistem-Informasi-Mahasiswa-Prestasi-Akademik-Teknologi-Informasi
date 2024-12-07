@@ -13,7 +13,7 @@ class m_019insertLogDataStoredProcedur implements BaseMigration
             @id NVARCHAR(6),
             @id_user VARCHAR(6),
             @id_perubahan VARCHAR(6),
-            @tabel_perubahan VARCHAR(6),
+            @tabel_perubahan VARCHAR(255),
             @jenis_operasi VARCHAR(10),
             @kolom_perubahan VARCHAR(255) = NULL,
             @data_lama TEXT = NULL,

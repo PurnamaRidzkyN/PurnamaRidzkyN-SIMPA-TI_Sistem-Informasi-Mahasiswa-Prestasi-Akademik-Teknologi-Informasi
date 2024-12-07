@@ -38,7 +38,10 @@ class s_001UserSeeder implements BaseSeeder
             1,
             2,
             2,
-            2
+            2,
+            3,
+            3,
+            3,
         ];
 
         $res = [];

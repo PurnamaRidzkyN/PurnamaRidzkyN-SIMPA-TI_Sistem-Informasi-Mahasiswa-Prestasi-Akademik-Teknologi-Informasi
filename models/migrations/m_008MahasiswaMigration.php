@@ -15,6 +15,7 @@ class m_008MahasiswaMigration implements BaseMigration
             $table->string("nama");
             $table->string("nim");
             $table->string("prodi");
+            $table->string("jurusan");
             $table->string("tahun_masuk", 4);
             $table->string("total_skor");
             $table->string("foto");

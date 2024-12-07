@@ -19,7 +19,7 @@ class LogData
 
     public static function insert(string $id, string $id_user, string $id_perubahan, string $tabel_perubahan, string $jenis_operasi, string $kolom_perubahan, string $data_lama, string $data_baru): array
     {
-
+        
         return Schema::query("
         EXEC sp_LogData 
         @id = '$id', 
