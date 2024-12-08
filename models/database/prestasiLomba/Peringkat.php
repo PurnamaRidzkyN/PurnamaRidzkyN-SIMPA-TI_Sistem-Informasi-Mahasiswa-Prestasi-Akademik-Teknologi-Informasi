@@ -16,8 +16,13 @@ class Peringkat extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::PERINGKAT,self::SKOR], $data);
-            
+            $table->insert([self::ID, self::PERINGKAT, self::SKOR], $data);
+        });
+    }
+    public static function displayPeringkat(): array
+    {
+        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
         });
     }
 
@@ -26,18 +31,16 @@ class Peringkat extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
-//     public static function getAllSortedBySkor(): array
-// {
-//     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
-//         $table->select([self::ID,self::SKOR,self::PERINGKAT]) // Pilih kolom yang diperlukan.
-//               ->orderBy(self::SKOR, 'DESC'); // Urutkan berdasarkan skor tertinggi.
-//               //error mulu aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-//     });
-// }
+    //     public static function getAllSortedBySkor(): array
+    // {
+    //     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+    //         $table->select([self::ID,self::SKOR,self::PERINGKAT]) // Pilih kolom yang diperlukan.
+    //               ->orderBy(self::SKOR, 'DESC'); // Urutkan berdasarkan skor tertinggi.
+    //               //error mulu aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    //     });
+    // }
 
 
 
 
 }
-
-?>

@@ -31,6 +31,7 @@ class Prestasi extends BaseModel
     public const FOTO_KEGIATAN = "foto_kegiatan";
     public const FILE_POSTER = "file_poster";
     public const VALIDASI = "validasi";
+    public const VIEW_TABLE = "view_prestasi";
     
     public static function insert(array $data): array
     {
@@ -63,9 +64,16 @@ class Prestasi extends BaseModel
             ], $data);
         });
     }
+    public static function prestasiDisplay():array
+    {
+        return Schema::selectFrom(self::VIEW_TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
+
 
     public static function deleteAll(): array
-    {
+    {  
         return Schema::deleteFrom(self::TABLE);
     }
 }

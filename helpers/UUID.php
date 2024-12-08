@@ -2,8 +2,6 @@
 
 namespace app\helpers;
 
-use Exception;
-use app\cores\Blueprint;
 use app\cores\Schema;
 
 
@@ -11,6 +9,7 @@ class UUID
 {
     public static function generate($tableName, $prefix): string
     {
+        try{
         $currentId = Schema::query("SELECT TOP 1 id
         FROM $tableName
         WHERE id LIKE '$prefix%'
@@ -25,7 +24,11 @@ class UUID
         $newNumber = (int)$number + 1;
         
         $formattedNumber = str_pad($newNumber, strlen($number), '0', STR_PAD_LEFT);
-    
+      
         return $prefix . $formattedNumber;
+    }catch (\PDOException $e) {
+        var_dump($e->getMessage());
     }
 }
+    }
+

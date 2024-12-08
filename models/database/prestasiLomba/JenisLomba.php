@@ -19,11 +19,19 @@ class JenisLomba extends BaseModel
             
         });
     }
+    public static function displayJenisLomba():array
+    {
+        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
+    
 
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);
     }
+
 }
 
 ?>
