@@ -1,8 +1,6 @@
 <?php
 namespace app\models\database\users;
 
-// namespace app\models\database\users;
-
 use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseModel;
@@ -37,6 +35,13 @@ class Admin extends BaseModel
             $table->selectWhere(["nip" => $nip], [self::ID, self::ID_USER, self::NIP,self::NAMA,self::FOTO, self::EMAIL]);
         });   
     }
+    public static function displayAdmin(): array
+    {
+        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
+
 
 
     public static function deleteAll(): array
