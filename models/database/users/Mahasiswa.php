@@ -56,4 +56,23 @@ class Mahasiswa extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
+    public static function findAll(): array
+{
+    return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+        $table->select([
+            self::ID,
+            self::ID_USER,
+            self::NAMA,
+            self::NIM,
+            self::PRODI,
+            self::JURUSAN,
+            self::TAHUN_MASUK,
+            self::TOTAL_SKOR,
+            self::FOTO,
+            self::EMAIL
+        ]);
+    });
+}
+
+
 }

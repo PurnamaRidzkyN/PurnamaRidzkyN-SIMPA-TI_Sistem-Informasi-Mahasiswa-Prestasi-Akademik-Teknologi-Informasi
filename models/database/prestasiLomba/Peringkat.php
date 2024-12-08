@@ -31,16 +31,4 @@ class Peringkat extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
-    //     public static function getAllSortedBySkor(): array
-    // {
-    //     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
-    //         $table->select([self::ID,self::SKOR,self::PERINGKAT]) // Pilih kolom yang diperlukan.
-    //               ->orderBy(self::SKOR, 'DESC'); // Urutkan berdasarkan skor tertinggi.
-    //               //error mulu aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    //     });
-    // }
-
-
-
-
 }
