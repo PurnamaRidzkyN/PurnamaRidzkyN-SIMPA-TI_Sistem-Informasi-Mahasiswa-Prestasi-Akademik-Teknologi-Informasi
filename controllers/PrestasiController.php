@@ -8,6 +8,7 @@ use app\cores\Session;
 use app\helpers\Dump;
 use app\helpers\UUID;
 use app\models\database\logData\LogData;
+use app\models\database\prestasiLomba\DosenPembimbing;
 use app\models\database\prestasiLomba\JenisLomba;
 use app\models\database\prestasiLomba\Peringkat;
 use app\models\database\prestasiLomba\Prestasi;
@@ -22,15 +23,14 @@ class PrestasiController extends BaseController
     {
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
-        Dump::out($body);
-        exit();
+
         $target_dir = "public/uploads/";
         $target_dir_surat_tugas = $target_dir . "suratTugas/";  //
         $target_dir_sertifikat = $target_dir . "sertifikat/";
         $target_dir_foto = $target_dir . "fotokegiatan/";
         $target_dir_poster = $target_dir . "poster/";
 
-        
+
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
@@ -53,11 +53,9 @@ class PrestasiController extends BaseController
         $file_sertifikat = $body["file-sertifikat"] ?? "null";
         $foto_kegiatan = $body["foto-kegiatan"] ?? "null";
         $file_poster = $body["file-poster"] ?? "null";
-        $validasi = 0; // 5 MB dalam byte
-        // Validasi dan pemrosesan file surat tugas
+        $validasi = 0;
         try {
-            // Fungsi untuk memeriksa dan memindahkan file jika valid
-            // Fungsi untuk menangani pengunggahan file
+
             function uploadFile($file, $target_dir)
             {
                 $max_size = 5 * 1024 * 1024;
@@ -74,19 +72,13 @@ class PrestasiController extends BaseController
                 return $target_file;
             }
 
-            // Pengunggahan file surat tugas
-            // Pengunggahan file surat tugas
             $file_surat_tugas =  uploadFile($file_surat_tugas, $target_dir_surat_tugas);
 
-            // Pengunggahan file sertifikat
             $file_sertifikat = uploadFile($file_sertifikat, $target_dir_sertifikat);
 
-            // Pengunggahan foto kegiatan
             $foto_kegiatan = uploadFile($foto_kegiatan, $target_dir_foto);
 
-            // Pengunggahan file poster
             $file_poster = uploadFile($file_poster, $target_dir_poster);
-
 
             $data = [
                 "id" => $id,
@@ -113,6 +105,16 @@ class PrestasiController extends BaseController
                 "file_poster" => $file_poster,
                 "validasi" => $validasi
             ];
+            $dosen = [];
+
+            // Loop melalui data POST untuk mendapatkan setiap dosen
+            foreach ($body as $key => $value) {
+                // Menyaring hanya yang dimulai dengan 'dosen-pembimbing-'
+                if (strpos($key, 'dosen-pembimbing-') === 0) {
+                    // Masukkan nilai dosen (ID dosen) ke dalam array
+                    $dosen[] = $value;
+                }
+            }
 
             Prestasi::insert($data);
             $result = implode(", ", array_map(function ($key, $value) {
@@ -128,7 +130,32 @@ class PrestasiController extends BaseController
                 "null",
                 $result
             );
+            $user = Session::get("user");;
+            for ($i = 0; $i < count($dosen); $i++) {
+                $data = [];
+                $id = UUID::generate(DosenPembimbing::TABLE, "DP");
+                $data =([
+                    DosenPembimbing::ID => $id, 
+                    DosenPembimbing::ID_Dosen => $dosen[$i],  
+                    DosenPembimbing::ID_PRESTASI => $id,       
+                ]);
+                DosenPembimbing::insert($data);
+                $result = implode(", ", array_map(function ($key, $value) {
+                    return "$key = $value";
+                }, array_keys($data), $data));
+                LogData::insert(
+                    UUID::generate(LogData::TABLE, "LD"),
+                    $mahasiswa['result'][0]["id_user"], 
+                    $id, 
+                    DosenPembimbing::TABLE, 
+                    "insert",
+                    "null",  
+                    "null",  
+                    $result 
+                );
+            }
             $user = Session::get("user");
+
             $res->redirect("/dashboard/mahasiswa/{$user}/prestasi");
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
@@ -137,7 +164,7 @@ class PrestasiController extends BaseController
 
     public function renderWeb(): void
     {
-        $JenisLomba=JenisLomba::displayJenisLomba();
+        $JenisLomba = JenisLomba::displayJenisLomba();
         $tingkatLomba = TingkatLomba::displayTingkatLomba();
         $peringkat = Peringkat::displayPeringkat();
         $dosen = Dosen::displayDosen();
@@ -147,8 +174,8 @@ class PrestasiController extends BaseController
             'TingkatLomba' => $tingkatLomba['result'],
             'Peringkat' => $peringkat['result'],
             'Dosen' => $dosen['result']
-        ]; 
-        $this->view("dashboard/mahasiswa/uploadPrestasi", "Upload Prestasi",$data);
+        ];
+        $this->view("dashboard/mahasiswa/uploadPrestasi", "Upload Prestasi", $data);
     }
     public function renderListPrestasi()
     {

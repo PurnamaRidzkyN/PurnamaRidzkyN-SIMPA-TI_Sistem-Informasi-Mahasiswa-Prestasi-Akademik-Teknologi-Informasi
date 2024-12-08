@@ -10,6 +10,7 @@
     $kategoriKompetisi = ["tim", "individu"];
     $urutanPeringkat = $data["Peringkat"];
     $dosenList = $data["Dosen"];
+    $nomorDosen = 1;
 
 
     ?>
@@ -131,6 +132,7 @@
             font-size: 16px;
         }
     </style>
+
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
@@ -158,51 +160,38 @@
                 <label for="jenis-kompetisi">Jenis Kompetisi</label>
                 <select name="jenis-kompetisi" id="jenis-kompetisi" required>
                     <option value="">Pilih Jenis Kompetisi</option>
-                    <?php
-                    // Menampilkan pilihan jenis kompetisi dari array
-                    foreach ($jenisKompetisi as $jenis) {
+                    <?php foreach ($jenisKompetisi as $jenis) {
                         echo "<option value='" . $jenis['id'] . "'>" . $jenis['jenis_lomba'] . "</option>";
-                    }
-                    ?>
+                    } ?>
                 </select>
 
                 <!-- Tingkat Kompetisi -->
                 <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
                 <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
                     <option value="">Pilih Tingkat Kompetisi</option>
-                    <?php
-                    // Menampilkan pilihan tingkat kompetisi dari array
-                    foreach ($tingkatKompetisi as $tingkat) {
+                    <?php foreach ($tingkatKompetisi as $tingkat) {
                         echo "<option value='" . $tingkat['id'] . "'>" . $tingkat['tingkat_lomba'] . "</option>";
-                    }
-                    ?>
+                    } ?>
                 </select>
 
                 <!-- Kategori Kompetisi -->
                 <label for="kategori-kompetisi">Kategori Kompetisi</label>
                 <select name="kategori-kompetisi" id="kategori-kompetisi" required>
                     <option value="">Pilih Kategori Kompetisi</option>
-                    <?php
-                    // Menampilkan pilihan kategori kompetisi dari array
-                    foreach ($kategoriKompetisi as $kategori) {
+                    <?php foreach ($kategoriKompetisi as $kategori) {
                         echo "<option value='$kategori'>" . ucfirst($kategori) . "</option>";
-                    }
-                    ?>
+                    } ?>
                 </select>
 
-                <!-- peringkat -->
+                <!-- Peringkat -->
                 <label for="peringkat">Peringkat</label>
                 <select name="peringkat" id="peringkat" required>
-                    <option value="">Pilih peringkat</option>
-                    <?php
-                    // Menampilkan pilihan kategori kompetisi dari array
-                    foreach ($urutanPeringkat as $peringkat) {
+                    <option value="">Pilih Peringkat</option>
+                    <?php foreach ($urutanPeringkat as $peringkat) {
                         echo "<option value='" . $peringkat['id'] . "'>" . $peringkat['peringkat'] . "</option>";
-                    }
-                    ?>
+                    } ?>
                 </select>
 
-                </select>
                 <!-- Tempat Kompetisi -->
                 <label for="tempat-kompetisi">Tempat Kompetisi</label>
                 <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
@@ -239,74 +228,74 @@
                 <label for="kategori-partisipasi">Kategori Partisipasi</label>
                 <input type="text" name="kategori-partisipasi" id="kategori-partisipasi" required>
 
-                <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <!-- Tombol untuk menambah dosen pembimbing -->
+                <button type="button" id="tambahDosen">Tambah Dosen Pembimbing</button>
 
-                    <!-- Dosen Pembimbing (Multiple Select) -->
-                    <label for="dosen-pembimbing">Dosen Pembimbing</label>
-                    <select name="dosen-pembimbing[]" id="dosen-pembimbing" multiple required>
-                        <option value="">Pilih atau Ketik Dosen Pembimbing</option>
-                        <?php
-                        // Menampilkan dosen yang sudah ada
-                        foreach ($dosenList as $dosen) {
-                            echo "<option value='" . $dosen['id'] . "'>" . $dosen['nama'] . "</option>";
-                        }
-                        ?>
-                    </select>
+                <!-- Dosen Pembimbing (Dynamic) -->
+                <div id="dosen-container">
+                    <!-- Dosen akan ditambah di sini oleh JavaScript -->
+                </div>
 
-                    <!-- Lampiran File -->
-                    <label for="file-surat-tugas">File Surat Tugas</label>
-                    <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- Lampiran File -->
+                <label for="file-surat-tugas">File Surat Tugas</label>
+                <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                    <label for="file-sertifikat">File Sertifikat</label>
-                    <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <label for="file-sertifikat">File Sertifikat</label>
+                <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                    <label for="foto-kegiatan">Foto Kegiatan</label>
-                    <input type="file" name="foto-kegiatan" id="foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <label for="foto-kegiatan">Foto Kegiatan</label>
+                <input type="file" name="foto-kegiatan" id="foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                    <label for="file-poster">File Poster</label>
-                    <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <label for="file-poster">File Poster</label>
+                <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                    <button type="submit" class="submit-btn">Kirim</button>
-                </form>
+
+                <button type="submit" class="submit-btn">Kirim</button>
+            </form>
         </div>
     </div>
 
+    <script>
+        var nomorDosen = 1; // Inisialisasi nomor dosen untuk membuat nama elemen select yang unik
 
-    <!-- Script untuk Select2 dan Dynamic Input -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-            // Mengaktifkan Select2 untuk pencarian dosen (multi-select)
-            $('#dosen-pembimbing').select2({
-                placeholder: 'Cari Dosen Pembimbing',
-                allowClear: true,
-                tags: true, // memungkinkan pengguna untuk menambah dosen baru
-                tokenSeparators: [',', ' '], // Pisahkan dengan koma atau spasi
-                createTag: function(params) {
-                    // Opsi untuk membuat tag baru jika dosen tidak ditemukan
-                    return {
-                        id: params.term,
-                        text: params.term,
-                        newTag: true // Menandakan bahwa ini adalah dosen baru
-                    };
-                },
-                multiple: true, // Memungkinkan memilih lebih dari satu dosen
-            });
+        document.getElementById("tambahDosen").addEventListener("click", function() {
+            var dosenContainer = document.getElementById("dosen-container");
+            var divBaru = document.createElement("div");
 
-            // Ketika pengguna memilih atau menambah dosen
-            $('#dosen-pembimbing').on('select2:select', function(e) {
-                var data = e.params.data;
-                if (data.newTag) {
-                    // Jika dosen baru, proses tambahan dosen baru ke backend atau array
-                    var newDosenName = data.text;
-                    console.log("Dosen Baru: " + newDosenName);
-                    // Anda bisa menambah dosen baru ke server di sini jika diperlukan
-                }
-            });
+            // Label untuk Dosen Pembimbing
+            var label = document.createElement("label");
+            label.setAttribute("for", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk id
+            label.textContent = "Dosen Pembimbing " ;
+
+            var select = document.createElement("select");
+            select.setAttribute("name", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk nama
+            select.setAttribute("multiple", true);
+            select.setAttribute("required", true);
+
+            var optionDefault = document.createElement("option");
+            optionDefault.setAttribute("value", "");
+            optionDefault.textContent = "Pilih Dosen Pembimbing";
+            select.appendChild(optionDefault);
+
+            <?php foreach ($dosenList as $dosen): ?>
+                var option = document.createElement("option");
+                option.setAttribute("value", "<?php echo $dosen['id']; ?>");
+                option.textContent = "<?php echo $dosen['nama']; ?>";
+                select.appendChild(option);
+            <?php endforeach; ?>
+
+            // Menambahkan label dan select ke divBaru
+            divBaru.appendChild(label);
+            divBaru.appendChild(select);
+
+            // Menambahkan divBaru ke dalam dosen-container
+            dosenContainer.appendChild(divBaru);
+
+            nomorDosen++; // Increment nomorDosen untuk setiap form baru
         });
+    </script>
 
-</script>
+
     <!-- <script>
         
         function formatDate(input) {
