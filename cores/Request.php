@@ -40,10 +40,38 @@ class Request
                 $data[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-
+        foreach ($_FILES as $key => $file) {
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $data[$key] = [
+                    'name' => $file['name'],
+                    'type' => $file['type'],
+                    'tmp_name' => $file['tmp_name'],
+                    'size' => $file['size'],
+                ];
+            } else {
+                $data[$key] = [
+                    'error' => $file['error'],
+                    'message' => $this->fileUploadErrorMessage($file['error']),
+                ];
+            }
+        }
         return $data;
     }
-
+    private function fileUploadErrorMessage(int $errorCode): string
+    {
+        $errors = [
+            UPLOAD_ERR_OK => 'Tidak ada error.',
+            UPLOAD_ERR_INI_SIZE => 'File terlalu besar (melebihi batas upload_max_filesize di php.ini).',
+            UPLOAD_ERR_FORM_SIZE => 'File terlalu besar (melebihi batas MAX_FILE_SIZE yang ditentukan di form).',
+            UPLOAD_ERR_PARTIAL => 'File hanya ter-upload sebagian.',
+            UPLOAD_ERR_NO_FILE => 'Tidak ada file yang di-upload.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Folder temporer hilang.',
+            UPLOAD_ERR_CANT_WRITE => 'Gagal menulis file ke disk.',
+            UPLOAD_ERR_EXTENSION => 'Upload file dihentikan oleh ekstensi PHP.',
+        ];
+    
+        return $errors[$errorCode] ?? 'Error tidak dikenal.';
+    }
     public function getParams(array|string $param): array|string
     {
 

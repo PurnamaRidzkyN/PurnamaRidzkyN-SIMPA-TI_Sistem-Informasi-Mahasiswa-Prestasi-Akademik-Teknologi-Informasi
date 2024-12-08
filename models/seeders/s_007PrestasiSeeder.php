@@ -7,12 +7,12 @@ class s_007PrestasiSeeder implements BaseSeeder
 {
     public function create(): array
     {
-        $id = ["DP001", "DP002", "DP003"];
-        $id_jenis_kompetisi = ["JK001", "JK002", "JK003"];
-        $id_tingkat_kompetisi = ["TK001", "TK002", "TK003"];
+        $id = ["P001", "P002", "P003"];
+        $id_jenis_kompetisi = ["Jl001", "Jl002", "Jl003"];
+        $id_tingkat_kompetisi = ["TL001", "TL002", "TL003"];
         $id_mahasiswa = ["M001", "M002", "M003"];
         $id_peringkat = ["P001", "P002", "P003"];
-        $id_admin = ["U001","U001","U002"];
+        $id_admin = ["A001","A001","A002"];
 
         $tim = [0, 0, 0];
         $judul_kompetisi = [

@@ -8,7 +8,7 @@ $user = Session::get('user');
     <div class="navbar">
         <a href="#">Beranda</a>
         <a href="#">Profil</a>
-        <a href="<?php echo '/dashboard/mahasiswa/' . $user . '/upload'; ?>">Prestasi</a>
+        <a href="<?php echo '/dashboard/mahasiswa/' . $user . '/prestasi'; ?>">Prestasi</a>
         <a href="/logout">Logout</a>
     </div>
 

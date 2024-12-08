@@ -16,8 +16,13 @@ class Peringkat extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::PERINGKAT,self::SKOR], $data);
-            
+            $table->insert([self::ID, self::PERINGKAT, self::SKOR], $data);
+        });
+    }
+    public static function displayPeringkat(): array
+    {
+        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
         });
     }
 
@@ -27,5 +32,3 @@ class Peringkat extends BaseModel
     }
 
 }
-
-?>
