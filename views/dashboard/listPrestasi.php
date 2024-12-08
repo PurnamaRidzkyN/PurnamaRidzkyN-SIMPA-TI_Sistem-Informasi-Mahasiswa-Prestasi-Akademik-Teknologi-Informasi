@@ -42,6 +42,7 @@ $user = Session::get('user');
         $data = View::getData();
         // Looping untuk menampilkan data dalam grid
         $prestasi = $data;
+
         // Looping untuk menampilkan data dalam grid
         foreach ($prestasi as $item) {
             echo '<div class="col-md-4 mb-4">';
