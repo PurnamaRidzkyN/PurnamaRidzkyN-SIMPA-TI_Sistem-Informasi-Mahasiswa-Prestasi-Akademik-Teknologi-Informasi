@@ -13,8 +13,8 @@ use app\models\database\users\Admin;
 use app\models\database\users\Dosen;
 use app\models\database\users\Mahasiswa;
 use app\models\database\users\User;
-use ArrayFormatter;
-use Helpers\FileUpload;
+use app\helpers\ArrayFormatter;
+use app\helpers\FileUpload;
 
 class UserManagement extends BaseController
 {
@@ -22,24 +22,25 @@ class UserManagement extends BaseController
     {
         $Admin = Admin::findNip(Session::get("user"));
         $body = $req->body();
-        $name = $body['nama'];
+        $name = $body['name'];
         $email = $body['email'];
-        $foto = $body['fotoProfil'];
+        $foto = $body['photo'];
         $nip = $body['nip'];
-        Dump::out($body);
-        exit;
+
         try {
+
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
-
-
-            $userData = User::insert([
-                "id" => UUID::generate(User::TABLE, "U"),
+            
+            $userData = [
+                "id" => UUID::generate("[user]", "U"),
                 "username" => $nip,
                 "password" => password_hash($nip, PASSWORD_BCRYPT),
                 "role" => 1
-            ]);
-            $userData = ArrayFormatter::formatKeyValue($userData);
-
+            ];
+            User::insert($userData);
+            
+            $Data = ArrayFormatter::formatKeyValue($userData);
+            
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -48,29 +49,30 @@ class UserManagement extends BaseController
                 "insert",
                 "null",
                 "null",
-                $userData
+                $Data
             );
 
-            $dataAdmin = Admin::insert([
+            $dataAdmin =[
                 Admin::ID => UUID::generate(Admin::TABLE, "A"),
                 Admin::ID_USER => $userData["id"],
                 Admin::NIP => $nip,
                 Admin::NAMA => $name,
                 Admin::FOTO => $fileFoto,
                 Admin::EMAIL => $email,
-            ]);
-
-            $dataAdmin = ArrayFormatter::formatKeyValue($dataAdmin);
+            ];
+            Admin::insert($dataAdmin);
+        
+            $data = ArrayFormatter::formatKeyValue($dataAdmin);
 
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
-                $dataAdmin['result'][0]["id_user"],
+                $dataAdmin["id"],
                 Admin::TABLE,
                 "insert",
                 "null",
                 "null",
-                $dataAdmin
+                $data
             );
             $res->redirect("/dashboard/admin/{$Admin['result'][0]["nip"]}/admin-data");
         } catch (\PDOException $e) {

@@ -77,6 +77,20 @@ class Prestasi extends BaseModel
         });   
     }
 
+    public static function updatePrestasi($value, string $columnWhere, string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ($value, $columnWhere, $where) {
+            $table->update(self::VALIDASI, $value, $columnWhere, $where);
+        });
+    }
+
+    public static function updateIdAdmin($value, string $columnWhere, string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ($value, $columnWhere, $where) {
+            $table->update(self::ID_ADMIN, $value, $columnWhere, $where);
+        });
+    }
+
 
     public static function deleteAll(): array
     {  

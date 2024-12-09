@@ -15,8 +15,8 @@ use app\models\database\prestasiLomba\Prestasi;
 use app\models\database\prestasiLomba\TingkatLomba;
 use app\models\database\users\Dosen;
 use app\models\database\users\Mahasiswa;
-use ArrayFormatter;
-use Helpers\FileUpload;
+use app\helpers\ArrayFormatter;
+use app\helpers\FileUpload;
 
 class PrestasiController extends BaseController
 {
@@ -95,14 +95,13 @@ class PrestasiController extends BaseController
                 }
             }
 
-            Prestasi::insert($data);
-
             $prestasiData = ArrayFormatter::formatKeyValue($data);
-
+            
+            Prestasi::insert($data);
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $mahasiswa['result'][0]["id_user"],
-                $prestasiData['result'][0]["id"],
+                $data["id"],
                 Prestasi::TABLE,
                 "insert",
                 "null",

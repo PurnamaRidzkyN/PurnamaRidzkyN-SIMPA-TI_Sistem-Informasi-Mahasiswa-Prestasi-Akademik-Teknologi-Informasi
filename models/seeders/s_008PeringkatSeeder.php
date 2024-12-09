@@ -8,7 +8,7 @@ class s_008PeringkatSeeder implements BaseSeeder
     public function create(): array
     {
         $id = ["P001", "P002", "P003"];
-        $peringkat = [1, 2, 3];
+        $peringkat = ["1", "2", "3"];
         $skor = [100, 75, 50];
 
         $res = [];

@@ -148,66 +148,24 @@ $dosenList = $data["Dosen"];
         right: 20px;
     }
 
-    .form-container input[type="file"] {
-        padding: 0;
-        font-size: 16px;
-    }
+        .form-container input[type="file"] {
+            padding: 0;
+            font-size: 16px;
+        }
+    </style>
 
-    /* Autocomplete Styles */
-    .autocomplete {
-        position: relative;
-        display: inline-block;
-    }
-
-    input[type="text"] {
-        background-color: #f1f1f1;
-        padding: 10px;
-        font-size: 16px;
-        width: 100%;
-    }
-
-    .autocomplete-items {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        top: 100%;
-        left: 0;
-        right: 0;
-        max-height: 150px;
-        overflow-y: auto;
-    }
-
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff;
-        border-bottom: 1px solid #d4d4d4;
-    }
-
-    .autocomplete-items div:hover {
-        background-color: #e9e9e9;
-    }
-
-    .autocomplete-active {
-        background-color: DodgerBlue;
-        color: #ffffff;
-    }
-</style>
-
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src=class="logo" src="../public/component/logoHijau.png" alt="Logo">
+            <h1>SIMPA-TI</h1>
+        </div>
+        <div class="menu">
+            <a href="#home">Home</a>
+            <a href="#prestasi">Prestasi</a>
+            <a href="#leaderboard">Leaderboard</a>
+        </div>
     </div>
-    <div class="menu">
-        <a href="#home">Home</a>
-        <a href="#prestasi">Prestasi</a>
-        <a href="#leaderboard">Leaderboard</a>
-    </div>
-</div>
 
 <!-- Main Content -->
 <div class="container">
@@ -279,15 +237,25 @@ $dosenList = $data["Dosen"];
             <label for="jumlah-peserta">Jumlah Peserta</label>
             <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
 
-            <!-- No Surat -->
-            <label for="no-surat">No Surat</label>
-            <input type="text" name="no-surat" id="no-surat" required>
+                <!-- No Surat Tugas -->
+                <label for="no-surat-tugas">No Surat Tugas</label>
+                <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
 
-            <!-- Dosen Pembimbing -->
-            <label for="dosen-pembimbing">Dosen Pembimbing</label>
-            <div class="autocomplete" style="width:100%;">
-                <input id="dosen-input" type="text" name="dosen-pembimbing" placeholder="Pilih Dosen Pembimbing" required>
-            </div>
+                <!-- Tanggal Surat Tugas -->
+                <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
+                <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+
+                <!-- Kategori Partisipasi -->
+                <label for="kategori-partisipasi">Kategori Partisipasi</label>
+                <input type="text" name="kategori-partisipasi" id="kategori-partisipasi" required>
+
+                <!-- Tombol untuk menambah dosen pembimbing -->
+                <button type="button" id="tambahDosen">Tambah Dosen Pembimbing</button>
+
+                <!-- Dosen Pembimbing (Dynamic) -->
+                <div id="dosen-container">
+                    <!-- Dosen akan ditambah di sini oleh JavaScript -->
+                </div>
 
             <!-- Hidden Input for Dosen ID -->
             <input type="hidden" name="dosen-pembimbing-id" id="dosen-id">
@@ -299,94 +267,90 @@ $dosenList = $data["Dosen"];
             <label for="file">Upload File</label>
             <input type="file" name="file" id="file" required>
 
-            <!-- Submit Button -->
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
+                <button type="submit" class="submit-btn">Kirim</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<!-- JavaScript -->
-<script>
-// List of dosen names from PHP
-var dosenList = <?php echo json_encode($dosenList); ?>;
-var dosenNames = dosenList.map(dosen => dosen['nama']); // Extracting only the names
+    <script>
+        var nomorDosen = 1; // Inisialisasi nomor dosen untuk membuat nama elemen select yang unik
 
-// Initialize autocomplete functionality
-autocomplete(document.getElementById("dosen-input"), dosenNames);
+        document.getElementById("tambahDosen").addEventListener("click", function() {
+            var dosenContainer = document.getElementById("dosen-container");
+            var divBaru = document.createElement("div");
 
-// Autocomplete function
-function autocomplete(inp, arr) {
-  var currentFocus;
-  inp.addEventListener("input", function(e) {
-    var a, b, i, val = this.value;
-    closeAllLists();
-    if (!val) { return false;}
-    currentFocus = -1;
-    a = document.createElement("DIV");
-    a.setAttribute("id", this.id + "autocomplete-list");
-    a.setAttribute("class", "autocomplete-items");
-    this.parentNode.appendChild(a);
-    
-    for (i = 0; i < arr.length; i++) {
-      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-        b = document.createElement("DIV");
-        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-        b.innerHTML += arr[i].substr(val.length);
-        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-        
-        b.addEventListener("click", function(e) {
-          inp.value = this.getElementsByTagName("input")[0].value;
-          document.getElementById("dosen-id").value = getDosenId(inp.value); // Get the Dosen ID based on the selected name
-          closeAllLists();
+            // Label untuk Dosen Pembimbing
+            var label = document.createElement("label");
+            label.setAttribute("for", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk id
+            label.textContent = "Dosen Pembimbing " ;
+
+            var select = document.createElement("select");
+            select.setAttribute("name", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk nama
+            select.setAttribute("multiple", true);
+            select.setAttribute("required", true);
+
+            var optionDefault = document.createElement("option");
+            optionDefault.setAttribute("value", "");
+            optionDefault.textContent = "Pilih Dosen Pembimbing";
+            select.appendChild(optionDefault);
+
+            <?php foreach ($dosenList as $dosen): ?>
+                var option = document.createElement("option");
+                option.setAttribute("value", "<?php echo $dosen['id']; ?>");
+                option.textContent = "<?php echo $dosen['nama']; ?>";
+                select.appendChild(option);
+            <?php endforeach; ?>
+
+            // Menambahkan label dan select ke divBaru
+            divBaru.appendChild(label);
+            divBaru.appendChild(select);
+
+            // Menambahkan divBaru ke dalam dosen-container
+            dosenContainer.appendChild(divBaru);
+
+            nomorDosen++; // Increment nomorDosen untuk setiap form baru
         });
-        a.appendChild(b);
-      }
-    }
-  });
+    </script>
 
-  inp.addEventListener("keydown", function(e) {
-    var x = document.getElementById(this.id + "autocomplete-list");
-    if (x) x = x.getElementsByTagName("div");
-    if (e.keyCode == 40) {
-      currentFocus++;
-      addActive(x);
-    } else if (e.keyCode == 38) {
-      currentFocus--;
-      addActive(x);
-    } else if (e.keyCode == 13) {
-      e.preventDefault();
-      if (currentFocus > -1) {
-        if (x) x[currentFocus].click();
-      }
-    }
-  });
 
-  function addActive(x) {
-    if (!x) return false;
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    x[currentFocus].classList.add("autocomplete-active");
-  }
+    <script>
+        
+        function formatDate(input) {
+            const date = new Date(input.value);
+            const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
+            input.value = formattedDate;
+        }
 
-  function removeActive(x) {
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
+        // Form Validation
+        document.getElementById("prestasiForm").addEventListener("submit", function(event) {
+            let isValid = true;
+            const formElements = this.elements;
+            const alertPlaceholder = document.getElementById('alert-placeholder');
+            alertPlaceholder.innerHTML = ""; // Clear previous alerts
 
-  function closeAllLists(elmnt) {
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
+            // Check if all fields are filled
+            for (let i = 0; i < formElements.length; i++) {
+                if (formElements[i].required && formElements[i].value.trim() === "") {
+                    isValid = false;
+                    break;
+                }
+            }
 
-  function getDosenId(dosenName) {
-    var dosen = dosenList.find(d => d['nama'] === dosenName);
-    return dosen ? dosen['id'] : '';
-  }
-}
-</script>
+            if (!isValid) {
+                // Show Bootstrap alert for incomplete form
+                alertPlaceholder.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    Semua kolom wajib diisi!
+                </div>
+            `;
+                event.preventDefault(); // Prevent form submission
+            } else {
+                // Show Bootstrap alert for success after submission
+                alertPlaceholder.innerHTML = `
+                <div class="alert alert-success" role="alert">
+                    Form berhasil dikirim!
+                </div>
+            `;
+            }
+        });
+    </script>

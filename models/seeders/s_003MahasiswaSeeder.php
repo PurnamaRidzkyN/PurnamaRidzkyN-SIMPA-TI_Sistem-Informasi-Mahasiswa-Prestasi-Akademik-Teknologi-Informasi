@@ -23,8 +23,8 @@ class s_003MahasiswaSeeder implements BaseSeeder
         ];
         $prodi = [
             "Teknik Informatika",
-            "Sistem Informasi",
-            "Ilmu Komputer"
+            "Sistem Informasi Bisnis",
+            "Sistem Informasi Bisnis"
         ];
         $tahun_masuk = ["2021", "2020", "2022"];
         $total_skor = [85, 90, 88];
@@ -39,7 +39,7 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "charlie.brown@example.com"
         ];
         $jurusan=[
-            "teknologi informasi","teknologi informasi","teknologi informasi"
+            "Teknologi Informasi","Teknologi Informasi","Teknologi Informasi"
         ];
 
         $res = [];
