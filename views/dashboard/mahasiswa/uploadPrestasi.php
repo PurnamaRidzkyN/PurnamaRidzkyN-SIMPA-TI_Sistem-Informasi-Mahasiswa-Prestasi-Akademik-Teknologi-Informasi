@@ -67,7 +67,6 @@
 
         .container {
             max-width: 1000px;
-            /* Lebar kontainer lebih lebar */
             margin: 0 auto;
             padding: 30px;
         }
@@ -79,12 +78,9 @@
             border-radius: 15px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             min-height: 1200px;
-            /* Lebih panjang */
             position: relative;
             max-width: 900px;
-            /* Menyesuaikan lebar form */
             margin: 0 auto;
-            /* Centering form */
         }
 
         .form-container h3 {
@@ -103,7 +99,6 @@
         .form-container select {
             width: 100%;
             padding: 10px;
-            /* Menambah padding untuk kenyamanan */
             margin-top: 5px;
             margin-bottom: 16px;
             border-radius: 25px;
@@ -115,7 +110,6 @@
             background-color: #AFFA08;
             border-radius: 25px;
             padding: 12px 25px;
-            /* Menyesuaikan padding untuk tombol */
             color: black;
             font-size: 20px;
             font-weight: 500;
@@ -223,10 +217,6 @@
                 <!-- Tanggal Surat Tugas -->
                 <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
                 <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
-
-                <!-- Kategori Partisipasi -->
-                <label for="kategori-partisipasi">Kategori Partisipasi</label>
-                <input type="text" name="kategori-partisipasi" id="kategori-partisipasi" required>
 
                 <!-- Tombol untuk menambah dosen pembimbing -->
                 <button type="button" id="tambahDosen">Tambah Dosen Pembimbing</button>
