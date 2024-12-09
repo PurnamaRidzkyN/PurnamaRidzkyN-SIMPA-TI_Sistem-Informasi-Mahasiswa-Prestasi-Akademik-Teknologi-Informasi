@@ -64,11 +64,17 @@ class Prestasi extends BaseModel
             ], $data);
         });
     }
-    public static function prestasiDisplay():array
+    public static function listPrestasiDisplay():array
     {
         return Schema::selectFrom(self::VIEW_TABLE, function (Blueprint $table) {
             $table->select();
         });
+    }
+    public static function findId($id): array 
+    {
+        return Schema::selectWhereFrom(self::VIEW_TABLE, function (Blueprint $table) use ($id) {
+            $table->selectWhere(["id" => $id] );
+        });   
     }
 
 

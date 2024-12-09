@@ -26,7 +26,9 @@
             </thead>
             <tbody>
                 <?php
-                use app\cores\View;
+
+use app\cores\Session;
+use app\cores\View;
 
                 $admins = View::getData();
 
@@ -56,25 +58,25 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/submit-admin-data" method="POST" enctype="multipart/form-data" id="batchForm">
+                        <form action=<?php echo '/dashboard/admin/'.Session::get("user").'/admin-data/insert'?> method="POST" enctype="multipart/form-data" id="batchForm">
                             <div id="adminInputs">
                                 <div class="admin-group border p-3 mb-3">
                                     <h6>Admin 1</h6>
                                     <div class="mb-3">
                                         <label for="name1" class="form-label">Nama Admin</label>
-                                        <input type="text" class="form-control" id="name1" name="name[]" required>
+                                        <input type="text" class="form-control" id="name1" name="name" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email1" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email1" name="email[]" required>
+                                        <input type="email" class="form-control" id="email1" name="email" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="nip1" class="form-label">NIP</label>
-                                        <input type="text" class="form-control" id="nip1" name="nip[]" required>
+                                        <input type="text" class="form-control" id="nip1" name="nip" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="photo1" class="form-label">Foto Profil</label>
-                                        <input type="file" class="form-control" id="photo1" name="photo[]" accept="image/*" required>
+                                        <input type="file" class="form-control" id="photo1" name="photo" accept="image/*" required>
                                     </div>
                                 </div>
                             </div>

@@ -36,7 +36,7 @@ class InfoLomba extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
-    public static function getAll(): array
+    public static function displayInfoLomba(): array
 {
     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
         $table->select();

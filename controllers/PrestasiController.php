@@ -160,7 +160,7 @@ class PrestasiController extends BaseController
     }
     public function renderListPrestasi()
     {
-        $data = Prestasi::prestasiDisplay();
+        $data = Prestasi::listPrestasiDisplay();
         $nim = Session::get("user");
         try {
 
@@ -180,7 +180,13 @@ class PrestasiController extends BaseController
             var_dump($e->getMessage());
         }
     }
-
-
-
+ public function renderDetailPrestasi(Request $req ){
+    $body =$req->body();
+    $id = $body["prestasi_id"];
+    $data = Prestasi::findId($id);
+    $data = $data["result"][0];
+    
+    $this->view("dashboard/detailPrestasi","Detail Prestasi",$data);
+                                                                                                          
+ }
 }

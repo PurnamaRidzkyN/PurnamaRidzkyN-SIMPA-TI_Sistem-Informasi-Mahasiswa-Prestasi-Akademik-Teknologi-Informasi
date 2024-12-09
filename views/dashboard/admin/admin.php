@@ -20,7 +20,7 @@ $user = Session::get('user');
           <a class="nav-link" href="#">Leaderboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Manajemen Data</a>
+          <a class="nav-link" href="<?php echo '../admin/' . $user . '/manajemen-data'; ?>">Manajemen Data</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Home</a>

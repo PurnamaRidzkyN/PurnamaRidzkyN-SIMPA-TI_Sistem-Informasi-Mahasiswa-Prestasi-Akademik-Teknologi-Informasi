@@ -1,10 +1,12 @@
 <?php
+
 namespace app\controllers;
 
 use app\controllers\BaseController;
 use app\cores\Request;
 use app\cores\Response;
 use app\cores\Session;
+use app\helpers\Dump;
 use app\helpers\UUID;
 use app\models\database\logData\LogData;
 use app\models\database\users\Admin;
@@ -24,9 +26,10 @@ class UserManagement extends BaseController
         $email = $body['email'];
         $foto = $body['fotoProfil'];
         $nip = $body['nip'];
-
+        Dump::out($body);
+        exit;
         try {
-            $fileFoto= FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
+            $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
 
 
             $userData = User::insert([
@@ -39,16 +42,16 @@ class UserManagement extends BaseController
 
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $userData[User::ID], 
-                Admin::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $userData[User::ID],
+                Admin::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $userData 
+                "null",
+                "null",
+                $userData
             );
 
-            $dataAdmin= Admin::insert([
+            $dataAdmin = Admin::insert([
                 Admin::ID => UUID::generate(Admin::TABLE, "A"),
                 Admin::ID_USER => $userData["id"],
                 Admin::NIP => $nip,
@@ -56,24 +59,25 @@ class UserManagement extends BaseController
                 Admin::FOTO => $fileFoto,
                 Admin::EMAIL => $email,
             ]);
-           
+
             $dataAdmin = ArrayFormatter::formatKeyValue($dataAdmin);
 
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $dataAdmin['result'][0]["id_user"], 
-                Admin::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $dataAdmin['result'][0]["id_user"],
+                Admin::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $dataAdmin 
+                "null",
+                "null",
+                $dataAdmin
             );
-        }catch (\PDOException $e) {
+            $res->redirect("/dashboard/admin/{$Admin['result'][0]["nip"]}/admin-data");
+        } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    public function insertMahasiswa(Request $req, Response $res)
+    public function insertMahasiswaUsers(Request $req, Response $res)
     {
         $Admin = Admin::findNip(Session::get("user"));
         $body = $req->body();
@@ -84,29 +88,29 @@ class UserManagement extends BaseController
         $tahun_masuk = $body['tahun_masuk'];
         $foto = $body['fotoProfil'];
         $email = $body['email'];
-    
+
         try {
-            $fileFoto= FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
+            $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
 
             $userData = User::insert([
                 "id" => UUID::generate(User::TABLE, "U"),
                 "username" => $nim,
                 "password" => password_hash($nim, PASSWORD_BCRYPT),
-                "role" => 2 
+                "role" => 2
             ]);
             $userData = ArrayFormatter::formatKeyValue($userData);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $userData[User::ID], 
-                User::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $userData[User::ID],
+                User::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $userData 
+                "null",
+                "null",
+                $userData
             );
-    
+
             $dataMahasiswa = Mahasiswa::insert([
                 Mahasiswa::ID => UUID::generate(Mahasiswa::TABLE, "M"),
                 Mahasiswa::ID_USER => $userData["id"],
@@ -118,34 +122,34 @@ class UserManagement extends BaseController
                 Mahasiswa::FOTO => $foto,
                 Mahasiswa::EMAIL => $email,
             ]);
-            
+
             $dataMahasiswa = ArrayFormatter::formatKeyValue($dataMahasiswa);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $dataMahasiswa['result'][0]["id_user"], 
-                Mahasiswa::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $dataMahasiswa['result'][0]["id_user"],
+                Mahasiswa::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $dataMahasiswa 
+                "null",
+                "null",
+                $dataMahasiswa
             );
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    
-    public function insertDosen(Request $req, Response $res)
+
+    public function insertDosenUsers(Request $req, Response $res)
     {
         $Admin = Admin::findNip(Session::get("user"));
         $body = $req->body();
         $name = $body['nama'];
         $nidn = $body['nidn'];
         $email = $body['email'];
-    
+
         try {
-    
+
             $userData = User::insert([
                 "id" => UUID::generate(User::TABLE, "U"),
                 "username" => $nidn,
@@ -153,58 +157,59 @@ class UserManagement extends BaseController
                 "role" => 3 // Assuming role 3 is for dosen
             ]);
             $userData = ArrayFormatter::formatKeyValue($userData);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $userData[User::ID], 
-                User::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $userData[User::ID],
+                User::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $userData 
+                "null",
+                "null",
+                $userData
             );
-    
+
             $dataDosen = Dosen::insert([
                 Dosen::ID => UUID::generate(Dosen::TABLE, "D"),
                 Dosen::ID_USER => $userData["id"],
                 Dosen::NIDN => $nidn,
                 Dosen::NAMA => $name,
             ]);
-            
+
             $dataDosen = ArrayFormatter::formatKeyValue($dataDosen);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
-                $Admin['result'][0]["id_user"], 
-                $dataDosen['result'][0]["id_user"], 
-                Dosen::TABLE, 
+                $Admin['result'][0]["id_user"],
+                $dataDosen['result'][0]["id_user"],
+                Dosen::TABLE,
                 "insert",
-                "null",  
-                "null",  
-                $dataDosen 
+                "null",
+                "null",
+                $dataDosen
             );
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    
-    public function renderDataAdmin(){
-        $data =Admin::displayAdmin();
-        $dataAdmin= $data["result"];
-        $this->view("dashboard/admin/manajemenData/adminData", "list prestasi", $dataAdmin);
+
+    public function renderDataAdmin()
+    {
+        $data = Admin::displayAdmin();
+        $dataAdmin = $data["result"];
+        $this->view("dashboard/admin/manajemenData/adminData", "Admin Data", $dataAdmin);
     }
-    public function renderDataMahasiswa(){
+    public function renderDataMahasiswa()
+    {
         $data = Mahasiswa::displayMahasiswa();
         $dataMahasiswa = $data["result"];
         $this->view("dashboard/admin/manajemenData/mahasiswaData", "list mahasiswa", $dataMahasiswa);
     }
-    
-    public function renderDataDosen(){
+
+    public function renderDataDosen()
+    {
         $data = Dosen::displayDosen();
         $dataDosen = $data["result"];
         $this->view("dashboard/admin/manajemenData/dosenData", "list dosen", $dataDosen);
     }
-    
-
 }

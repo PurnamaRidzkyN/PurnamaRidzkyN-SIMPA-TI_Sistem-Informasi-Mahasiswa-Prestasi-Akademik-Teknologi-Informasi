@@ -1,6 +1,13 @@
 <h1>Daftar Lomba</h1>
-<?php if (isset($error)): ?>
-    <p style="color: red;"><?php echo $error; ?></p>
+<?php
+
+use app\cores\View;
+
+ if (isset($error)): ?>
+    <p style="color: red;"><?php echo $error; 
+    
+$infoLomba = View::getData();
+    ?></p>
 <?php endif; ?>
 <table>
     <thead>

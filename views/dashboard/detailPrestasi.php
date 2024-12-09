@@ -1,15 +1,29 @@
+<?php
+
+use app\cores\View;
+use app\helpers\Dump;
+
+$prestasi = View::getData();
+?>
 <!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="../public/component/logoHijau.png" alt="Logo" class="logo">
-        <h1>SIMPA-TI</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Prestasi</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Prestasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Kontak</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="menu">
-        <a href="#home">Home</a>
-        <a href="#prestasi">Prestasi</a>
-        <a href="#leaderboard">Leaderboard</a>
-    </div>
-</div>
+</nav>
 
 <!-- Main Content -->
 <div class="container mt-5">
@@ -36,7 +50,7 @@
             <!-- Kategori Kompetisi -->
             <div class="mb-3">
                 <label for="kategori-kompetisi" class="form-label">Kategori Kompetisi</label>
-                <input type="text" class="form-control" id="kategori-kompetisi" value="<?php echo ucfirst($prestasi['kategori']); ?>" readonly>
+                <input type="text" class="form-control" id="kategori-kompetisi" value="<?php echo ucfirst($jenis = $prestasi['tim'] == 0 ? 'Individu' : 'Tim'); ?>" readonly>
             </div>
 
             <!-- Peringkat -->
@@ -48,13 +62,13 @@
             <!-- Tempat Kompetisi -->
             <div class="mb-3">
                 <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi</label>
-                <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat']; ?>" readonly>
+                <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi']; ?>" readonly>
             </div>
 
             <!-- URL Kompetisi -->
             <div class="mb-3">
                 <label for="url-kompetisi" class="form-label">URL Kompetisi</label>
-                <input type="url" class="form-control" id="url-kompetisi" value="<?php echo $prestasi['url']; ?>" readonly>
+                <input type="url" class="form-control" id="url-kompetisi" value="<?php echo $prestasi['url_kompetisi']; ?>" readonly>
             </div>
 
             <!-- Tanggal Mulai -->

@@ -9,6 +9,15 @@ class m_021ViewPrestasiView implements BaseMigration
         return Schema::query("
 CREATE VIEW view_prestasi AS
 SELECT 
+    j.id,    
+    m.nama,
+    m.nim,
+    m.jurusan,
+    m.prodi,
+    m.tahun_masuk,
+    p.peringkat,
+    a.nama AS admin_nama,
+    j.tim,
     j.judul_kompetisi,
     j.judul_kompetisi_en,
     j.tempat_kompetisi,
@@ -27,14 +36,7 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    ((p.skor * (1 + (j.jumlah_pt / j.jumlah_peserta))) * tl.skor)/100  AS skor,
-    m.nama,
-    m.nim,
-    m.jurusan,
-    m.prodi,
-    m.tahun_masuk,
-    p.peringkat,
-    a.nama AS admin_nama
+    ((p.skor * (1 + (j.jumlah_pt / j.jumlah_peserta))) * tl.skor)/100  AS skor
 FROM prestasi j
 JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
