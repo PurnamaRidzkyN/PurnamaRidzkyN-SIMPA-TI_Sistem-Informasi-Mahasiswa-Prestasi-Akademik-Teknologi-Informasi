@@ -1,4 +1,4 @@
-<?php
+a<?php
 use app\cores\Session;
 use app\cores\View;
 
@@ -19,7 +19,7 @@ $dosenList = $data["Dosen"];
         background-color: #f5f5f5;
         color: white;
     }
-    
+
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -152,6 +152,48 @@ $dosenList = $data["Dosen"];
         padding: 0;
         font-size: 16px;
     }
+
+    /* Autocomplete Styles */
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+    input[type="text"] {
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border-bottom: 1px solid #d4d4d4;
+    }
+
+    .autocomplete-items div:hover {
+        background-color: #e9e9e9;
+    }
+
+    .autocomplete-active {
+        background-color: DodgerBlue;
+        color: #ffffff;
+    }
 </style>
 
 <!-- Navbar -->
@@ -237,42 +279,25 @@ $dosenList = $data["Dosen"];
             <label for="jumlah-peserta">Jumlah Peserta</label>
             <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
 
-            <!-- No Surat Tugas -->
-            <label for="no-surat-tugas">No Surat Tugas</label>
-            <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
-
-            <!-- Tanggal Surat Tugas -->
-            <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
-            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+            <!-- No Surat -->
+            <label for="no-surat">No Surat</label>
+            <input type="text" name="no-surat" id="no-surat" required>
 
             <!-- Dosen Pembimbing -->
             <label for="dosen-pembimbing">Dosen Pembimbing</label>
-            <div id="dosen-container">
-                <div class="dosen-entry">
-                    <select name="dosen-pembimbing[]" class="dosen-select" required>
-                        <option value="">Pilih Dosen Pembimbing</option>
-                        <?php foreach ($dosenList as $dosen) : ?>
-                            <option value="<?php echo $dosen['id']; ?>"><?php echo $dosen['nama']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <div class="autocomplete" style="width:100%;">
+                <input id="dosen-input" type="text" name="dosen-pembimbing" placeholder="Pilih Dosen Pembimbing" required>
             </div>
 
-            <!-- Tombol Tambah Dosen -->
+            <!-- Hidden Input for Dosen ID -->
+            <input type="hidden" name="dosen-pembimbing-id" id="dosen-id">
+
+            <!-- Add Dosen Button -->
             <button type="button" class="btn-tambah" id="add-dosen">Tambah Dosen</button>
 
-            <!-- File Uploads -->
-            <label for="surat-tugas">Surat Tugas</label>
-            <input type="file" name="surat-tugas" id="surat-tugas" required>
-
-            <label for="sertifikat">Sertifikat</label>
-            <input type="file" name="sertifikat" id="sertifikat" required>
-
-            <label for="foto-kegiatan">Foto Kegiatan</label>
-            <input type="file" name="foto-kegiatan" id="foto-kegiatan" required>
-
-            <label for="poster">Poster</label>
-            <input type="file" name="poster" id="poster" required>
+            <!-- File Input -->
+            <label for="file">Upload File</label>
+            <input type="file" name="file" id="file" required>
 
             <!-- Submit Button -->
             <button type="submit" class="submit-btn">Submit</button>
@@ -281,42 +306,87 @@ $dosenList = $data["Dosen"];
 </div>
 
 <!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
-    // Initialize Select2 for all select elements
-    $('select').select2();
+// List of dosen names from PHP
+var dosenList = <?php echo json_encode($dosenList); ?>;
+var dosenNames = dosenList.map(dosen => dosen['nama']); // Extracting only the names
 
-    // Add Dosen Pembimbing dynamically
-    $('#add-dosen').click(function() {
-        var dosenHTML = '<div class="dosen-entry"><select name="dosen-pembimbing[]" class="dosen-select" required><option value="">Pilih Dosen Pembimbing</option><?php foreach ($dosenList as $dosen) : ?><option value="<?php echo $dosen['id']; ?>"><?php echo $dosen['nama']; ?></option><?php endforeach; ?></select></div>';
-        $('#dosen-container').append(dosenHTML);
-        $('select').select2(); // Re-initialize Select2 for newly added select elements
-    });
+// Initialize autocomplete functionality
+autocomplete(document.getElementById("dosen-input"), dosenNames);
 
-    // Validate form before submission
-    $('#prestasiForm').submit(function(event) {
-        let isValid = true;
-
-        // Check if all required fields are filled
-        $('input, select').each(function() {
-            if ($(this).prop('required') && $(this).val() === '') {
-                isValid = false;
-                $(this).css('border', '2px solid red');
-            } else {
-                $(this).css('border', '');
-            }
+// Autocomplete function
+function autocomplete(inp, arr) {
+  var currentFocus;
+  inp.addEventListener("input", function(e) {
+    var a, b, i, val = this.value;
+    closeAllLists();
+    if (!val) { return false;}
+    currentFocus = -1;
+    a = document.createElement("DIV");
+    a.setAttribute("id", this.id + "autocomplete-list");
+    a.setAttribute("class", "autocomplete-items");
+    this.parentNode.appendChild(a);
+    
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        b = document.createElement("DIV");
+        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+        b.innerHTML += arr[i].substr(val.length);
+        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+        
+        b.addEventListener("click", function(e) {
+          inp.value = this.getElementsByTagName("input")[0].value;
+          document.getElementById("dosen-id").value = getDosenId(inp.value); // Get the Dosen ID based on the selected name
+          closeAllLists();
         });
-
-        if (!isValid) {
-            event.preventDefault(); // Prevent form submission
-            $('#alert-placeholder').html('<div style="color:red;">Please fill in all required fields!</div>');
-        }
-    });
-
-    // Function to format date input fields
-    function formatDate(input) {
-        let date = new Date(input.value);
-        input.value = date.toISOString().split('T')[0];
+        a.appendChild(b);
+      }
     }
+  });
+
+  inp.addEventListener("keydown", function(e) {
+    var x = document.getElementById(this.id + "autocomplete-list");
+    if (x) x = x.getElementsByTagName("div");
+    if (e.keyCode == 40) {
+      currentFocus++;
+      addActive(x);
+    } else if (e.keyCode == 38) {
+      currentFocus--;
+      addActive(x);
+    } else if (e.keyCode == 13) {
+      e.preventDefault();
+      if (currentFocus > -1) {
+        if (x) x[currentFocus].click();
+      }
+    }
+  });
+
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+
+  function removeActive(x) {
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+
+  function closeAllLists(elmnt) {
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+
+  function getDosenId(dosenName) {
+    var dosen = dosenList.find(d => d['nama'] === dosenName);
+    return dosen ? dosen['id'] : '';
+  }
+}
 </script>
