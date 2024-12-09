@@ -52,4 +52,20 @@ class InfoLombaController extends BaseController
             var_dump($e->getMessage());
         }
     }
+
+    public function renderViewLomba(): void
+    {
+        $this->view("dashboard/infoLomba/viewLomba", "Daftar Lomba");
+    }
+
+    public function renderCreateLomba(): void
+    {
+        $this->view("dashboard/infoLomba/create", "Upload Lomba");
+    }
+
+    public function renderHapusLomba(): void
+    {
+        $this->view("dashboard/infoLomba/delete", "Hapus Lomba");
+    }
+
 }

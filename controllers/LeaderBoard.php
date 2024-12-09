@@ -2,64 +2,86 @@
 
 namespace app\controllers;
 
-use app\models\database\prestasiLomba\Peringkat;
 use app\models\database\users\Mahasiswa;
+use app\models\database\prestasiLomba\Peringkat;
 
 class Leaderboard extends BaseController
 {
     /**
-     * Menampilkan leaderboard berdasarkan skor tertinggi.
+     * Menampilkan leaderboard mahasiswa berdasarkan total skor.
      *
      * @return array
      */
     public static function getLeaderboard(): array
     {
-        // Ambil semua data dari tabel peringkat, urutkan berdasarkan skor (descending).
-        $peringkat = Peringkat::getAllSortedBySkor(); // ini error yaw
+        // Ambil data mahasiswa
+        $mahasiswa = Mahasiswa::findAll();
+        
+        // Jika tidak ada data mahasiswa, kembalikan array kosong
+        if (empty($mahasiswa)) {
+            return [];
+        }
 
-        // Gabungkan data peringkat dengan data mahasiswa berdasarkan ID Mahasiswa.
+        // Urutkan mahasiswa berdasarkan total skor secara descending
+        usort($mahasiswa, function ($a, $b) {
+            return $b['total_skor'] - $a['total_skor'];
+        });
+
+        // Buat leaderboard dengan format data yang diperlukan
         $leaderboard = [];
-        foreach ($peringkat as $entry) {
-            $mahasiswa = Mahasiswa::findNim($entry[Peringkat::ID]);
-            if ($mahasiswa) {
-                $leaderboard[] = [
-                    'nama' => $mahasiswa[Mahasiswa::NAMA],
-                    'nim' => $mahasiswa[Mahasiswa::NIM],
-                    'prodi' => $mahasiswa[Mahasiswa::PRODI],
-                    'skor' => $entry[Peringkat::SKOR],
-                    'peringkat' => $entry[Peringkat::PERINGKAT],
-                ];
-            }
+        $peringkat = 1;
+
+        foreach ($mahasiswa as $mhs) {
+            $leaderboard[] = [
+                'peringkat' => $peringkat++,
+                'nama' => $mhs['nama'],
+                'nim' => $mhs['nim'],
+                'prodi' => $mhs['prodi'],
+                'jurusan' => $mhs['jurusan'],
+                'tahun_masuk' => $mhs['tahun_masuk'],
+                'total_skor' => $mhs['total_skor'],
+            ];
         }
 
         return $leaderboard;
     }
 
     /**
-     * Tambahkan entri baru ke leaderboard.
-     *
-     * @param array $data
-     * @return array
-     */
-    public static function addLeaderboardEntry(array $data): array
-    {
-        // Data harus memiliki ID Mahasiswa, peringkat, dan skor.
-        if (!isset($data[Peringkat::ID], $data[Peringkat::PERINGKAT], $data[Peringkat::SKOR])) {
-            return ['status' => 'error', 'message' => 'Data tidak lengkap.'];
-        }
-
-        // Tambahkan ke tabel peringkat.
-        return Peringkat::insert($data);
-    }
-
-    /**
-     * Reset semua data leaderboard.
+     * Menghapus seluruh data leaderboard.
      *
      * @return array
      */
     public static function resetLeaderboard(): array
     {
-        // Hapus semua data dari tabel peringkat.
-        return Peringkat::deleteAll();
+        $resultMahasiswa = Mahasiswa::deleteAll();
+        $resultPeringkat = Peringkat::deleteAll();
+
+        return [
+            'mahasiswa_deleted' => $resultMahasiswa,
+            'peringkat_deleted' => $resultPeringkat,
+        ];
+    }
+
+    /**
+     * Tambahkan data mahasiswa dan skor ke leaderboard.
+     *
+     * @param array $mahasiswaData
+     * @param array $peringkatData
+     * @return array
+     */
+    public static function addToLeaderboard(array $mahasiswaData, array $peringkatData): array
+    {
+        $resultMahasiswa = Mahasiswa::insert($mahasiswaData);
+        $resultPeringkat = Peringkat::insert($peringkatData);
+
+        return [
+            'mahasiswa_added' => $resultMahasiswa,
+            'peringkat_added' => $resultPeringkat,
+        ];
+    }
+
+    public function renderViewLomba(): void
+    {
+        $this->view("dashboard/leaderboard/Leaderboard", "Leaderboard");
     }
 }
