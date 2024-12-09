@@ -1,20 +1,20 @@
 {
-  "name": "pur/pbl",
-  "autoload": {
-    "psr-4": {
-      "app\\": "./",
-      "app\\models\\migrations\\": "./models/migrations/"
+    "name": "vendor/afifah",
+    "autoload": {
+        "psr-4": {
+            "app\\":"./",
+            "app\\models\\migrations\\": "./models/migrations/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jami'atul Afifah",
+            "email": "jamiatul.afifah2735@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "ext-sqlsrv": "*",
+       "phpmailer/phpmailer": "^6.9"
     }
-  },
-  "authors": [
-    {
-      "name": "PurnamaRidzkyN",
-      "email": "purnamanugraha492@gmail.com"
-    }
-  ],
-  "require": {
-    "ext-pdo": "*",
-    "ext-sqlsrv": "*",
-    "phpmailer/phpmailer": "^6.9"
-  }
 }
