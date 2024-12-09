@@ -259,100 +259,64 @@ $dosenList = $data["Dosen"];
             </div>
 
             <!-- Tombol Tambah Dosen -->
-            <button type="button" id="tambahDosen" class="btn-tambah">Tambah Dosen</button>
+            <button type="button" class="btn-tambah" id="add-dosen">Tambah Dosen</button>
 
             <!-- File Uploads -->
-            <label for="file-surat-tugas"><br style="clear: both;">File Surat Tugas</label>
-            <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <label for="surat-tugas">Surat Tugas</label>
+            <input type="file" name="surat-tugas" id="surat-tugas" required>
 
-            <label for="file-sertifikat">File Sertifikat</label>
-            <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <label for="sertifikat">Sertifikat</label>
+            <input type="file" name="sertifikat" id="sertifikat" required>
 
             <label for="foto-kegiatan">Foto Kegiatan</label>
-            <input type="file" name="foto-kegiatan" id="foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <input type="file" name="foto-kegiatan" id="foto-kegiatan" required>
 
-            <label for="file-poster">File Poster</label>
-            <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <label for="poster">Poster</label>
+            <input type="file" name="poster" id="poster" required>
 
-            <button type="submit" class="submit-btn">Kirim</button>
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
 </div>
 
-<!-- Scripts -->
+<!-- JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
-    var nomorDosen = 1;
+    // Initialize Select2 for all select elements
+    $('select').select2();
 
-    $(document).ready(function() {
-        // Apply select2 to the first select input
-        $('.dosen-select').select2();
-
-        document.getElementById("tambahDosen").addEventListener("click", function() {
-            var dosenContainer = document.getElementById("dosen-container");
-            var divBaru = document.createElement("div");
-            divBaru.className = "dosen-entry";
-
-            var select = document.createElement("select");
-            select.setAttribute("name", "dosen-pembimbing[]");
-            select.setAttribute("class", "dosen-select");
-            select.setAttribute("required", true);
-
-            var optionDefault = document.createElement("option");
-            optionDefault.setAttribute("value", "");
-            optionDefault.textContent = "Pilih Dosen Pembimbing";
-            select.appendChild(optionDefault);
-
-            <?php foreach ($dosenList as $dosen) : ?>
-                var option = document.createElement("option");
-                option.value = "<?php echo $dosen['id']; ?>";
-                option.textContent = "<?php echo $dosen['nama']; ?>";
-                select.appendChild(option);
-            <?php endforeach; ?>
-
-            divBaru.appendChild(select);
-            dosenContainer.appendChild(divBaru);
-
-            // Initialize select2 on the new select input
-            $(select).select2();
-            nomorDosen++;
-        });
+    // Add Dosen Pembimbing dynamically
+    $('#add-dosen').click(function() {
+        var dosenHTML = '<div class="dosen-entry"><select name="dosen-pembimbing[]" class="dosen-select" required><option value="">Pilih Dosen Pembimbing</option><?php foreach ($dosenList as $dosen) : ?><option value="<?php echo $dosen['id']; ?>"><?php echo $dosen['nama']; ?></option><?php endforeach; ?></select></div>';
+        $('#dosen-container').append(dosenHTML);
+        $('select').select2(); // Re-initialize Select2 for newly added select elements
     });
 
-    function formatDate(input) {
-        const date = new Date(input.value);
-        const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
-        input.value = formattedDate;
-    }
-
-    document.getElementById("prestasiForm").addEventListener("submit", function(event) {
+    // Validate form before submission
+    $('#prestasiForm').submit(function(event) {
         let isValid = true;
-        const formElements = this.elements;
-        const alertPlaceholder = document.getElementById('alert-placeholder');
-        alertPlaceholder.innerHTML = "";
 
-        for (let i = 0; i < formElements.length; i++) {
-            if (formElements[i].required && formElements[i].value.trim() === "") {
+        // Check if all required fields are filled
+        $('input, select').each(function() {
+            if ($(this).prop('required') && $(this).val() === '') {
                 isValid = false;
-                break;
+                $(this).css('border', '2px solid red');
+            } else {
+                $(this).css('border', '');
             }
-        }
+        });
 
         if (!isValid) {
-            alertPlaceholder.innerHTML = `
-                <div class="alert alert-danger" role="alert">
-                    Semua kolom wajib diisi!
-                </div>
-            `;
-            event.preventDefault();
-        } else {
-            alertPlaceholder.innerHTML = `
-                <div class="alert alert-success" role="alert">
-                    Form berhasil dikirim!
-                </div>
-            `;
+            event.preventDefault(); // Prevent form submission
+            $('#alert-placeholder').html('<div style="color:red;">Please fill in all required fields!</div>');
         }
     });
+
+    // Function to format date input fields
+    function formatDate(input) {
+        let date = new Date(input.value);
+        input.value = date.toISOString().split('T')[0];
+    }
 </script>
