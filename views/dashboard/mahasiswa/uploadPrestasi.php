@@ -131,12 +131,57 @@
             padding: 0;
             font-size: 16px;
         }
+
+        #tambahDosen {
+            background-color: #AFFA08;
+            color: black;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #tambahDosen:hover {
+            background-color: #FFED60;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+            background-color: DodgerBlue !important;
+            color: #ffffff;
+        }
     </style>
 
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
-            <img src=class="logo" src="../public/component/logoHijau.png" alt="Logo">
+            <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
             <h1>SIMPA-TI</h1>
         </div>
         <div class="menu">
@@ -228,12 +273,12 @@
                 <label for="kategori-partisipasi">Kategori Partisipasi</label>
                 <input type="text" name="kategori-partisipasi" id="kategori-partisipasi" required>
 
-                <!-- Tombol untuk menambah dosen pembimbing -->
+                <!-- Button to add Dosen Pembimbing -->
                 <button type="button" id="tambahDosen">Tambah Dosen Pembimbing</button>
 
                 <!-- Dosen Pembimbing (Dynamic) -->
                 <div id="dosen-container">
-                    <!-- Dosen akan ditambah di sini oleh JavaScript -->
+                    <!-- Dynamic dosen selects will be added here -->
                 </div>
 
                 <!-- Lampiran File -->
@@ -255,9 +300,12 @@
         </div>
     </div>
 
-    <script>
-        var nomorDosen = 1; // Inisialisasi nomor dosen untuk membuat nama elemen select yang unik
 
+
+    <script>
+        var nomorDosen = 1; // Inisialisasi nomor dosen untuk membuat nama elemen input yang unik
+
+        // Fungsi untuk menambah input dosen pembimbing
         document.getElementById("tambahDosen").addEventListener("click", function() {
             var dosenContainer = document.getElementById("dosen-container");
             var divBaru = document.createElement("div");
@@ -265,75 +313,31 @@
             // Label untuk Dosen Pembimbing
             var label = document.createElement("label");
             label.setAttribute("for", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk id
-            label.textContent = "Dosen Pembimbing " ;
+            label.textContent = "Dosen Pembimbing " + nomorDosen;
 
-            var select = document.createElement("select");
-            select.setAttribute("name", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk nama
-            select.setAttribute("multiple", true);
-            select.setAttribute("required", true);
+            // Input untuk nama dosen pembimbing
+            var inputDosen = document.createElement("input");
+            inputDosen.setAttribute("type", "text");
+            inputDosen.setAttribute("name", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk nama
+            inputDosen.setAttribute("id", "dosen-pembimbing-" + nomorDosen);
+            inputDosen.setAttribute("required", true);
 
-            var optionDefault = document.createElement("option");
-            optionDefault.setAttribute("value", "");
-            optionDefault.textContent = "Pilih Dosen Pembimbing";
-            select.appendChild(optionDefault);
-
-            <?php foreach ($dosenList as $dosen): ?>
-                var option = document.createElement("option");
-                option.setAttribute("value", "<?php echo $dosen['id']; ?>");
-                option.textContent = "<?php echo $dosen['nama']; ?>";
-                select.appendChild(option);
-            <?php endforeach; ?>
-
-            // Menambahkan label dan select ke divBaru
+            // Menambahkan label dan input ke divBaru
             divBaru.appendChild(label);
-            divBaru.appendChild(select);
+            divBaru.appendChild(inputDosen);
 
             // Menambahkan divBaru ke dalam dosen-container
             dosenContainer.appendChild(divBaru);
 
+            // Mengaktifkan fitur auto-complete pada input dosen
+            $(inputDosen).autocomplete({
+                source: [
+                    <?php foreach ($dosenList as $dosen): ?> "<?php echo $dosen['nama']; ?>", // Nama dosen untuk autocomplete
+                    <?php endforeach; ?>
+                ],
+                minLength: 2, // Minimal panjang karakter untuk memulai pencarian
+            });
+
             nomorDosen++; // Increment nomorDosen untuk setiap form baru
-        });
-    </script>
-
-
-    <script>
-        
-        function formatDate(input) {
-            const date = new Date(input.value);
-            const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
-            input.value = formattedDate;
-        }
-
-        // Form Validation
-        document.getElementById("prestasiForm").addEventListener("submit", function(event) {
-            let isValid = true;
-            const formElements = this.elements;
-            const alertPlaceholder = document.getElementById('alert-placeholder');
-            alertPlaceholder.innerHTML = ""; // Clear previous alerts
-
-            // Check if all fields are filled
-            for (let i = 0; i < formElements.length; i++) {
-                if (formElements[i].required && formElements[i].value.trim() === "") {
-                    isValid = false;
-                    break;
-                }
-            }
-
-            if (!isValid) {
-                // Show Bootstrap alert for incomplete form
-                alertPlaceholder.innerHTML = `
-                <div class="alert alert-danger" role="alert">
-                    Semua kolom wajib diisi!
-                </div>
-            `;
-                event.preventDefault(); // Prevent form submission
-            } else {
-                // Show Bootstrap alert for success after submission
-                alertPlaceholder.innerHTML = `
-                <div class="alert alert-success" role="alert">
-                    Form berhasil dikirim!
-                </div>
-            `;
-            }
         });
     </script>

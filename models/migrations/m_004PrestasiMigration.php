@@ -32,6 +32,7 @@ class m_004PrestasiMigration implements BaseMigration
             $table->string("foto_kegiatan");
             $table->string("file_poster");
             $table->tinyInt("validasi");
+            $table->datetime("tanggal_input");
 
             $table->primary("id");
             $table->unique("id");
