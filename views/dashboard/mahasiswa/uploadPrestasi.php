@@ -287,6 +287,7 @@ $dosenList = $data["Dosen"];
     var nomorDosen = 1;
 
     $(document).ready(function() {
+        // Apply select2 to the first select input
         $('.dosen-select').select2();
 
         document.getElementById("tambahDosen").addEventListener("click", function() {
@@ -314,6 +315,7 @@ $dosenList = $data["Dosen"];
             divBaru.appendChild(select);
             dosenContainer.appendChild(divBaru);
 
+            // Initialize select2 on the new select input
             $(select).select2();
             nomorDosen++;
         });
