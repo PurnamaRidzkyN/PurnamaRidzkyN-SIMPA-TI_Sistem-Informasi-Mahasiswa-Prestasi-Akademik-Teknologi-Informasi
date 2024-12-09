@@ -15,6 +15,8 @@ use app\models\database\prestasiLomba\Prestasi;
 use app\models\database\prestasiLomba\TingkatLomba;
 use app\models\database\users\Dosen;
 use app\models\database\users\Mahasiswa;
+use ArrayFormatter;
+use Helpers\FileUpload;
 
 class PrestasiController extends BaseController
 {
@@ -24,19 +26,13 @@ class PrestasiController extends BaseController
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
 
-        $target_dir = "public/uploads/";
-        $target_dir_surat_tugas = $target_dir . "suratTugas/";  //
-        $target_dir_sertifikat = $target_dir . "sertifikat/";
-        $target_dir_foto = $target_dir . "fotokegiatan/";
-        $target_dir_poster = $target_dir . "poster/";
-
 
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
         $id_mahasiswa = $mahasiswa['result'][0]["id"] ?? "null";
         $id_peringkat = $body["perinkat"] ?? "null";
-        $id_admin = "null"; // Tetap nilai default
+        $id_admin = "null";
         $tim = ($body["kategori-kompetisi"] == "Tim") ? 1 : 0;
         $judul_kompetisi = $body["judul-kompetisi"] ?? "null";
         $judul_kompetisi_en = $body["judul-kompetisi-en"] ?? "null";
@@ -56,29 +52,12 @@ class PrestasiController extends BaseController
         $validasi = 0;
         try {
 
-            function uploadFile($file, $target_dir)
-            {
-                $max_size = 5 * 1024 * 1024;
-                if ($file && isset($file["tmp_name"]) && $file["error"] == 0) {
-                    $file_size = $file["size"];
-                    if ($file_size > $max_size) {
-                    } else {
-                        $target_file = $target_dir . basename($file["name"]);
-                    }
-                } else {
-                    echo "File tidak diunggah atau terjadi kesalahan.<br>";
-                }
+            $file_surat_tugas = FileUpload::uploadFile($file_surat_tugas, FileUpload::TARGET_DIR_SURAT_TUGAS);
+            $file_sertifikat = FileUpload::uploadFile($file_sertifikat, FileUpload::TARGET_DIR_SERTIFIKAT);
+            $foto_kegiatan = FileUpload::uploadFile($foto_kegiatan, FileUpload::TARGET_DIR_FOTO);
+            $file_poster = FileUpload::uploadFile($file_poster, FileUpload::TARGET_DIR_POSTER);
 
-                return $target_file;
-            }
 
-            $file_surat_tugas =  uploadFile($file_surat_tugas, $target_dir_surat_tugas);
-
-            $file_sertifikat = uploadFile($file_sertifikat, $target_dir_sertifikat);
-
-            $foto_kegiatan = uploadFile($foto_kegiatan, $target_dir_foto);
-
-            $file_poster = uploadFile($file_poster, $target_dir_poster);
 
             $data = [
                 "id" => $id,
@@ -117,41 +96,43 @@ class PrestasiController extends BaseController
             }
 
             Prestasi::insert($data);
-            $result = implode(", ", array_map(function ($key, $value) {
-                return "$key = $value";
-            }, array_keys($data), $data));
+
+            $prestasiData = ArrayFormatter::formatKeyValue($data);
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $mahasiswa['result'][0]["id_user"],
-                $mahasiswa['result'][0]["id"],
-                Mahasiswa::TABLE,
+                $prestasiData['result'][0]["id"],
+                Prestasi::TABLE,
                 "insert",
                 "null",
                 "null",
-                $result
+                $prestasiData
             );
+
             $user = Session::get("user");;
             for ($i = 0; $i < count($dosen); $i++) {
                 $data = [];
                 $id = UUID::generate(DosenPembimbing::TABLE, "DP");
-                $data =([
-                    DosenPembimbing::ID => $id, 
-                    DosenPembimbing::ID_Dosen => $dosen[$i],  
-                    DosenPembimbing::ID_PRESTASI => $id,       
+                $data = ([
+                    DosenPembimbing::ID => $id,
+                    DosenPembimbing::ID_Dosen => $dosen[$i],
+                    DosenPembimbing::ID_PRESTASI => $id,
                 ]);
+
                 DosenPembimbing::insert($data);
-                $result = implode(", ", array_map(function ($key, $value) {
-                    return "$key = $value";
-                }, array_keys($data), $data));
+
+                $dosenData = ArrayFormatter::formatKeyValue($data);
+
                 LogData::insert(
                     UUID::generate(LogData::TABLE, "LD"),
-                    $mahasiswa['result'][0]["id_user"], 
-                    $id, 
-                    DosenPembimbing::TABLE, 
+                    $mahasiswa['result'][0]["id_user"],
+                    $id,
+                    DosenPembimbing::TABLE,
                     "insert",
-                    "null",  
-                    "null",  
-                    $result 
+                    "null",
+                    "null",
+                    $dosenData
                 );
             }
             $user = Session::get("user");
@@ -179,11 +160,15 @@ class PrestasiController extends BaseController
     }
     public function renderListPrestasi()
     {
-        $data = Prestasi::prestasiDisplay();
+        $data = Prestasi::listPrestasiDisplay();
         $nim = Session::get("user");
         try {
 
-            if (Session::get("role") !== "1") {
+            if (Session::get("role") === "2") {
+                $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
+                    return $item["nim"] === $nim;
+                });
+            } elseif (Session::get("role") === "3") {
                 $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
                     return $item["nim"] === $nim;
                 });
@@ -195,4 +180,13 @@ class PrestasiController extends BaseController
             var_dump($e->getMessage());
         }
     }
+ public function renderDetailPrestasi(Request $req ){
+    $body =$req->body();
+    $id = $body["prestasi_id"];
+    $data = Prestasi::findId($id);
+    $data = $data["result"][0];
+    
+    $this->view("dashboard/detailPrestasi","Detail Prestasi",$data);
+                                                                                                          
+ }
 }

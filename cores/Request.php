@@ -41,18 +41,39 @@ class Request
             }
         }
         foreach ($_FILES as $key => $file) {
-            if ($file['error'] === UPLOAD_ERR_OK) {
-                $data[$key] = [
-                    'name' => $file['name'],
-                    'type' => $file['type'],
-                    'tmp_name' => $file['tmp_name'],
-                    'size' => $file['size'],
-                ];
+            // Jika multiple file uploads (error dalam bentuk array)
+            if (is_array($file['error'])) {
+                $data[$key] = [];
+                foreach ($file['error'] as $index => $error) {
+                    if ($error === UPLOAD_ERR_OK) {
+                        $data[$key][$index] = [
+                            'name' => $file['name'][$index],
+                            'type' => $file['type'][$index],
+                            'tmp_name' => $file['tmp_name'][$index],
+                            'size' => $file['size'][$index],
+                        ];
+                    } else {
+                        $data[$key][$index] = [
+                            'error' => $error,
+                            'message' => $this->fileUploadErrorMessage($error),
+                        ];
+                    }
+                }
             } else {
-                $data[$key] = [
-                    'error' => $file['error'],
-                    'message' => $this->fileUploadErrorMessage($file['error']),
-                ];
+                // Jika single file upload (error bukan array)
+                if ($file['error'] === UPLOAD_ERR_OK) {
+                    $data[$key] = [
+                        'name' => $file['name'],
+                        'type' => $file['type'],
+                        'tmp_name' => $file['tmp_name'],
+                        'size' => $file['size'],
+                    ];
+                } else {
+                    $data[$key] = [
+                        'error' => $file['error'],
+                        'message' => $this->fileUploadErrorMessage($file['error']),
+                    ];
+                }
             }
         }
         return $data;
@@ -69,7 +90,7 @@ class Request
             UPLOAD_ERR_CANT_WRITE => 'Gagal menulis file ke disk.',
             UPLOAD_ERR_EXTENSION => 'Upload file dihentikan oleh ekstensi PHP.',
         ];
-    
+
         return $errors[$errorCode] ?? 'Error tidak dikenal.';
     }
     public function getParams(array|string $param): array|string
