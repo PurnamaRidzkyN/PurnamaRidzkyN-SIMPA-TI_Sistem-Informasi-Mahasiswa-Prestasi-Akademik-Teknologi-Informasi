@@ -263,7 +263,7 @@ $dosenList = $data["Dosen"];
             <button type="button" id="tambahDosen" class="btn-tambah">Tambah Dosen</button>
 
             <!-- File Uploads -->
-            <label for="file-surat-tugas"><br>File Surat Tugas</label>
+            <label for="file-surat-tugas"><br style="clear: both;">File Surat Tugas</label>
             <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
             <label for="file-sertifikat">File Sertifikat</label>
