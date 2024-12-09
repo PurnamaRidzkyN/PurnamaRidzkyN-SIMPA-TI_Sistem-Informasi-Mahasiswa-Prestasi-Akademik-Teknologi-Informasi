@@ -36,7 +36,7 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    ((p.skor * (1 + (j.jumlah_pt / j.jumlah_peserta))) * tl.skor)/100  AS skor
+    ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/100  AS skor
 FROM prestasi j
 JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi

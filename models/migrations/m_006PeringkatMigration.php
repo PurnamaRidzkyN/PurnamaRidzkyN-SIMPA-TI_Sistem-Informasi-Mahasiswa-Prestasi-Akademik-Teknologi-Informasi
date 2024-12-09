@@ -10,7 +10,7 @@ class m_006PeringkatMigration implements BaseMigration
     {
         return Schema::createTableIfNotExist("peringkat", function (Blueprint $table) {
             $table->string("id",6);
-            $table->int("peringkat");
+            $table->string("peringkat");
             $table->int("skor");
 
             $table->primary("id");

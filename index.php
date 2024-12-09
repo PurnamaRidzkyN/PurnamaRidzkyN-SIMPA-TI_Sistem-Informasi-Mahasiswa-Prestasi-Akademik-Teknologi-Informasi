@@ -8,6 +8,7 @@ use app\constant\Config;
 use app\controllers\AuditLog;
 use app\controllers\NewPassword;
 use app\controllers\Dashboard;
+use app\controllers\Leaderboard;
 use app\controllers\ManagementData;
 use app\controllers\PrestasiController;
 use app\controllers\UserManagement;
@@ -59,6 +60,8 @@ $app::post("/dashboard/mahasiswa/:nim/detail-prestasi",[PrestasiController::clas
 $app::post("/dashboard/admin/:nip/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[AdminMiddleware::class]);
 
 $app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"render"],[AdminMiddleware::class]);
+
+$app::get("/dashboard/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
 
 
 $app::get("/logout", [Auth::class, "logout"]);

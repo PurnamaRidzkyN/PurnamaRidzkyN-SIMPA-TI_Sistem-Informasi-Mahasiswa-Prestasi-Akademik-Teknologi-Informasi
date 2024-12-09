@@ -33,11 +33,6 @@ class InfoLombaController extends BaseController
         }
     }
 
-    public function viewAllLomba(): void
-    {
-        $infoLomba = InfoLomba::getAll();
-        $this->view("infoLomba/index", "Daftar Lomba", ["infoLomba" => $infoLomba]);
-    }
 
     public function deleteAllLomba(Request $req, Response $res): void
     {

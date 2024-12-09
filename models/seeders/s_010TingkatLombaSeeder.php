@@ -9,11 +9,14 @@ class s_010TingkatLombaSeeder implements BaseSeeder
     {
         $id = ["TL001", "TL002", "TL003"];
         $tingkat_lomba = [
-            "Lokal",
-            "Regional",
-            "Nasional"
+            "Sekolah",
+            "Kecamatan",
+            "Kab/Kota",
+            "Provinsi",
+            "Nasional",
+            "Internasional"
         ];
-        $skor = [30, 50, 100];
+        $skor = [5, 10, 20, 30, 40, 50];
 
         $res = [];
 
