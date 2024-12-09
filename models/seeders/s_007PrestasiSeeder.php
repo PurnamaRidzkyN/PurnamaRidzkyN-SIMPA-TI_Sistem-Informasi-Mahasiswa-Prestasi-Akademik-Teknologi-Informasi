@@ -7,13 +7,14 @@ class s_007PrestasiSeeder implements BaseSeeder
 {
     public function create(): array
     {
-        $id = ["DP001", "DP002", "DP003"];
-        $id_jenis_kompetisi = ["JK001", "JK002", "JK003"];
-        $id_tingkat_kompetisi = ["TK001", "TK002", "TK003"];
+        $id = ["P001", "P002", "P003"];
+        $id_jenis_kompetisi = ["Jl001", "Jl002", "Jl003"];
+        $id_tingkat_kompetisi = ["TL001", "TL002", "TL003"];
         $id_mahasiswa = ["M001", "M002", "M003"];
         $id_peringkat = ["P001", "P002", "P003"];
+        $id_admin = ["A001","A001","A002"];
 
-        $tim = [1, 0, 0];
+        $tim = [0, 0, 0];
         $judul_kompetisi = [
             "Lomba Karya Tulis Ilmiah Nasional",
             "Hackathon Mahasiswa Indonesia",
@@ -60,6 +61,7 @@ class s_007PrestasiSeeder implements BaseSeeder
                 Prestasi::ID_TINGKAT_KOMPETISI => $id_tingkat_kompetisi[$i],
                 Prestasi::ID_MAHASISWA => $id_mahasiswa[$i],
                 Prestasi::ID_PERINGKAT => $id_peringkat[$i],
+                Prestasi::ID_ADMIN=>$id_admin[$i],
                 Prestasi::TIM => $tim[$i],
                 Prestasi::JUDUL_KOMPETISI => $judul_kompetisi[$i],
                 Prestasi::JUDUL_KOMPETISI_EN => $judul_kompetisi_en[$i],

@@ -17,9 +17,9 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "Charlie Brown"
         ];
         $nim = [
-            "210101001",
-            "210101002",
-            "210101003"
+            "234176001",
+            "234176002",
+            "234176003"
         ];
         $prodi = [
             "Teknik Informatika",
@@ -33,6 +33,14 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "bob.jpg",
             "charlie.jpg"
         ];
+        $email = [
+            "alice.johnson@example.com",
+            "bob.williams@example.com",
+            "charlie.brown@example.com"
+        ];
+        $jurusan=[
+            "teknologi informasi","teknologi informasi","teknologi informasi"
+        ];
 
         $res = [];
 
@@ -43,9 +51,11 @@ class s_003MahasiswaSeeder implements BaseSeeder
                 "nama" => $nama[$i],
                 "nim" => $nim[$i],
                 "prodi" => $prodi[$i],
+                "jurusan"=> $jurusan[$i],
                 "tahun_masuk" => $tahun_masuk[$i],
                 "total_skor" => $total_skor[$i],
                 "foto" => $foto[$i],
+                "email"=> $email[$i]
             ]);
         }
 

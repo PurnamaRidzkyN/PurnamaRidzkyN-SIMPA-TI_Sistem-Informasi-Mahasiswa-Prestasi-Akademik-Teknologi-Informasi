@@ -20,6 +20,12 @@ class TingkatLomba extends BaseModel
             
         });
     }
+        public static function displayTingkatLomba():array
+    {
+        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
 
     public static function deleteAll(): array
     {

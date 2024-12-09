@@ -13,6 +13,7 @@ class Prestasi extends BaseModel
     public const ID_TINGKAT_KOMPETISI = "id_tingkat_kompetisi";
     public const ID_MAHASISWA = "id_mahasiswa";
     public const ID_PERINGKAT = "id_peringkat";
+    public const ID_ADMIN = "id_admin";
     public const TIM = "tim";
     public const JUDUL_KOMPETISI = "judul_kompetisi";
     public const JUDUL_KOMPETISI_EN = "judul_kompetisi_en";
@@ -30,6 +31,7 @@ class Prestasi extends BaseModel
     public const FOTO_KEGIATAN = "foto_kegiatan";
     public const FILE_POSTER = "file_poster";
     public const VALIDASI = "validasi";
+    public const VIEW_TABLE = "view_prestasi";
     
     public static function insert(array $data): array
     {
@@ -40,6 +42,7 @@ class Prestasi extends BaseModel
                 self::ID_TINGKAT_KOMPETISI,
                 self::ID_MAHASISWA,
                 self::ID_PERINGKAT,
+                self::ID_ADMIN,
                 self::TIM,
                 self::JUDUL_KOMPETISI,
                 self::JUDUL_KOMPETISI_EN,
@@ -61,9 +64,22 @@ class Prestasi extends BaseModel
             ], $data);
         });
     }
+    public static function listPrestasiDisplay():array
+    {
+        return Schema::selectFrom(self::VIEW_TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
+    public static function findId($id): array 
+    {
+        return Schema::selectWhereFrom(self::VIEW_TABLE, function (Blueprint $table) use ($id) {
+            $table->selectWhere(["id" => $id] );
+        });   
+    }
+
 
     public static function deleteAll(): array
-    {
+    {  
         return Schema::deleteFrom(self::TABLE);
     }
 }

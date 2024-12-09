@@ -1,25 +1,16 @@
 body {
-    background-color: #f8f9fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  background-color: #f8f9fa;
 }
 
-.login-container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+.container {
+  margin-top: 30px;
 }
 
-.form-control {
-    margin-bottom: 20px;
+table th,
+table td {
+  text-align: center;
 }
 
-.btn-login {
-    width: 100%;
+.table-responsive {
+  margin-top: 20px;
 }

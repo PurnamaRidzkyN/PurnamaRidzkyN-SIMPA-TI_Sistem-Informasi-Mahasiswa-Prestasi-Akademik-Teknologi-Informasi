@@ -21,6 +21,7 @@ class m_016PrestasiRelations implements BaseMigration
 
                 // Relasi ke peringkat
                 $table->alterAddForeignKey("id_peringkat", "peringkat", "id", "Fk_id_peringkat_prestasi");
+                $table->alterAddForeignKey("id_admin","admin","id","Fk_id_admin");
             }),
         ];
     }

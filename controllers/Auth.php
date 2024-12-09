@@ -15,10 +15,10 @@ class Auth extends BaseController
         $username = $body["username"];
         $password = $body["password"];
 
+
         // handle login logic
         try {
             $user = User::findOne($username)["result"][0];
-
             if (!$user) {
                 $this->view("login/login", "login", ["error" => "user not found"]);
                 return;
@@ -31,7 +31,7 @@ class Auth extends BaseController
           
             Session::set("user", $user["username"]);
             Session::set("role", $user["role"]);
-        
+            
             // redirect each user to their page
             switch ($user["role"]) {
                 case "1":
@@ -58,6 +58,6 @@ class Auth extends BaseController
     public function logout(Request $req, Response $res): void
     {
         Session::destroy();
-        $res->redirect("/login");
+        $res->redirect("/");
     }
 }

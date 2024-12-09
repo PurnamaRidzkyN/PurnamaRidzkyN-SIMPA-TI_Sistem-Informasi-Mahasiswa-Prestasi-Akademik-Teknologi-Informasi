@@ -3,7 +3,7 @@
         <h1 class="fw-bold text-primary">Lupa Kata Sandi</h1>
         <p class="fs-5 mt-3 text-secondary">Masukkan email dan username Anda untuk mengatur ulang kata sandi</p>
 
-        <form action="/change-password" method="post" class="mt-4">
+        <form action="/send-password" method="post" class="mt-4">
             <!-- Username Input -->
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -25,7 +25,7 @@
             </div>
 
             <!-- Tombol Kirim -->
-            <button type="submit" class="btn btn-primary w-100 py-2">Kirim Tautan Reset</button>
+            <button type="submit" class="btn btn-primary w-100 py-2">Kirim sandi baru</button>
 
             <!-- Kembali ke Login -->
             <div class="mt-3">

@@ -7,14 +7,17 @@ class s_001UserSeeder implements BaseSeeder
 {
     public function create(): array
     {
-        $id=["U001", "U002", "U003", "U004", "U005", "U006"];
+        $id=["U001", "U002", "U003", "U004", "U005", "U006","U007","U008","U009"];
         $username = [
             "100321104",
             "100321105",
             "100321106",
             "234176001",
             "234176002",
-            "234176003"
+            "234176003",
+            "123456789",
+            "987654321",
+            "112233445"
         ];
 
         $password = [
@@ -23,7 +26,10 @@ class s_001UserSeeder implements BaseSeeder
             "admin3",
             "Mahasiswa1",
             "Mahasiswa2",
-            "Mahasiswa3"  
+            "Mahasiswa3",
+            "Dr. John Doe",
+            "Dr. Jane Smith",
+            "Dr. Alan Turing"
         ];
 
         $role = [
@@ -32,7 +38,10 @@ class s_001UserSeeder implements BaseSeeder
             1,
             2,
             2,
-            2
+            2,
+            3,
+            3,
+            3,
         ];
 
         $res = [];

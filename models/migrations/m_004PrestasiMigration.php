@@ -14,6 +14,7 @@ class m_004PrestasiMigration implements BaseMigration
             $table->string("id_tingkat_kompetisi",6);
             $table->string("id_mahasiswa",6);
             $table->string("id_peringkat",6);
+            $table->string("id_admin",6);
             $table->tinyInt("tim");
             $table->string("judul_kompetisi");
             $table->string("judul_kompetisi_en");

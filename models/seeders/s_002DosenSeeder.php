@@ -8,6 +8,7 @@ class s_002DosenSeeder implements BaseSeeder
     public function create(): array
     {
         $id = ["D001", "D002", "D003"];
+        $id_user= ["U007", "U008", "U009"];
         
         $nidn = [
             "123456789",
@@ -25,6 +26,7 @@ class s_002DosenSeeder implements BaseSeeder
         for ($i = 0; $i < count($id); $i++) {
             $res[$i] = Dosen::insert([
                 "id" => $id[$i],
+                "id_user"=> $id_user[$i],
                 "nidn" => $nidn[$i],
                 "nama" => $nama[$i],
             ]);
