@@ -1,5 +1,4 @@
 <?php
-
 use app\cores\Session;
 use app\cores\View;
 
@@ -10,9 +9,9 @@ $tingkatKompetisi = $data["TingkatLomba"];
 $kategoriKompetisi = ["tim", "individu"];
 $urutanPeringkat = $data["Peringkat"];
 $dosenList = $data["Dosen"];
-
 ?>
 
+<!-- Styles -->
 <style>
     body {
         margin: 0;
@@ -20,7 +19,7 @@ $dosenList = $data["Dosen"];
         background-color: #f5f5f5;
         color: white;
     }
-
+    
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -280,34 +279,44 @@ $dosenList = $data["Dosen"];
     </div>
 </div>
 
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     var nomorDosen = 1;
 
-    document.getElementById("tambahDosen").addEventListener("click", function() {
-        var dosenContainer = document.getElementById("dosen-container");
-        var divBaru = document.createElement("div");
-        divBaru.className = "dosen-entry";
+    $(document).ready(function() {
+        $('.dosen-select').select2();
 
-        var select = document.createElement("select");
-        select.setAttribute("name", "dosen-pembimbing[]");
-        select.setAttribute("class", "dosen-select");
-        select.setAttribute("required", true);
+        document.getElementById("tambahDosen").addEventListener("click", function() {
+            var dosenContainer = document.getElementById("dosen-container");
+            var divBaru = document.createElement("div");
+            divBaru.className = "dosen-entry";
 
-        var optionDefault = document.createElement("option");
-        optionDefault.setAttribute("value", "");
-        optionDefault.textContent = "Pilih Dosen Pembimbing";
-        select.appendChild(optionDefault);
+            var select = document.createElement("select");
+            select.setAttribute("name", "dosen-pembimbing[]");
+            select.setAttribute("class", "dosen-select");
+            select.setAttribute("required", true);
 
-        <?php foreach ($dosenList as $dosen) : ?>
-            var option = document.createElement("option");
-            option.value = "<?php echo $dosen['id']; ?>";
-            option.textContent = "<?php echo $dosen['nama']; ?>";
-            select.appendChild(option);
-        <?php endforeach; ?>
+            var optionDefault = document.createElement("option");
+            optionDefault.setAttribute("value", "");
+            optionDefault.textContent = "Pilih Dosen Pembimbing";
+            select.appendChild(optionDefault);
 
-        divBaru.appendChild(select);
-        dosenContainer.appendChild(divBaru);
-        nomorDosen++;
+            <?php foreach ($dosenList as $dosen) : ?>
+                var option = document.createElement("option");
+                option.value = "<?php echo $dosen['id']; ?>";
+                option.textContent = "<?php echo $dosen['nama']; ?>";
+                select.appendChild(option);
+            <?php endforeach; ?>
+
+            divBaru.appendChild(select);
+            dosenContainer.appendChild(divBaru);
+
+            $(select).select2();
+            nomorDosen++;
+        });
     });
 
     function formatDate(input) {
@@ -322,7 +331,6 @@ $dosenList = $data["Dosen"];
         const alertPlaceholder = document.getElementById('alert-placeholder');
         alertPlaceholder.innerHTML = "";
 
-        // Check if all fields are filled
         for (let i = 0; i < formElements.length; i++) {
             if (formElements[i].required && formElements[i].value.trim() === "") {
                 isValid = false;
