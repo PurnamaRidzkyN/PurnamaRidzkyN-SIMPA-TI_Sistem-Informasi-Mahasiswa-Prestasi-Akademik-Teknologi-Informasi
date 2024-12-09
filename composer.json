@@ -1,20 +1,19 @@
 {
-  "name": "pur/pbl",
-  "autoload": {
-    "psr-4": {
-      "app\\": "./",
-      "app\\models\\migrations\\": "./models/migrations/"
+    "name": "pbl/gilang",
+    "autoload": {
+        "psr-4": {
+            "app\\" : "./",
+            "app\\models\\migrations\\": "./models/migrations/"
+        }
+    },
+    "authors": [
+        {
+            "name": "GilangAndhika18",
+            "email": "gilangandhikaerlangga18@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "ext-sqlsrv": "*"
     }
-  },
-  "authors": [
-    {
-      "name": "PurnamaRidzkyN",
-      "email": "purnamanugraha492@gmail.com"
-    }
-  ],
-  "require": {
-    "ext-pdo": "*",
-    "ext-sqlsrv": "*",
-    "phpmailer/phpmailer": "^6.9"
-  }
 }

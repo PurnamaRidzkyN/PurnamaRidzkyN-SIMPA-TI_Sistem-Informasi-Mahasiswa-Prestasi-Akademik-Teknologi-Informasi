@@ -9,9 +9,10 @@ class s_009JenisLombaSeeder implements BaseSeeder
     {
         $id = ["JL001", "JL002", "JL003"];
         $jenis_lomba = [
-            "Lomba Karya Tulis Ilmiah",
-            "Hackathon Mahasiswa",
-            "Kompetisi Desain Poster"
+            "Sains",
+            "Seni",
+            "Olahraga",
+            "Lain-lain"
         ];
 
         $res = [];
