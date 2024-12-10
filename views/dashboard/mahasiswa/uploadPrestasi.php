@@ -262,11 +262,11 @@ $dosenList = $data["Dosen"];
 
             <!-- Tanggal Mulai -->
             <label for="tanggal-mulai">Tanggal Mulai</label>
-            <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
+            <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
 
             <!-- Tanggal Akhir -->
             <label for="tanggal-akhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
+            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required>
 
             <!-- Jumlah PT -->
             <label for="jumlah-pt">Jumlah PT</label>
@@ -282,7 +282,7 @@ $dosenList = $data["Dosen"];
 
             <!-- Tanggal Surat Tugas -->
             <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
-            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required>
 
             <!-- Dosen Pembimbing -->
             <label for="dosen-pembimbing">Dosen Pembimbing</label>
@@ -516,47 +516,4 @@ $dosenList = $data["Dosen"];
 
     // Initialize the autocomplete function
     autocomplete(document.getElementById("dosenInput"), dosenNames);
-</script>
-
-<script>
-    function formatDate(input) {
-        const date = new Date(input.value);
-        const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
-        input.value = formattedDate;
-    }
-
-    // Form Validation
-    document.getElementById("
-    
-    tasiForm").addEventListener("submit", function(event) {
-        let isValid = true;
-        const formElements = this.elements;
-        const alertPlaceholder = document.getElementById('alert-placeholder');
-        alertPlaceholder.innerHTML = ""; // Clear previous alerts
-
-        // Check if all fields are filled
-        for (let i = 0; i < formElements.length; i++) {
-            if (formElements[i].required && formElements[i].value.trim() === "") {
-                isValid = false;
-                break;
-            }
-        }
-
-        if (!isValid) {
-            // Show Bootstrap alert for incomplete form
-            alertPlaceholder.innerHTML = `
-                <div class="alert alert-danger" role="alert">
-                    Semua kolom wajib diisi!
-                </div>
-            `;
-            event.preventDefault(); // Prevent form submission
-        } else {
-            // Show Bootstrap alert for success after submission
-            alertPlaceholder.innerHTML = `
-                <div class="alert alert-success" role="alert">
-                    Form berhasil dikirim!
-                </div>
-            `;
-        }
-    });
 </script>
