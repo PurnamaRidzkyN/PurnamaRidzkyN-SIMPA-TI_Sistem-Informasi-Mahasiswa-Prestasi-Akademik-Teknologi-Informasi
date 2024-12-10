@@ -36,13 +36,16 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/100  AS skor
+    ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/10  AS skor
+    d.nama as nama_dosen
 FROM prestasi j
 JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
 JOIN mahasiswa m ON m.id = j.id_mahasiswa
 JOIN peringkat p ON p.id = j.id_peringkat
-JOIN admin a ON a.id = j.id_admin;");
+JOIN admin a ON a.id = j.id_admin
+JOIN dosen_pembimbing dp On j.id = dp.id_prestasi
+join dosen d on dp.id_dosen = d.id");
     }
 
     public function down(): array

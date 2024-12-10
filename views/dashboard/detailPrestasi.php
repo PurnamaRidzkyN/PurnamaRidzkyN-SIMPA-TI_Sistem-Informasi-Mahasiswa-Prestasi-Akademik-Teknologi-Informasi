@@ -1,9 +1,14 @@
 <?php
 
+use app\cores\Session;
 use app\cores\View;
 use app\helpers\Dump;
 
-$prestasi = View::getData();
+$data = View::getData();
+$user = Session::get("user");
+$dosen = $data["dosen"];
+$prestasi = $data["prestasi"]; 
+
 ?>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,6 +50,18 @@ $prestasi = View::getData();
             <div class="mb-3">
                 <label for="tingkat-kompetisi" class="form-label">Tingkat Kompetisi</label>
                 <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['tingkat_lomba']; ?>" readonly>
+            </div>
+
+
+            <!-- Tingkat Kompetisi -->
+            <div class="mb-3">
+                <label for="judul-kompetisi" class="form-label">judul kompetisi</label>
+                <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>" readonly>
+            </div><!-- Tingkat Kompetisi -->
+
+            <div class="mb-3">
+                <label for="judul-kompetisi-en" class="form-label">judul kompetisi en</label>
+                <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['judul_kompetisi_en']; ?>" readonly>
             </div>
 
             <!-- Kategori Kompetisi -->
@@ -109,17 +126,22 @@ $prestasi = View::getData();
 
             <!-- Kategori Partisipasi -->
             <div class="mb-3">
-                <label for="kategori-partisipasi" class="form-label">Kategori Partisipasi</label>
-                <input type="text" class="form-control" id="kategori-partisipasi" value="<?php echo $prestasi['kategori_partisipasi']; ?>" readonly>
+                <label for="kategori-partisipasi" class="form-label">skor</label>
+                <input type="text" class="form-control" id="kategori-partisipasi" value="<?php echo $prestasi['skor']; ?>" readonly>
             </div>
 
             <!-- Dosen Pembimbing (Dynamic) -->
             <div id="dosen-container" class="mb-3">
                 <label for="dosen-pembimbing" class="form-label">Dosen Pembimbing</label>
                 <ul class="list-group">
-                    <?php foreach ($prestasi['dosen'] as $dosen) { ?>
-                        <li class="list-group-item"><?php echo $dosen; ?></li>
-                    <?php } ?>
+                    <?php
+                    $id_target = "P001"; // ID yang ingin ditampilkan
+                    foreach ($dosen as $dosen_item) {
+                        if ($dosen_item['id'] === $prestasi["id"]) { // Cek apakah ID sesuai dengan target
+                            echo '<li class="list-group-item">' . $dosen_item['nama'] . '</li>';
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
 
@@ -143,6 +165,27 @@ $prestasi = View::getData();
                 <label for="file-poster" class="form-label">File Poster</label>
                 <a href="<?php echo $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
             </div>
+            <!-- Tombol Validasi dan Tolak Validasi -->
+            <div class="mb-3">
+                <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
+                    <!-- Tombol Validasi dan Tolak Validasi -->
+                    <form method="POST" action="/dashboard/<?= $user ?>/detail-prestasi">
+                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="validasi" value="valid"> <!-- Status Validasi -->
+                        <button type="submit" class="btn btn-success" name="action" value="validasi">Validasi</button>
+                    </form>
+
+                    <form method="POST" action="/dashboard/<?= $user ?>/detail-prestasi">
+                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="validasi" value="invalid"> <!-- Status Tolak Validasi -->
+                        <button type="submit" class="btn btn-danger" name="action" value="tolak">Tolak Validasi</button>
+                    </form>
+                <?php elseif ($prestasi["validasi"] == 1): ?>
+                    <!-- Pesan jika sudah divalidasi -->
+                    <p>Sudah divalidasi oleh <?= htmlspecialchars($user, ENT_QUOTES, 'UTF-8'); ?></p>
+                <?php endif; ?>
+            </div>
+
 
         </form>
     </div>

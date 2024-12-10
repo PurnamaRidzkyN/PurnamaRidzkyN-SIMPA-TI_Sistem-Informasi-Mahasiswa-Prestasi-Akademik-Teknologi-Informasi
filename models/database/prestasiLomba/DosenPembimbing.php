@@ -12,6 +12,7 @@ class DosenPembimbing extends BaseModel
     public const ID = "id";
     public const ID_Dosen = "id_dosen";
     public const ID_PRESTASI = "id_prestasi";
+    public const TABLE_VIEW ="View_dosen_pembimbing";
 
     public static function insert(array $data): array
     {
@@ -20,7 +21,13 @@ class DosenPembimbing extends BaseModel
             
         });
     }
-
+    
+    public static function displayDosenPembimbing():array
+    {
+        return Schema::selectFrom(self::TABLE_VIEW, function (Blueprint $table) {
+            $table->select();
+        });
+    }
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);

@@ -17,6 +17,7 @@ use app\models\database\users\Dosen;
 use app\models\database\users\Mahasiswa;
 use app\helpers\ArrayFormatter;
 use app\helpers\FileUpload;
+use app\models\database\users\Admin;
 
 class PrestasiController extends BaseController
 {
@@ -25,7 +26,6 @@ class PrestasiController extends BaseController
     {
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
-
 
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
@@ -96,7 +96,7 @@ class PrestasiController extends BaseController
             }
 
             $prestasiData = ArrayFormatter::formatKeyValue($data);
-            
+
             Prestasi::insert($data);
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
@@ -179,13 +179,47 @@ class PrestasiController extends BaseController
             var_dump($e->getMessage());
         }
     }
- public function renderDetailPrestasi(Request $req ){
-    $body =$req->body();
-    $id = $body["prestasi_id"];
-    $data = Prestasi::findId($id);
-    $data = $data["result"][0];
-    
-    $this->view("dashboard/detailPrestasi","Detail Prestasi",$data);
-                                                                                                          
- }
+    public function renderDetailPrestasi(Request $req)
+    {
+        $body = $req->body();
+        $id = $body["prestasi_id"];
+        $data = Prestasi::findId($id);
+        $data = $data["result"][0];
+        $dosen = DosenPembimbing::displayDosenPembimbing();
+        $dosen = $dosen["result"];
+        $data = ["dosen"=>$dosen,
+        "prestasi"=>$data];
+        $this->view("dashboard/detailPrestasi", "Detail Prestasi", $data);
+    }
+
+    public function validatePrestasi(Request $request, Response $response)
+    {
+        // Ambil data dari request
+        $data = $request->Body();
+
+        // Validasi input
+        if (!isset($data)) {
+            return $this->view("validasi/error", "validasi", [
+                "error" => "gagal validasi coba  lagi"
+            ]);
+        }
+        $admin = Admin::findNip(Session::get("user"));
+        $idPrestasi = $data['id_prestasi'];
+        $validasiStatus = $data['validasi'];
+
+
+        $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
+        $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id_user"], Prestasi::ID, $idPrestasi);
+
+        if ($updateValidasi['success'] && $updateAdmin['success']) {
+            return $this->view("validasi/success", "validasi", [
+                "message" => "Prestasi mahasiswa berhasil divalidasi."
+            ]);
+        }
+        
+
+        return $this->view("validasi/error", "validasi", [
+            "error" => "Terjadi kesalahan saat memvalidasi prestasi mahasiswa."
+        ]);
+    }
 }

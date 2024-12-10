@@ -27,7 +27,7 @@ class s_003MahasiswaSeeder implements BaseSeeder
             "Sistem Informasi Bisnis"
         ];
         $tahun_masuk = ["2021", "2020", "2022"];
-        $total_skor = [85, 90, 88];
+        $total_skor = [31, 29, 34];
         $foto = [
             "alice.jpg",
             "bob.jpg",
