@@ -230,6 +230,10 @@ $dosenList = $data["Dosen"];
                     <?php endforeach; ?>
                 </select>
 
+                <!-- Judul Kompetisi -->
+                <label for="judul-kompetisi">Judul kompetisi</label>
+                <input type="text" name="judul-kompetisi" id="judul-kompetisi" required>
+
                 <!-- Kategori Kompetisi -->
                 <label for="kategori-kompetisi">Kategori Kompetisi</label>
                 <select name="kategori-kompetisi" id="kategori-kompetisi" required>
