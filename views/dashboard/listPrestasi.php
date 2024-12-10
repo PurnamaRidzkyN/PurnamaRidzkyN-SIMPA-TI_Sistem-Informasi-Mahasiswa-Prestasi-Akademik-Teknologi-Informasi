@@ -11,6 +11,7 @@ $user = Session::get('user');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prestasi Mahasiswa</title>
+    <!-- Link ke Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -28,6 +29,11 @@ $user = Session::get('user');
             align-items: center;
         }
 
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
         .navbar .logo img {
             width: 60px;
             height: 60px;
@@ -38,6 +44,12 @@ $user = Session::get('user');
             font-size: 24px;
             font-weight: 600;
             color: white;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 15px;
         }
 
         .navbar .menu a {
@@ -51,11 +63,14 @@ $user = Session::get('user');
             color: #AFFA08;
         }
 
+        /* Section Styles */
         .section {
             background-color: #0039C8;
             padding: 20px;
             border-radius: 15px;
             margin: 15px;
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .section-title {
@@ -87,51 +102,58 @@ $user = Session::get('user');
             background-color: #0039C8;
         }
 
+        /* Container Responsif */
         .container {
             max-width: 100%;
-            padding: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
+        /* Flexbox untuk data container */
         .row {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 5px; /* Mengurangi gap untuk tombol lebih rapat */
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href="#home">Home</a>
-        <a href="#prestasi">Prestasi</a>
-        <a href="#leaderboard">Leaderboard</a>
-    </div>
-</div>
-
-<!-- Filter Section -->
-<div class="section">
-    <div class="section-title">Status Validasi</div>
-    <div class="row justify-content-center">
-        <div class="col-md-5 text-center">
-            <button class="btn btn-warning w-100" id="filterBelum">Belum Divalidasi</button>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="logoHijau.png" alt="Logo">
+            <h1>SIMPA-TI</h1>
         </div>
-        <div class="col-md-5 text-center">
-            <button class="btn btn-success w-100" id="filterSudah">Sudah Divalidasi</button>
+        <div class="menu">
+            <a href="#home">Home</a>
+            <a href="#prestasi">Prestasi</a>
+            <a href="#leaderboard">Leaderboard</a>
         </div>
     </div>
-</div>
 
-<!-- Data Container -->
-<div class="container">
-    <div id="belum-div" class="row">
-        <?php foreach ($prestasi as $item): 
-            if ($item['validasi'] == 0): ?>
+    <!-- Filter Section -->
+    <div class="section">
+        <div class="section-title">Status Validasi</div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 text-center">
+                <button class="btn btn-warning w-100" id="filterBelum">Belum Divalidasi</button>
+            </div>
+            <div class="col-md-5 text-center">
+                <button class="btn btn-success w-100" id="filterSudah">Sudah Divalidasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Container -->
+    <div class="container">
+        <!-- Data "Belum Divalidasi" akan ditampilkan di sini -->
+        <div id="belum-div" class="row">
+            <?php
+            // Looping through "prestasi" items
+            foreach ($prestasi as $item):
+                if ($item['validasi'] == 0): // Belum Divalidasi
+            ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -145,12 +167,16 @@ $user = Session::get('user');
                         </div>
                     </div>
                 </div>
-        <?php endif; endforeach; ?>
-    </div>
+            <?php endif; endforeach; ?>
+        </div>
 
-    <div id="sudah-div" class="row">
-        <?php foreach ($prestasi as $item): 
-            if ($item['validasi'] == 1): ?>
+        <!-- Data "Sudah Divalidasi" akan ditampilkan di sini -->
+        <div id="sudah-div" class="row">
+            <?php
+            // Looping through "prestasi" items
+            foreach ($prestasi as $item):
+                if ($item['validasi'] == 1): // Sudah Divalidasi
+            ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -165,29 +191,33 @@ $user = Session::get('user');
                         </div>
                     </div>
                 </div>
-        <?php endif; endforeach; ?>
+            <?php endif; endforeach; ?>
+        </div>
     </div>
-</div>
 
-<!-- JS and Bootstrap Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- JS and Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $("#belum-div").hide();
-        $("#sudah-div").hide();
-
-        $("#filterBelum").click(function() {
-            $("#belum-div").show();
-            $("#sudah-div").hide();
-        });
-
-        $("#filterSudah").click(function() {
-            $("#sudah-div").show();
+    <!-- Script untuk Filter -->
+    <script>
+        $(document).ready(function() {
+            // Menyembunyikan kedua bagian (belum dan sudah divalidasi) saat halaman pertama dimuat
             $("#belum-div").hide();
+            $("#sudah-div").hide();
+
+            // Saat tombol "Belum Divalidasi" ditekan
+            $("#filterBelum").click(function() {
+                $("#belum-div").show(); // Menampilkan data yang belum divalidasi
+                $("#sudah-div").hide(); // Menyembunyikan data yang sudah divalidasi
+            });
+
+            // Saat tombol "Sudah Divalidasi" ditekan
+            $("#filterSudah").click(function() {
+                $("#sudah-div").show(); // Menampilkan data yang sudah divalidasi
+                $("#belum-div").hide(); // Menyembunyikan data yang belum divalidasi
+            });
         });
-    });
-</script>
+    </script>
 </body>
 </html>
