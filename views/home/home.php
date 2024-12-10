@@ -60,7 +60,6 @@
 
         .navbar .menu a:hover {
             color: #AFFA08;
-            /* Warna hijau saat hover */
         }
 
         .navbar .user-info img {
@@ -77,32 +76,20 @@
 
         .login-text {
             font-size: 18px;
-            /* Ukuran font untuk teks Login */
             color: white;
-            /* Warna teks */
             padding: 10px 15px;
-            /* Padding di sekitar teks */
             border: 2px solid white;
-            /* Garis putih di sekitar teks */
             border-radius: 20px;
-            /* Sudut membulat */
             background-color: transparent;
-            /* Latar belakang transparan */
             display: flex;
-            /* Menggunakan flexbox untuk centering */
             align-items: center;
-            /* Menyelaraskan teks secara vertikal */
             justify-content: center;
-            /* Menyelaraskan teks secara horizontal */
             height: 40px;
-            /* Menetapkan tinggi agar konsisten dengan ikon */
             transition: background-color 0.3s;
-            /* Efek transisi saat hover */
         }
 
         .login-text:hover {
             background-color: rgba(255, 255, 255, 0.2);
-            /* Efek hover */
         }
 
 
@@ -128,19 +115,12 @@
 
         .header .home {
             font-size: 20px;
-            /* Ukuran font untuk teks HOME */
             font-weight: 700;
-            /* Menebalkan font */
             color: rgb(82, 78, 78);
-            /* Warna teks hitam */
             font-family: 'Galatea', sans-serif;
-            /* Menetapkan font yang sesuai untuk Home */
             font-style: normal;
-            /* Menghilangkan efek miring */
         }
 
-
-        /* Main Container Styling */
         .main-container {
             display: flex;
             justify-content: space-between;
@@ -168,17 +148,14 @@
             width: 100%;
             height: 130px;
             position: relative;
-            /* Menyediakan konteks untuk posisi gambar */
         }
 
         .image-container {
             display: flex;
             align-items: flex-end;
-            /* Mengatur gambar agar berada di bagian bawah */
             justify-content: center;
             flex-grow: 1;
             position: relative;
-            /* Menyediakan konteks untuk posisi gambar */
         }
 
         .image {
@@ -186,9 +163,7 @@
             height: auto;
             object-fit: cover;
             position: relative;
-            /* Mengatur posisi gambar */
             bottom: 20px;
-            /* Menggeser gambar ke bawah */
         }
 
         .text-container {
@@ -199,16 +174,10 @@
 
         .welcome-text {
             font-size: 24px;
-            /* Ukuran font untuk teks */
             font-weight: 400;
-            /* Berat font standar */
             color: #ffffff;
-            /* Warna teks putih */
             padding: 20px;
-            /* Menambahkan padding untuk ruang di sekitar teks */
         }
-
-        /* Upcoming Events Styling */
         .upcoming-events {
             background-color: #0039C8;
             border-radius: 30px;
@@ -225,17 +194,13 @@
             color: #AFFA08;
             margin-bottom: 20px;
             position: relative;
-            /* Menjaga header tetap di atas */
         }
 
         .event-container {
             display: flex;
             flex-wrap: wrap;
-            /* Memungkinkan kotak untuk membungkus ke baris berikutnya */
             gap: 10px;
-            /* Jarak antar kartu */
             justify-content: space-between;
-            /* Menyebar ruang antar item */
         }
 
         .event-box {
@@ -254,9 +219,7 @@
 
         .event-box:hover {
             transform: scale(1.3);
-            /* Membesarkan kotak saat hover */
             z-index: 1;
-            /* Mengangkat kotak di atas yang lain saat hover */
         }
 
         .event-img {
@@ -264,24 +227,16 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            /* Memastikan gambar mengambil lebar penuh */
             margin-bottom: 5px;
-            /* Jarak antara gambar dan informasi */
         }
 
         .event-img img {
             width: auto;
-            /* Mengatur lebar gambar secara otomatis */
             height: auto;
-            /* Mengatur tinggi gambar secara otomatis */
             max-height: 180px;
-            /* Mengatur tinggi maksimum gambar menjadi 150px */
             max-width: 250px;
-            /* Mengatur lebar maksimum gambar menjadi 200px */
             object-fit: cover;
-            /* Memastikan gambar terpotong dengan baik */
             border-radius: 10px;
-            /* Menambahkan sudut melengkung */
         }
 
         .event-info {
@@ -290,27 +245,19 @@
             align-items: center;
             width: 100%;
             margin-top: 10px;
-            /* Jarak atas untuk informasi */
         }
 
-        /* Tanggal event */
         .event-info .date {
             font-size: 16px;
             font-weight: 600;
             color: black;
-            /* Teks menjadi putih */
             font-family: 'Galatea', sans-serif;
             text-align: center;
-            /* Centering teks dalam date */
             background-color: #AFFA08;
-            /* Background hijau */
             padding: 5px 10px;
-            /* Menambahkan padding agar bentuk bulat */
             border-radius: 80%;
-            /* Membuat background menjadi bulat */
         }
 
-        /* Nama event */
         .event-info .event-name {
             font-size: 16px;
             font-weight: 700;
@@ -319,14 +266,11 @@
 
         }
 
-        /* Kategori event */
         .event-info .categories {
             font-size: 12px;
             color: #333333;
             font-family: 'Galatea', sans-serif;
         }
-
-        /* Link */
         .event-info .link {
             font-size: 12px;
             text-decoration: none;
@@ -411,7 +355,6 @@
             margin-right: 10px;
         }
 
-        /* Ensure responsiveness */
         @media (max-width: 768px) {
             .leaderboard {
                 width: 100%;
@@ -438,7 +381,7 @@
 <div class="navbar">
     <div class="logo">
 
-        <img src="./public/component/logoHijau.png" alt="Logo">
+        <img src="../../../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
@@ -450,7 +393,7 @@
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
 
-            <img src="./public/component/notifikasi.png" alt="Notifikasi">
+            <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
 
         </div>
 
@@ -477,7 +420,6 @@
     <div class="header">Upcoming Events</div>
     <div class="event-container">
         <?php
-        // Data event dalam array
 
 use app\cores\View;
 use app\helpers\Dump;
@@ -485,11 +427,7 @@ use app\helpers\Dump;
         $data = View::getData();
         $leaderboardData = $data["Leaderboard"]["result"];
         $eventData= $data["Info_Lomba"]["result"];
-        // Dump::out($eventData);
 
-        
-
-        // Loop untuk menampilkan data event
         foreach ($eventData as $event) {
             echo '<div class="event-box">';
             echo '<div class="event-img">';
@@ -518,9 +456,6 @@ use app\helpers\Dump;
     </div>
     <div class="rank-list">
         <?php
-        // Data leaderboard dalam array 
-
-        // Loop untuk menampilkan data leaderboard
         foreach ($leaderboardData as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
