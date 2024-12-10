@@ -1,0 +1,21 @@
+{
+    "name": "nazwa/simpa-ti",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./",
+            "app\\models\\migrations\\": "./models/migrations/"      
+        }
+    },
+    "authors": [
+        {
+            "name": "Zwaa",
+            "email": "nazwanrlwjy@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*",
+        "ext-sqlsrv": "*",
+        "phpmailer/phpmailer":"^6.9"
+    
+    }
+}
