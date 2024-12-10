@@ -204,111 +204,118 @@ $dosenList = $data["Dosen"];
         <a href="#prestasi">Prestasi</a>
         <a href="#leaderboard">Leaderboard</a>
     </div>
-</div>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="form-container">
-        <h3>Form Prestasi Mahasiswa</h3>
 
-        <!-- Alert Placeholder -->
-        <div id="alert-placeholder"></div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="form-container">
+            <h3>Form Prestasi Mahasiswa</h3>
 
-        <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <!-- Alert Placeholder -->
+            <div id="alert-placeholder"></div>
 
-            <!-- Jenis Kompetisi -->
-            <label for="jenis-kompetisi">Jenis Kompetisi</label>
-            <select name="jenis-kompetisi" id="jenis-kompetisi" required>
-                <option value="">Pilih Jenis Kompetisi</option>
-                <?php foreach ($jenisKompetisi as $jenis) : ?>
-                    <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+            <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-            <!-- Tingkat Kompetisi -->
-            <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
-            <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
-                <option value="">Pilih Tingkat Kompetisi</option>
-                <?php foreach ($tingkatKompetisi as $tingkat) : ?>
-                    <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Jenis Kompetisi -->
+                <label for="jenis-kompetisi">Jenis Kompetisi</label>
+                <select name="jenis-kompetisi" id="jenis-kompetisi" required>
+                    <option value="">Pilih Jenis Kompetisi</option>
+                    <?php foreach ($jenisKompetisi as $jenis) : ?>
+                        <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Kategori Kompetisi -->
-            <label for="kategori-kompetisi">Kategori Kompetisi</label>
-            <select name="kategori-kompetisi" id="kategori-kompetisi" required>
-                <option value="">Pilih Kategori Kompetisi</option>
-                <?php foreach ($kategoriKompetisi as $kategori) : ?>
-                    <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Tingkat Kompetisi -->
+                <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
+                <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
+                    <option value="">Pilih Tingkat Kompetisi</option>
+                    <?php foreach ($tingkatKompetisi as $tingkat) : ?>
+                        <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Peringkat -->
-            <label for="peringkat">Peringkat</label>
-            <select name="peringkat" id="peringkat" required>
-                <option value="">Pilih Peringkat</option>
-                <?php foreach ($urutanPeringkat as $peringkat) : ?>
-                    <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- 
+ Kompetisi -->
+                <label for="judul-kompetisi">Judul kompetisi</label>
+                <input type="text" name="judul-kompetisi" id="judul-kompetisi" required>
 
-            <!-- Tempat Kompetisi -->
-            <label for="tempat-kompetisi">Tempat Kompetisi</label>
-            <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+                <!-- Kategori Kompetisi -->
+                <label for="kategori-kompetisi">Kategori Kompetisi</label>
+                <select name="kategori-kompetisi" id="kategori-kompetisi" required>
+                    <option value="">Pilih Kategori Kompetisi</option>
+                    <?php foreach ($kategoriKompetisi as $kategori) : ?>
+                        <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- URL Kompetisi -->
-            <label for="url-kompetisi">URL Kompetisi</label>
-            <input type="url" name="url-kompetisi" id="url-kompetisi">
+                <!-- Peringkat -->
+                <label for="peringkat">Peringkat</label>
+                <select name="peringkat" id="peringkat" required>
+                    <option value="">Pilih Peringkat</option>
+                    <?php foreach ($urutanPeringkat as $peringkat) : ?>
+                        <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Tanggal Mulai -->
-            <label for="tanggal-mulai">Tanggal Mulai</label>
-            <input type="date" id="tanggal-mulai" name="tanggal-mulai" required>
+                <!-- Tempat Kompetisi -->
+                <label for="tempat-kompetisi">Tempat Kompetisi</label>
+                <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
 
-            <!-- Tanggal Akhir -->
-            <label for="tanggal-akhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required>
+                <!-- URL Kompetisi -->
+                <label for="url-kompetisi">URL Kompetisi</label>
+                <input type="url" name="url-kompetisi" id="url-kompetisi">
 
-            <!-- Jumlah PT -->
-            <label for="jumlah-pt">Jumlah PT</label>
-            <input type="number" name="jumlah-pt" id="jumlah-pt" required>
+                <!-- Tanggal Mulai -->
+                <label for="tanggal-mulai">Tanggal Mulai</label>
+                <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
 
-            <!-- Jumlah Peserta -->
-            <label for="jumlah-peserta">Jumlah Peserta</label>
-            <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
+                <!-- Tanggal Akhir -->
+                <label for="tanggal-akhir">Tanggal Akhir</label>
+                <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
 
-            <!-- No Surat Tugas -->
-            <label for="no-surat-tugas">No Surat Tugas</label>
-            <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
+                <!-- 
+ PT -->
+                <label for="jumlah-pt">Jumlah PT</label>
+                <input type="number" name="jumlah-pt" id="jumlah-pt" required>
 
-            <!-- Tanggal Surat Tugas -->
-            <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
-            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required>
+                <!-- Jumlah Peserta -->
+                <label for="jumlah-peserta">Jumlah Peserta</label>
+                <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
 
-            <!-- Dosen Pembimbing -->
-            <label for="dosen-pembimbing">Dosen Pembimbing</label>
-            <button id="addDosenBtn">Tambah Dosen</button>
+                <!-- No Surat Tugas -->
+                <label for="no-surat-tugas">No Surat Tugas</label>
+                <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
 
-            <!-- Container to hold the dosen input fields -->
-            <div id="dosenFieldsContainer"></div>
+                <!-- Tanggal Surat Tugas -->
+                <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
+                <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
 
-            <!-- File Surat Tugas -->
-            <label for="file-surat-tugas">File Surat Tugas</label>
-            <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- Dosen Pembimbing -->
+                <label for="dosen-pembimbing">Dosen Pembimbing</label>
+                <button id="addDosenBtn">Tambah Dosen</button>
 
-            <!-- File Sertifikat -->
-            <label for="file-sertifikat">File Sertifikat</label>
-            <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- Container to hold the dosen input fields -->
+                <div id="dosenFieldsContainer"></div>
 
-            <!-- Foto Kegiatan -->
-            <label for="file-foto-kegiatan">Foto Kegiatan</label>
-            <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- File Surat Tugas -->
+                <label for="file-surat-tugas">File Surat Tugas</label>
+                <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- File Poster -->
-            <label for="file-poster">File Poster</label>
-            <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- File Sertifikat -->
+                <label for="file-sertifikat">File Sertifikat</label>
+                <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <button type="submit" class="submit-btn">Kirim</button>
-        </form>
+                <!-- Foto Kegiatan -->
+                <label for="file-foto-kegiatan">Foto Kegiatan</label>
+                <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+
+                <!-- File Poster -->
+                <label for="file-poster">File Poster</label>
+                <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+
+                <button type="submit" class="submit-btn">Kirim</button>
+            </form>
+        </div>
     </div>
 </div>
 
