@@ -1,6 +1,8 @@
 <?php
+
 use app\cores\Session;
 use app\cores\View;
+use app\helpers\Dump;
 
 $user = Session::get('user');
 $data = View::getData();
@@ -136,7 +138,7 @@ $dosenList = $data["Dosen"];
     .form-container .submit-btn {
         background-color: #AFFA08;
         border-radius: 25px;
-        padding: 12px 25px;
+        padding: 10px 20px;
         color: black;
         font-size: 20px;
         font-weight: 500;
@@ -148,94 +150,127 @@ $dosenList = $data["Dosen"];
         right: 20px;
     }
 
-        .form-container input[type="file"] {
-            padding: 0;
-            font-size: 16px;
-        }
-    </style>
+    .form-container input[type="file"] {
+        padding: 0;
+        font-size: 16px;
+    }
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <a href="#home">Home</a>
-            <a href="#prestasi">Prestasi</a>
-            <a href="#leaderboard">Leaderboard</a>
-        </div>
+    #addDosenBtn {
+        background-color: #AFFA08;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 25px;
+        color: black;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    #addDosenBtn:hover {
+        background-color: #218838;
+        /* Darker green for hover effect */
+    }
+
+    /* Red "Hapus" button with rounded borders */
+    .dosen-container button {
+        background-color: #dc3545;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 25px;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .dosen-container button:hover {
+        background-color: #c82333;
+        /* Darker red for hover effect */
+    }
+</style>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">
+        <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
+        <h1>SIMPA-TI</h1>
+    </div>
+    <div class="menu">
+        <a href="#home">Home</a>
+        <a href="#prestasi">Prestasi</a>
+        <a href="#leaderboard">Leaderboard</a>
     </div>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="form-container">
-        <h3>Form Prestasi Mahasiswa</h3>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="form-container">
+            <h3>Form Prestasi Mahasiswa</h3>
 
-        <!-- Alert Placeholder -->
-        <div id="alert-placeholder"></div>
+            <!-- Alert Placeholder -->
+            <div id="alert-placeholder"></div>
 
-        <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-            <!-- Jenis Kompetisi -->
-            <label for="jenis-kompetisi">Jenis Kompetisi</label>
-            <select name="jenis-kompetisi" id="jenis-kompetisi" required>
-                <option value="">Pilih Jenis Kompetisi</option>
-                <?php foreach ($jenisKompetisi as $jenis) : ?>
-                    <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Jenis Kompetisi -->
+                <label for="jenis-kompetisi">Jenis Kompetisi</label>
+                <select name="jenis-kompetisi" id="jenis-kompetisi" required>
+                    <option value="">Pilih Jenis Kompetisi</option>
+                    <?php foreach ($jenisKompetisi as $jenis) : ?>
+                        <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Tingkat Kompetisi -->
-            <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
-            <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
-                <option value="">Pilih Tingkat Kompetisi</option>
-                <?php foreach ($tingkatKompetisi as $tingkat) : ?>
-                    <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Tingkat Kompetisi -->
+                <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
+                <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
+                    <option value="">Pilih Tingkat Kompetisi</option>
+                    <?php foreach ($tingkatKompetisi as $tingkat) : ?>
+                        <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Kategori Kompetisi -->
-            <label for="kategori-kompetisi">Kategori Kompetisi</label>
-            <select name="kategori-kompetisi" id="kategori-kompetisi" required>
-                <option value="">Pilih Kategori Kompetisi</option>
-                <?php foreach ($kategoriKompetisi as $kategori) : ?>
-                    <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Kategori Kompetisi -->
+                <label for="kategori-kompetisi">Kategori Kompetisi</label>
+                <select name="kategori-kompetisi" id="kategori-kompetisi" required>
+                    <option value="">Pilih Kategori Kompetisi</option>
+                    <?php foreach ($kategoriKompetisi as $kategori) : ?>
+                        <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Peringkat -->
-            <label for="peringkat">Peringkat</label>
-            <select name="peringkat" id="peringkat" required>
-                <option value="">Pilih Peringkat</option>
-                <?php foreach ($urutanPeringkat as $peringkat) : ?>
-                    <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Peringkat -->
+                <label for="peringkat">Peringkat</label>
+                <select name="peringkat" id="peringkat" required>
+                    <option value="">Pilih Peringkat</option>
+                    <?php foreach ($urutanPeringkat as $peringkat) : ?>
+                        <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-            <!-- Tempat Kompetisi -->
-            <label for="tempat-kompetisi">Tempat Kompetisi</label>
-            <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+                <!-- Tempat Kompetisi -->
+                <label for="tempat-kompetisi">Tempat Kompetisi</label>
+                <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
 
-            <!-- URL Kompetisi -->
-            <label for="url-kompetisi">URL Kompetisi</label>
-            <input type="url" name="url-kompetisi" id="url-kompetisi">
+                <!-- URL Kompetisi -->
+                <label for="url-kompetisi">URL Kompetisi</label>
+                <input type="url" name="url-kompetisi" id="url-kompetisi">
 
-            <!-- Tanggal Mulai -->
-            <label for="tanggal-mulai">Tanggal Mulai</label>
-            <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
+                <!-- Tanggal Mulai -->
+                <label for="tanggal-mulai">Tanggal Mulai</label>
+                <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
 
-            <!-- Tanggal Akhir -->
-            <label for="tanggal-akhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
+                <!-- Tanggal Akhir -->
+                <label for="tanggal-akhir">Tanggal Akhir</label>
+                <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
 
-            <!-- Jumlah PT -->
-            <label for="jumlah-pt">Jumlah PT</label>
-            <input type="number" name="jumlah-pt" id="jumlah-pt" required>
+                <!-- Jumlah PT -->
+                <label for="jumlah-pt">Jumlah PT</label>
+                <input type="number" name="jumlah-pt" id="jumlah-pt" required>
 
-            <!-- Jumlah Peserta -->
-            <label for="jumlah-peserta">Jumlah Peserta</label>
-            <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
+                <!-- Jumlah Peserta -->
+                <label for="jumlah-peserta">Jumlah Peserta</label>
+                <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
 
                 <!-- No Surat Tugas -->
                 <label for="no-surat-tugas">No Surat Tugas</label>
@@ -245,76 +280,241 @@ $dosenList = $data["Dosen"];
                 <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
                 <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
 
-                <!-- Kategori Partisipasi -->
-                <label for="kategori-partisipasi">Kategori Partisipasi</label>
-                <input type="text" name="kategori-partisipasi" id="kategori-partisipasi" required>
+                <!-- Dosen Pembimbing -->
+                <label for="dosen-pembimbing">Dosen Pembimbing</label>
+                <button id="addDosenBtn">Tambah Dosen</button>
 
-                <!-- Tombol untuk menambah dosen pembimbing -->
-                <button type="button" id="tambahDosen">Tambah Dosen Pembimbing</button>
+                <!-- Container to hold the dosen input fields -->
+                <div id="dosenFieldsContainer"></div>
 
-                <!-- Dosen Pembimbing (Dynamic) -->
-                <div id="dosen-container">
-                    <!-- Dosen akan ditambah di sini oleh JavaScript -->
-                </div>
+                <!-- File Surat Tugas -->
+                <label for="file-surat-tugas">File Surat Tugas</label>
+                <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- Hidden Input for Dosen ID -->
-            <input type="hidden" name="dosen-pembimbing-id" id="dosen-id">
+                <!-- File Sertifikat -->
+                <label for="file-sertifikat">File Sertifikat</label>
+                <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- Add Dosen Button -->
-            <button type="button" class="btn-tambah" id="add-dosen">Tambah Dosen</button>
+                <!-- Foto Kegiatan -->
+                <label for="file-foto-kegiatan">Foto Kegiatan</label>
+                <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- File Input -->
-            <label for="file">Upload File</label>
-            <input type="file" name="file" id="file" required>
+                <!-- File Poster -->
+                <label for="file-poster">File Poster</label>
+                <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
                 <button type="submit" class="submit-btn">Kirim</button>
             </form>
         </div>
     </div>
 
+
+
     <script>
-        var nomorDosen = 1; // Inisialisasi nomor dosen untuk membuat nama elemen select yang unik
+        var dosenList = <?php echo json_encode($dosenList); ?>; // PHP array passed to JS
+        var dosenNames = dosenList.map(function(dosen) {
+            return dosen.nama; // Extracting dosen names
+        });
 
-        document.getElementById("tambahDosen").addEventListener("click", function() {
-            var dosenContainer = document.getElementById("dosen-container");
-            var divBaru = document.createElement("div");
+        function autocomplete(inp, arr) {
+            var currentFocus;
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
 
-            // Label untuk Dosen Pembimbing
-            var label = document.createElement("label");
-            label.setAttribute("for", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk id
-            label.textContent = "Dosen Pembimbing " ;
+                if (!val) {
+                    return false;
+                }
 
-            var select = document.createElement("select");
-            select.setAttribute("name", "dosen-pembimbing-" + nomorDosen); // Menambahkan nomor untuk nama
-            select.setAttribute("multiple", true);
-            select.setAttribute("required", true);
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
 
-            var optionDefault = document.createElement("option");
-            optionDefault.setAttribute("value", "");
-            optionDefault.textContent = "Pilih Dosen Pembimbing";
-            select.appendChild(optionDefault);
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.addEventListener("click", function(e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
 
-            <?php foreach ($dosenList as $dosen): ?>
-                var option = document.createElement("option");
-                option.setAttribute("value", "<?php echo $dosen['id']; ?>");
-                option.textContent = "<?php echo $dosen['nama']; ?>";
-                select.appendChild(option);
-            <?php endforeach; ?>
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) {
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
 
-            // Menambahkan label dan select ke divBaru
-            divBaru.appendChild(label);
-            divBaru.appendChild(select);
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
 
-            // Menambahkan divBaru ke dalam dosen-container
-            dosenContainer.appendChild(divBaru);
+            function removeActive(x) {
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
 
-            nomorDosen++; // Increment nomorDosen untuk setiap form baru
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+
+            document.addEventListener("click", function(e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        // Function to add new dosen input field and delete button
+        document.getElementById("addDosenBtn").addEventListener("click", function() {
+            var container = document.getElementById("dosenFieldsContainer");
+
+            // Create a new div for the new dosen input
+            var newDiv = document.createElement("div");
+            newDiv.classList.add("dosen-container");
+
+            // Create the input field for dosen
+            var inputField = document.createElement("input");
+            inputField.setAttribute("type", "text");
+            inputField.setAttribute("placeholder", "Dosen Pembimbing");
+            inputField.setAttribute("name", "dosen[]"); // Make it an array to send multiple dosen names in the form
+            newDiv.appendChild(inputField);
+
+            // Initialize autocomplete on the new input field
+            autocomplete(inputField, dosenNames);
+
+            // Create delete button for this dosen input
+            var deleteButton = document.createElement("button");
+            deleteButton.innerText = "Hapus";
+            deleteButton.addEventListener("click", function() {
+                container.removeChild(newDiv); // Remove the corresponding input field and delete button
+            });
+            newDiv.appendChild(deleteButton);
+
+            // Append the new div to the container
+            container.appendChild(newDiv);
         });
     </script>
 
+    <script>
+        // Fetch the PHP array and create an array of dosen names
+        var dosenList = <?php echo json_encode($dosenList); ?>;
+        var dosenNames = dosenList.map(function(dosen) {
+            return dosen.nama; // Extract the 'nama' of each dosen
+        });
+
+        // Autocomplete function
+        function autocomplete(inp, arr) {
+            var currentFocus;
+
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+
+                if (!val) {
+                    return false;
+                }
+
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                        b.addEventListener("click", function(e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+
+                        a.appendChild(b);
+                    }
+                }
+            });
+
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) {
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+
+            function removeActive(x) {
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+
+            document.addEventListener("click", function(e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        // Initialize the autocomplete function
+        autocomplete(document.getElementById("dosenInput"), dosenNames);
+    </script>
 
     <script>
-        
         function formatDate(input) {
             const date = new Date(input.value);
             const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
