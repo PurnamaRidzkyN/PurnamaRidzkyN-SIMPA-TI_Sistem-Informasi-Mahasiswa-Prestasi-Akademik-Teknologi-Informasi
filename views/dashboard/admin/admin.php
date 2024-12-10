@@ -1,8 +1,10 @@
 <?php
 
 use app\cores\Session;
+use app\models\database\users\Admin;
 
 $user = Session::get('user');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +236,7 @@ $user = Session::get('user');
         }
 
         .event-box:hover {
-            transform: scale(1.3);
+            transform: scale(1.1);
             /* Membesarkan kotak saat hover */
             z-index: 1;
             /* Mengangkat kotak di atas yang lain saat hover */
@@ -432,10 +434,10 @@ $user = Session::get('user');
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
-        <a href="/">Home</a>
-        <a href="#">Prestasi</a>
+        <a href="#">Home</a>
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
         <a href="#">Leaderboard</a>
-        <a href="#">Management Data</a>
+        <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
     </div>
     <div class="user-info">
         <!-- Notification Bubble -->
@@ -443,7 +445,10 @@ $user = Session::get('user');
             <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
 
-        <img src="../../../public/component/profilpic.png" alt="Profile">
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user").'/profil'?>>
+            <img src="../../../public/component/profilpic.png" alt="Profile">
+        </a>
+
     </div>
 </div>
 
@@ -463,41 +468,41 @@ $user = Session::get('user');
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang, Masti!</div>
+                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"]?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>
         <div class="upcoming-events">
             <div class="header">Upcoming Events</div>
             <div class="event-container">
-                
-            <?php
-            // Data event disimpan dalam array
-            use app\cores\View;
-            use app\helpers\Dump;
-            $data = View::getData();  
-            $events = $data["info_lomba"]["result"];
-            // Dump::out($data);
 
-            // Loop untuk menampilkan setiap event
-            foreach ($events as $event) {
-                echo '<div class="event-box">';
-                echo '    <div class="event-img">';
-                echo '        <img src="' . $event['file_poster'] . '" alt="Event Image">';
-                echo '    </div>';
-                echo '    <div class="event-info">';
-                echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
-                echo '        <div class="event-name">' . $event['judul'] . '</div>';
-                echo '        <div class="categories">';
-                echo '            <ul>';
-                echo ($event['deskripsi_lomba']);
-                echo '            </ul>';
-                echo '        </div>';
-                echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                echo '    </div>';
-                echo '</div>';
-            }
-            ?>
+                <?php
+                // Data event disimpan dalam array
+                use app\cores\View;
+                use app\helpers\Dump;
+
+                $data = View::getData();
+                $events = $data["info_lomba"]["result"];
+                // Dump::out($data);
+                // // Loop untuk menampilkan setiap event
+                foreach ($events as $event) {
+                    echo '<div class="event-box">';
+                    echo '    <div class="event-img">';
+                    echo '        <img src="../../../' .$event["file_poster"] . ' " alt="Event Image">';
+                    echo '    </div>';
+                    echo '    <div class="event-info">';
+                    echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
+                    echo '        <div class="event-name">' . $event['judul'] . '</div>';
+                    echo '        <div class="categories">';
+                    echo '            <ul>';
+                    echo ($event['deskripsi_lomba']);
+                    echo '            </ul>';
+                    echo '        </div>';
+                    echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+                    echo '    </div>';
+                    echo '</div>';
+                }
+                ?>
 
             </div>
         </div>
@@ -511,7 +516,7 @@ $user = Session::get('user');
         </div>
 
         <?php
-        
+
 
         // Data leaderboard
         $data = View::getData();
@@ -522,15 +527,15 @@ $user = Session::get('user');
         foreach ($leaderboardData as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
-            echo '<img src="' . $item['image'] . '" alt="User Image">';
+            echo '<img src="' . $item['foto'] . '" alt="User Image">';
             echo '<div class="rank-info">';
             echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
             echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-            echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+            echo '<div class="points">' . $item['Total_Skor'] . ' pts</div>';
             echo '</div>'; // rank-info
             echo '</div>'; // rank-item
         }
         ?>
-    </body>
+        </body>
 
 </html>

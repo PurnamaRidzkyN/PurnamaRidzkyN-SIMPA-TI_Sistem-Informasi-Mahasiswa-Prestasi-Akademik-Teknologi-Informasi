@@ -195,7 +195,7 @@ $dosenList = $data["Dosen"];
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="../public/component/logoHijau.png" alt="Logo">
+        <img src="../../../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
 
     </div>
@@ -329,8 +329,6 @@ $dosenList = $data["Dosen"];
     </div>
 </div>
 </div>
-
-<?php Dump::out($dosenList); ?>
 
 <script>
     var dosenCounter = 1;

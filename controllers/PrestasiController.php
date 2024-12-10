@@ -56,8 +56,8 @@ class PrestasiController extends BaseController
             $file_sertifikat = FileUpload::uploadFile($file_sertifikat, FileUpload::TARGET_DIR_SERTIFIKAT);
             $foto_kegiatan = FileUpload::uploadFile($foto_kegiatan, FileUpload::TARGET_DIR_FOTO);
             $file_poster = FileUpload::uploadFile($file_poster, FileUpload::TARGET_DIR_POSTER);
-         
-           
+
+
 
             $data = [
                 "id" => $id,
@@ -108,7 +108,7 @@ class PrestasiController extends BaseController
                 "null",
                 $prestasiData
             );
-            
+
             $user = Session::get("user");;
             for ($i = 0; $i < count($dosen); $i++) {
                 $data = [];
@@ -157,24 +157,23 @@ class PrestasiController extends BaseController
         ];
         $this->view("dashboard/mahasiswa/uploadPrestasi", "Upload Prestasi", $data);
     }
-    public function renderListPrestasi()
+    public function renderListPrestasi(Request $req, response $res)
     {
+        $body = $req->body();
         $data = Prestasi::listPrestasiDisplay();
-        $nim = Session::get("user");
+        $nim = $body["nim"];
         try {
-
-            if (Session::get("role") === "2") {
+            if (Session::get("role") == "1") {
                 $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
                     return $item["nim"] === $nim;
                 });
-            } elseif (Session::get("role") === "3") {
+            } elseif ((Session::get("role") == "2")) {
+                $nim= Mahasiswa::findNim(Session::get("user"))["result"][0]["nim"];
                 $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
                     return $item["nim"] === $nim;
                 });
-            } else {
-                $filtered_data = $data["result"];
-            }
-            $this->view("dashboard/mahasiswa/listPrestasiMahasiswa", "list prestasi", $filtered_data);
+            } 
+            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
@@ -187,39 +186,42 @@ class PrestasiController extends BaseController
         $data = $data["result"][0];
         $dosen = DosenPembimbing::displayDosenPembimbing();
         $dosen = $dosen["result"];
-        $data = ["dosen"=>$dosen,
-        "prestasi"=>$data];
+        $data = [
+            "dosen" => $dosen,
+            "prestasi" => $data
+        ];
+
         $this->view("dashboard/detailPrestasi", "Detail Prestasi", $data);
     }
 
     public function validatePrestasi(Request $request, Response $response)
     {
         // Ambil data dari request
-        $data = $request->Body();
+        $body = $request->Body();
+        $user = Session::get("user");
 
-        // Validasi input
-        if (!isset($data)) {
-            return $this->view("validasi/error", "validasi", [
-                "error" => "gagal validasi coba  lagi"
-            ]);
+        try {
+            // Validasi input
+
+            $admin = Admin::findNip(Session::get("user"));
+            $idPrestasi = $body['prestasi_id'];
+            $validasiStatus = $body['action_validasi'] === 'validasi' ? "1" : "0";
+
+            if ($validasiStatus == "1") {
+                $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
+                $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
+                $response->redirect("/dashboard/admin/{$user}/prestasi");
+            } else {
+                $response->redirect("/dashboard/admin/{$user}/prestasi");
+            }
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
         }
-        $admin = Admin::findNip(Session::get("user"));
-        $idPrestasi = $data['id_prestasi'];
-        $validasiStatus = $data['validasi'];
+    }
 
-
-        $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
-        $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id_user"], Prestasi::ID, $idPrestasi);
-
-        if ($updateValidasi['success'] && $updateAdmin['success']) {
-            return $this->view("validasi/success", "validasi", [
-                "message" => "Prestasi mahasiswa berhasil divalidasi."
-            ]);
-        }
-        
-
-        return $this->view("validasi/error", "validasi", [
-            "error" => "Terjadi kesalahan saat memvalidasi prestasi mahasiswa."
-        ]);
+    public function renderDaftarMahasiswa(): void
+    {
+        $data = Mahasiswa::displayMahasiswa();
+        $this->view("/dashboard/admin/daftarMahasiswaBerprestasi", "Daftar Mahasiswa", $data);
     }
 }
