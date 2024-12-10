@@ -114,7 +114,7 @@
     .system-description {
         text-align: center;
         font-size: 0.8rem;
-        color: white;
+        color: #0039C8;
         margin-top: 15px;
     }
 

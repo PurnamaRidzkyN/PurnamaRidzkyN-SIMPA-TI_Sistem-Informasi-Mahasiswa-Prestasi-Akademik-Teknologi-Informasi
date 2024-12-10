@@ -116,7 +116,7 @@ body {
 .system-description {
     text-align: center;
     font-size: 0.9rem;
-    color: white;
+    color: #0039C8;
     margin-top: 20px;
 }
 
