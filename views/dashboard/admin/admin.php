@@ -433,7 +433,7 @@ $user = Session::get('user');
     </div>
     <div class="menu">
         <a href="#">Home</a>
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
         <a href="#">Leaderboard</a>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
     </div>

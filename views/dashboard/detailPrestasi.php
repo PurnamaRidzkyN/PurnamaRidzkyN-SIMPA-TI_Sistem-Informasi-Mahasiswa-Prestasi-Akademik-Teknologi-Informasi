@@ -7,7 +7,9 @@ use app\helpers\Dump;
 $data = View::getData();
 $user = Session::get("user");
 $dosen = $data["dosen"];
-$prestasi = $data["prestasi"]; 
+$prestasi = $data["prestasi"];
+// Periksa apakah array mengandung 'success'
+$hasSuccess = in_array('benernjir', $data);
 
 ?>
 
@@ -81,6 +83,11 @@ $prestasi = $data["prestasi"];
                 <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi</label>
                 <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi']; ?>" readonly>
             </div>
+            <div class="mb-3">
+                <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi En</label>
+                <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi_en']; ?>" readonly>
+            </div>
+
 
             <!-- URL Kompetisi -->
             <div class="mb-3">
@@ -169,23 +176,33 @@ $prestasi = $data["prestasi"];
             <!-- Tombol Validasi dan Tolak Validasi -->
             <div class="mb-3">
                 <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
-                    <!-- Tombol Validasi dan Tolak Validasi -->
-                    <form method="POST" action="/dashboard/<?= $user ?>/detail-prestasi">
+
+
+                    <!-- Tombol Validasi -->
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
+                    </form>
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
                         <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="validasi" value="valid"> <!-- Status Validasi -->
-                        <button type="submit" class="btn btn-success" name="action" value="validasi">Validasi</button>
+                        <button type="submit" class="btn btn-success" name="action_validasi" value="validasi">Validasi</button>
                     </form>
 
-                    <form method="POST" action="/dashboard/<?= $user ?>/detail-prestasi">
+
+                    <!-- Tombol Tolak Validasi -->
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
                         <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="validasi" value="invalid"> <!-- Status Tolak Validasi -->
-                        <button type="submit" class="btn btn-danger" name="action" value="tolak">Tolak Validasi</button>
+                        <button type="submit" class="btn btn-danger" name="action_tolak" value="tolak">Tolak Validasi</button>
                     </form>
+
                 <?php elseif ($prestasi["validasi"] == 1): ?>
                     <!-- Pesan jika sudah divalidasi -->
                     <p>Sudah divalidasi oleh <?= htmlspecialchars($user, ENT_QUOTES, 'UTF-8'); ?></p>
                 <?php endif; ?>
             </div>
+            <div class="container mt-5">
+
+             
+            </div>
+
 
         </form>
     </div>
@@ -333,7 +350,7 @@ $prestasi = $data["prestasi"];
     }
 
     #addDosenBtn {
-        background-color: #AFFA08; 
+        background-color: #AFFA08;
         padding: 5px 10px;
         border: none;
         border-radius: 25px;
