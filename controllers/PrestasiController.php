@@ -31,9 +31,9 @@ class PrestasiController extends BaseController
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
         $id_mahasiswa = $mahasiswa['result'][0]["id"] ?? "null";
-        $id_peringkat = $body["perinkat"] ?? "null";
+        $id_peringkat = $body["peringkat"] ?? "null";
         $id_admin = "null";
-        $tim = ($body["kategori-kompetisi"] == "Tim") ? 1 : 0;
+        $tim = ($body["kategori-kompetisi"] == "tim") ? 1 : 0;
         $judul_kompetisi = $body["judul-kompetisi"] ?? "null";
         $judul_kompetisi_en = $body["judul-kompetisi-en"] ?? "null";
         $tempat_kompetisi = $body["tempat-kompetisi"] ?? "null";
@@ -56,8 +56,8 @@ class PrestasiController extends BaseController
             $file_sertifikat = FileUpload::uploadFile($file_sertifikat, FileUpload::TARGET_DIR_SERTIFIKAT);
             $foto_kegiatan = FileUpload::uploadFile($foto_kegiatan, FileUpload::TARGET_DIR_FOTO);
             $file_poster = FileUpload::uploadFile($file_poster, FileUpload::TARGET_DIR_POSTER);
-
-
+         
+           
 
             $data = [
                 "id" => $id,
@@ -89,9 +89,9 @@ class PrestasiController extends BaseController
             // Loop melalui data POST untuk mendapatkan setiap dosen
             foreach ($body as $key => $value) {
                 // Menyaring hanya yang dimulai dengan 'dosen-pembimbing-'
-                if (strpos($key, 'dosen-pembimbing-') === 0) {
-                    // Masukkan nilai dosen (ID dosen) ke dalam array
-                    $dosen[] = $value;
+                if (strpos($key, 'dosen-') === 0) {
+                    $value = Dosen::findName($value);
+                    $dosen[] = $value["result"][0]["id"];
                 }
             }
 
@@ -108,7 +108,7 @@ class PrestasiController extends BaseController
                 "null",
                 $prestasiData
             );
-
+            
             $user = Session::get("user");;
             for ($i = 0; $i < count($dosen); $i++) {
                 $data = [];
@@ -174,7 +174,7 @@ class PrestasiController extends BaseController
             } else {
                 $filtered_data = $data["result"];
             }
-            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
+            $this->view("dashboard/mahasiswa/listPrestasiMahasiswa", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }

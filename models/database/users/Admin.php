@@ -14,6 +14,7 @@ class Admin extends BaseModel
     public const NAMA = "nama";
     public const FOTO = "foto";
     public const EMAIL = "email";
+    public const VIEW = "GetLeaderboard";
 
 
     public static function insert(array $data): array
@@ -38,6 +39,13 @@ class Admin extends BaseModel
     public static function displayAdmin(): array
     {
         return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+            $table->select();
+        });
+    }
+
+    public static function getLeaderboard(): array
+    {
+        return Schema::selectFrom(self::VIEW, function (Blueprint $table) {
             $table->select();
         });
     }

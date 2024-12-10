@@ -38,6 +38,10 @@ $app::post("/change-password/new-password",[NewPassword::class,"changePassword"]
 $app::get("/dashboard/admin/:nip", [Dashboard::class, "adminDashboard"], [AdminMiddleware::class]);
 $app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "studentDashboard"],[StudentMiddleware::class]);
 
+$app::get("/dashboard/admin/:nip/profil", [Dashboard::class, "renderProfilAdmin"], [AdminMiddleware::class]);
+$app::get("/dashboard/mahasiswa/:nim/profil", [Dashboard::class, "renderProfilMahasiswa"], [StudentMiddleware::class]);
+
+
 $app::get("/dashboard/admin/:nip/log-data",[AuditLog::class,"renderWeb"],[AdminMiddleware::class]);
 $app::post("/dashboard/admin/:nip/log-data",[AuditLog::class,"getFilteredLog"],[AdminMiddleware::class]);
 

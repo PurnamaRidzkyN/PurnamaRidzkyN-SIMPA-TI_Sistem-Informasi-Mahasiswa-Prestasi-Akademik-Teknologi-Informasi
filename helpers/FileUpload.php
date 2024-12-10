@@ -19,18 +19,18 @@ class FileUpload
             if ($file && isset($file["tmp_name"]) ) {
                 $file_size = $file["size"];
                 if ($file_size > $max_size) {
-                    // Handle the case where the file size exceeds the limit
+                   return "0";
                 } else {
                     $target_file = $target_dir . basename($file["name"]);
                     move_uploaded_file($file["tmp_name"], $target_file);
                 }
             } else {
-                echo "File tidak diunggah atau terjadi kesalahan.<br>";
+                return "0";
             }
 
             return $target_file;
         } catch (\PDOException $e) {
-            var_dump($e->getMessage());
+            return($e->getMessage());
         }
     }
 }

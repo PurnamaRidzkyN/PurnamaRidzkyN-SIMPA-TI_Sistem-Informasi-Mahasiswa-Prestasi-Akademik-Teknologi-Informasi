@@ -184,22 +184,25 @@ $user = Session::get('user');
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
-            <img src="logoHijau.png" alt="Logo">
+            <img src="../../../public/component/logoHijau.png" alt="Logo">
             <h1>SIMPA-TI</h1>
         </div>
         <div class="menu">
-            <a href="#">Home</a>
-            <a href="#">Prestasi</a>
+            <a href="<?php echo '/dashboard/admin/' . Session::get("user") ?>">Home</a>
+            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>">Prestasi</a>
             <a href="#">Leaderboard</a>
             <a href="#">Management Data</a> <!-- Menu Management Data -->
         </div>
         <div class="user-info">
             <!-- Notification Bubble -->
             <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-                <img src="notifikasi-03.png" alt="Notifikasi">
+                <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
             </div>
 
-            <img src="profilpic.png" alt="Profile">
+            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil' ?>">
+                <img src="../../../public/component/profilpic.png" alt="Profile">
+            </a>
+
         </div>
     </div>
 
@@ -410,15 +413,6 @@ $user = Session::get('user');
                             </tr>
                         </tbody>
                     </table>
-                    <h4>Tambah Log Data Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID User" id="log-id-user">
-                        <input type="text" placeholder="ID Perubahan" id="log-id-perubahan">
-                        <input type="text" placeholder="Tabel Perubahan" id="log-tabel-perubahan">
-                        <textarea placeholder="Keterangan Kegiatan" id="log-keterangan"></textarea>
-                        <input type="date" placeholder="Tanggal" id="log-tanggal">
-                        <button onclick="addData('log')">Tambah Log Data</button>
-                    </div>
                 `;
             }
 
@@ -458,7 +452,7 @@ $user = Session::get('user');
                 data.keterangan_kegiatan = document.getElementById('log-keterangan').value;
                 data.tanggal = document.getElementById('log-tanggal').value;
             }
-            console.log(data);  // Data yang dimasukkan akan ditampilkan di konsol
+            console.log(data); // Data yang dimasukkan akan ditampilkan di konsol
             alert(type + " data has been added!");
         }
     </script>
