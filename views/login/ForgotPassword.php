@@ -118,6 +118,7 @@
         text-decoration: none;
         color: #0039C8;
         font-size: 1rem;
+
     }
 
     .loading-overlay {
