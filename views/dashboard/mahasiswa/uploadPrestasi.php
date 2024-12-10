@@ -155,6 +155,8 @@ $dosenList = $data["Dosen"];
         font-size: 16px;
     }
 
+
+    /* Green "Tambah Dosen" button with rounded borders */
     #addDosenBtn {
         background-color: #AFFA08;
         padding: 5px 10px;
@@ -193,14 +195,16 @@ $dosenList = $data["Dosen"];
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
+        <img src="../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
+
     </div>
     <div class="menu">
         <a href="#home">Home</a>
         <a href="#prestasi">Prestasi</a>
         <a href="#leaderboard">Leaderboard</a>
     </div>
+
 
     <!-- Main Content -->
     <div class="container">
@@ -230,7 +234,8 @@ $dosenList = $data["Dosen"];
                     <?php endforeach; ?>
                 </select>
 
-                <!-- Judul Kompetisi -->
+                <!-- 
+ Kompetisi -->
                 <label for="judul-kompetisi">Judul kompetisi</label>
                 <input type="text" name="judul-kompetisi" id="judul-kompetisi" required>
 
@@ -268,7 +273,8 @@ $dosenList = $data["Dosen"];
                 <label for="tanggal-akhir">Tanggal Akhir</label>
                 <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
 
-                <!-- Jumlah PT -->
+                <!-- 
+ PT -->
                 <label for="jumlah-pt">Jumlah PT</label>
                 <input type="number" name="jumlah-pt" id="jumlah-pt" required>
 
@@ -311,250 +317,210 @@ $dosenList = $data["Dosen"];
             </form>
         </div>
     </div>
+</div>
 
 
 
-    <script>
-        var dosenList = <?php echo json_encode($dosenList); ?>; // PHP array passed to JS
-        var dosenNames = dosenList.map(function(dosen) {
-            return dosen.nama; // Extracting dosen names
+<script>
+    var dosenList = <?php echo json_encode($dosenList); ?>; // PHP array passed to JS
+    var dosenNames = dosenList.map(function(dosen) {
+        return dosen.nama; // Extracting dosen names
+    });
+
+    function autocomplete(inp, arr) {
+        var currentFocus;
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            closeAllLists();
+
+            if (!val) {
+                return false;
+            }
+
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            this.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    b.addEventListener("click", function(e) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
         });
 
-        function autocomplete(inp, arr) {
-            var currentFocus;
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
-                closeAllLists();
-
-                if (!val) {
-                    return false;
-                }
-
-                currentFocus = -1;
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(a);
-
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                        b.addEventListener("click", function(e) {
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                    }
-                }
-            });
-
-            inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode == 40) {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.keyCode == 38) {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.keyCode == 13) {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                if (!x) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("autocomplete-active");
-            }
-
-            function removeActive(x) {
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x) x[currentFocus].click();
                 }
             }
+        });
 
-            function closeAllLists(elmnt) {
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function(e) {
-                closeAllLists(e.target);
-            });
+        function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            x[currentFocus].classList.add("autocomplete-active");
         }
 
-        // Function to add new dosen input field and delete button
-        document.getElementById("addDosenBtn").addEventListener("click", function() {
-            var container = document.getElementById("dosenFieldsContainer");
-
-            // Create a new div for the new dosen input
-            var newDiv = document.createElement("div");
-            newDiv.classList.add("dosen-container");
-
-            // Create the input field for dosen
-            var inputField = document.createElement("input");
-            inputField.setAttribute("type", "text");
-            inputField.setAttribute("placeholder", "Dosen Pembimbing");
-            inputField.setAttribute("name", "dosen[]"); // Make it an array to send multiple dosen names in the form
-            newDiv.appendChild(inputField);
-
-            // Initialize autocomplete on the new input field
-            autocomplete(inputField, dosenNames);
-
-            // Create delete button for this dosen input
-            var deleteButton = document.createElement("button");
-            deleteButton.innerText = "Hapus";
-            deleteButton.addEventListener("click", function() {
-                container.removeChild(newDiv); // Remove the corresponding input field and delete button
-            });
-            newDiv.appendChild(deleteButton);
-
-            // Append the new div to the container
-            container.appendChild(newDiv);
-        });
-    </script>
-
-    <script>
-        // Fetch the PHP array and create an array of dosen names
-        var dosenList = <?php echo json_encode($dosenList); ?>;
-        var dosenNames = dosenList.map(function(dosen) {
-            return dosen.nama; // Extract the 'nama' of each dosen
-        });
-
-        // Autocomplete function
-        function autocomplete(inp, arr) {
-            var currentFocus;
-
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
-                closeAllLists();
-
-                if (!val) {
-                    return false;
-                }
-
-                currentFocus = -1;
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(a);
-
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-
-                        b.addEventListener("click", function(e) {
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-
-                        a.appendChild(b);
-                    }
-                }
-            });
-
-            inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode == 40) {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.keyCode == 38) {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.keyCode == 13) {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                if (!x) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("autocomplete-active");
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
             }
-
-            function removeActive(x) {
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
-                }
-            }
-
-            function closeAllLists(elmnt) {
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function(e) {
-                closeAllLists(e.target);
-            });
         }
 
-        // Initialize the autocomplete function
-        autocomplete(document.getElementById("dosenInput"), dosenNames);
-    </script>
-
-    <script>
-        function formatDate(input) {
-            const date = new Date(input.value);
-            const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
-            input.value = formattedDate;
-        }
-
-        // Form Validation
-        document.getElementById("prestasiForm").addEventListener("submit", function(event) {
-            let isValid = true;
-            const formElements = this.elements;
-            const alertPlaceholder = document.getElementById('alert-placeholder');
-            alertPlaceholder.innerHTML = ""; // Clear previous alerts
-
-            // Check if all fields are filled
-            for (let i = 0; i < formElements.length; i++) {
-                if (formElements[i].required && formElements[i].value.trim() === "") {
-                    isValid = false;
-                    break;
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
                 }
             }
+        }
 
-            if (!isValid) {
-                // Show Bootstrap alert for incomplete form
-                alertPlaceholder.innerHTML = `
-                <div class="alert alert-danger" role="alert">
-                    Semua kolom wajib diisi!
-                </div>
-            `;
-                event.preventDefault(); // Prevent form submission
-            } else {
-                // Show Bootstrap alert for success after submission
-                alertPlaceholder.innerHTML = `
-                <div class="alert alert-success" role="alert">
-                    Form berhasil dikirim!
-                </div>
-            `;
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    // Function to add new dosen input field and delete button
+    document.getElementById("addDosenBtn").addEventListener("click", function() {
+        var container = document.getElementById("dosenFieldsContainer");
+
+        // Create a new div for the new dosen input
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("dosen-container");
+
+        // Create the input field for dosen
+        var inputField = document.createElement("input");
+        inputField.setAttribute("type", "text");
+        inputField.setAttribute("placeholder", "Dosen Pembimbing");
+        inputField.setAttribute("name", "dosen[]"); // Make it an array to send multiple dosen names in the form
+        newDiv.appendChild(inputField);
+
+        // Initialize autocomplete on the new input field
+        autocomplete(inputField, dosenNames);
+
+        // Create delete button for this dosen input
+        var deleteButton = document.createElement("button");
+        deleteButton.innerText = "Hapus";
+        deleteButton.addEventListener("click", function() {
+            container.removeChild(newDiv); // Remove the corresponding input field and delete button
+        });
+        newDiv.appendChild(deleteButton);
+
+        // Append the new div to the container
+        container.appendChild(newDiv);
+    });
+</script>
+
+<script>
+    // Fetch the PHP array and create an array of dosen names
+    var dosenList = <?php echo json_encode($dosenList); ?>;
+    var dosenNames = dosenList.map(function(dosen) {
+        return dosen.nama; // Extract the 'nama' of each dosen
+    });
+
+    // Autocomplete function
+    function autocomplete(inp, arr) {
+        var currentFocus;
+
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            closeAllLists();
+
+            if (!val) {
+                return false;
+            }
+
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            this.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                    b.addEventListener("click", function(e) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        closeAllLists();
+                    });
+
+                    a.appendChild(b);
+                }
             }
         });
-    </script>
+
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+
+        function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    // Initialize the autocomplete function
+    autocomplete(document.getElementById("dosenInput"), dosenNames);
+</script>
