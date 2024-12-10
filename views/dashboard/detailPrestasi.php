@@ -14,24 +14,32 @@ $hasSuccess = in_array('benernjir', $data);
 ?>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Prestasi</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Prestasi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Kontak</a>
-                </li>
-            </ul>
-        </div>
+<div class="navbar">
+    <div class="logo">
+        <img src="../../../public/component/logoHijau.png" alt="Logo">
+        <h1>SIMPA-TI</h1>
     </div>
-</nav>
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href=<?php echo '/../' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
+        <a href="#">Leaderboard</a>
+        <?php if (Session::get("role") == "1"): ?>
+            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data'; ?>">Management Data</a>
+        <?php endif; ?>
+    </div>
+    <div class="user-info">
+        <!-- Notification Bubble -->
+        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
+            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
+        </div>
+
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/profil' ?>>
+            <img src="../../../public/component/profilpic.png" alt="Profile">
+        </a>
+
+    </div>
+</div>
+
 
 <!-- Main Content -->
 <div class="container mt-5">
@@ -155,22 +163,23 @@ $hasSuccess = in_array('benernjir', $data);
             <!-- Lampiran File -->
             <div class="mb-3">
                 <label for="file-surat-tugas" class="form-label">File Surat Tugas</label>
-                <a href="<?php echo $prestasi['file_surat_tugas']; ?>" class="btn btn-primary" target="_blank">Lihat Surat Tugas</a>
+                <a href="<?php echo '../../../' . $prestasi['file_surat_tugas']; ?>" class="btn btn-primary" target="_blank">Lihat Surat Tugas</a>
             </div>
 
             <div class="mb-3">
                 <label for="file-sertifikat" class="form-label">File Sertifikat</label>
-                <a href="<?php echo $prestasi['file_sertifikat']; ?>" class="btn btn-primary" target="_blank">Lihat Sertifikat</a>
+                <a href="<?php echo '../../../'.$prestasi['file_sertifikat']; ?>" class="btn btn-primary" target="_blank">Lihat Sertifikat</a>
             </div>
 
             <div class="mb-3">
                 <label for="foto-kegiatan" class="form-label">Foto Kegiatan</label>
-                <a href="<?php echo $prestasi['foto_kegiatan']; ?>" class="btn btn-primary" target="_blank">Lihat Foto</a>
+                <a href="<?php echo'../../../'.$prestasi['foto_kegiatan']; ?>" class="btn btn-primary" target="_blank">Lihat Foto</a>
             </div>
 
             <div class="mb-3">
                 <label for="file-poster" class="form-label">File Poster</label>
-                <a href="<?php echo $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
+                <a href="<?php echo '../../../' . $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
+
             </div>
 
             <!-- Tombol Validasi dan Tolak Validasi -->
@@ -195,12 +204,12 @@ $hasSuccess = in_array('benernjir', $data);
 
                 <?php elseif ($prestasi["validasi"] == 1): ?>
                     <!-- Pesan jika sudah divalidasi -->
-                    <p>Sudah divalidasi oleh <?= htmlspecialchars($user, ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p>Sudah divalidasi oleh <?= htmlspecialchars($prestasi["admin_nama"], ENT_QUOTES, 'UTF-8'); ?></p>
                 <?php endif; ?>
             </div>
             <div class="container mt-5">
 
-             
+
             </div>
 
 
@@ -219,7 +228,7 @@ $hasSuccess = in_array('benernjir', $data);
     .navbar {
         display: flex;
         justify-content: space-between;
-        padding: 10px 30px;
+        padding: 8px;
         background-color: #0039C8;
         color: white;
         align-items: center;
@@ -231,21 +240,20 @@ $hasSuccess = in_array('benernjir', $data);
     }
 
     .navbar .logo img {
-        width: 80px;
-        height: 80px;
-        margin-right: 15px;
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
     }
 
     .navbar .logo h1 {
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 700;
-        color: white;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.32px;
     }
 
     .navbar .menu {
         display: flex;
-        gap: 20px;
+        gap: 16px;
     }
 
     .navbar .menu a {
@@ -257,6 +265,28 @@ $hasSuccess = in_array('benernjir', $data);
 
     .navbar .menu a:hover {
         color: #AFFA08;
+        /* Warna hijau saat hover */
+    }
+
+    .navbar .user-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .navbar .user-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .navbar .user-info .notifications {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 
     .container {

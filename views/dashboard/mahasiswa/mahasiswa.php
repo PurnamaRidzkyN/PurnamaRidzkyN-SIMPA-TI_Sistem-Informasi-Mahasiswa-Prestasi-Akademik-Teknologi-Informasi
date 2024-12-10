@@ -418,7 +418,8 @@
         }
     </style>
 </head>
-
+<?php use app\cores\Session;
+use app\models\database\users\Mahasiswa; ?> 
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
@@ -426,8 +427,8 @@
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
-        <a href="/">Home</a>
-        <a href="#">Prestasi</a>
+        <a href="#">Home</a>
+        <a href=<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
         <a href="#">Leaderboard</a>
     </div>
     <div class="user-info">
@@ -446,6 +447,7 @@
     <div class="date">
         <?php
         // Set timezone jika diperlukan
+
         date_default_timezone_set('Asia/Jakarta'); // Zona waktu Jakarta
         echo date('d F Y'); // Menampilkan tanggal saat ini dalam format Hari Bulan Tahun
         ?>
@@ -456,7 +458,7 @@
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang, Masti!</div>
+                <div class="welcome-text">Selamat Datang, <?php echo Mahasiswa::findNim(Session::get("user"))["result"][0]["nama"];?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>

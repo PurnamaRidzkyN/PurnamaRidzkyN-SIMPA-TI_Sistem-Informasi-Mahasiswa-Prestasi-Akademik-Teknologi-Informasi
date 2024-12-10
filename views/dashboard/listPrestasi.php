@@ -132,9 +132,18 @@ $user = Session::get("user");
             <h1>SIMPA-TI</h1>
         </div>
         <div class="menu">
-            <a href="#home">Home</a>
-            <a href="#prestasi">Prestasi</a>
-            <a href="#leaderboard">Leaderboard</a>
+            <?php if (Session::get("role") == "1"): ?>
+                <a href="<?php echo '/dashboard/admin/' . Session::get("user"); ?>">Home</a>
+                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Prestasi</a>
+                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Leaderboard</a>
+
+                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data'; ?>">Management Data</a>
+            <?php else: ?>
+                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Home</a>
+                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Leaderboard</a>
+                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi'; ?>">prestasi</a>
+            <?php endif; ?>
+
         </div>
     </div>
 
@@ -166,7 +175,7 @@ $user = Session::get("user");
                                 <h5 class="card-title"><?= $item['judul_kompetisi'] ?></h5>
                                 <p class="card-text">Status: Belum Divalidasi</p>
                                 <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="/dashboard/admin/<?= $user ?>/detail-prestasi" method="POST">
+                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
                                     <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
                                     <button type="submit" class="btn btn-warning">Detail Prestasi</button>
                                 </form>
@@ -191,7 +200,7 @@ $user = Session::get("user");
                                 <p class="card-text">Status: Sudah Divalidasi</p>
                                 <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
                                 <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="/dashboard/admin/<?= $user ?>/detail-prestasi" method="POST">
+                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
                                     <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
                                     <button type="submit" class="btn btn-success">Detail Prestasi</button>
                                 </form>
@@ -202,6 +211,22 @@ $user = Session::get("user");
             endforeach; ?>
         </div>
     </div>
+    <?php if (Session::get("role") == "2"): ?>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <a href="../<?= $user ?>/upload-prestasi" class="btn btn-success btn-lg" role="button">Upload Prestasi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
 
     <!-- JS and Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

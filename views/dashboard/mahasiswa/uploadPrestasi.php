@@ -330,8 +330,6 @@ $dosenList = $data["Dosen"];
 </div>
 </div>
 
-<?php Dump::out($dosenList); ?>
-
 <script>
     var dosenCounter = 1;
 

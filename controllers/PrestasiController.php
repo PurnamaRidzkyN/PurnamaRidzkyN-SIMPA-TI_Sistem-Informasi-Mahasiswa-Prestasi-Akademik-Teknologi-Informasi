@@ -163,11 +163,16 @@ class PrestasiController extends BaseController
         $data = Prestasi::listPrestasiDisplay();
         $nim = $body["nim"];
         try {
-
-            $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
-                return $item["nim"] === $nim;
-            });
-
+            if (Session::get("role") == "1") {
+                $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
+                    return $item["nim"] === $nim;
+                });
+            } elseif ((Session::get("role") == "2")) {
+                $nim= Mahasiswa::findNim(Session::get("user"))["result"][0]["nim"];
+                $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
+                    return $item["nim"] === $nim;
+                });
+            } 
             $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
@@ -185,36 +190,33 @@ class PrestasiController extends BaseController
             "dosen" => $dosen,
             "prestasi" => $data
         ];
-        
+
         $this->view("dashboard/detailPrestasi", "Detail Prestasi", $data);
     }
 
     public function validatePrestasi(Request $request, Response $response)
     {
         // Ambil data dari request
-        $body= $request->Body();
+        $body = $request->Body();
         $user = Session::get("user");
 
-        try{
-        // Validasi input
- 
-        $admin = Admin::findNip(Session::get("user"));
-        $idPrestasi = $body['prestasi_id'];
-        $validasiStatus = $body['action_validasi'] === 'validasi' ? "1" : "0";
-  
-        if ($validasiStatus == "1"){
-            $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
-            $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
-            $response->redirect("/dashboard/admin/{$user}/prestasi");
-            
-    
-        }else{
-            $response->redirect("/dashboard/admin/{$user}/prestasi");
+        try {
+            // Validasi input
+
+            $admin = Admin::findNip(Session::get("user"));
+            $idPrestasi = $body['prestasi_id'];
+            $validasiStatus = $body['action_validasi'] === 'validasi' ? "1" : "0";
+
+            if ($validasiStatus == "1") {
+                $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
+                $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
+                $response->redirect("/dashboard/admin/{$user}/prestasi");
+            } else {
+                $response->redirect("/dashboard/admin/{$user}/prestasi");
+            }
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
         }
- 
-    }catch (\PDOException $e) {
-        var_dump($e->getMessage());
-    }
     }
 
     public function renderDaftarMahasiswa(): void
