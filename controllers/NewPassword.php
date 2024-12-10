@@ -10,6 +10,7 @@ use app\models\database\users\User;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use app\constant\Config;
+use app\helpers\Dump;
 use app\models\database\users\Mahasiswa;
 use app\models\database\logData\LogData;
 use app\helpers\UUID;
@@ -117,7 +118,7 @@ class NewPassword extends BaseController
         
         try {
             $user =User::findOne($username)["result"][0];
-            
+            Dump::out($user);    
             if (!password_verify($password, $user["password"])) {
                 $this->view("login/changePassword", "changePassword", ["error" => "wrong password"]);                
                 return;
