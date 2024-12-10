@@ -1,5 +1,7 @@
 <style>
     body {
+        margin: 0;
+        padding: 0;
         background: linear-gradient(180deg, #0039C8 0%, #001C62 100%);
         font-family: Poppins, sans-serif;
         display: flex;
@@ -21,10 +23,21 @@
         padding: 20px;
     }
 
+    .header {
+        text-align: center;
+        margin: 20px 0;
+    }
+
     .header h1 {
         font-size: 2rem;
         color: #0000EE;
         margin: 0;
+    }
+
+    .app-name-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .logo {
@@ -53,144 +66,172 @@
 
     .forgot-password-form {
         width: 100%;
-        max-width: 350px;
-        margin: 10px auto;
+        max-width: 400px;
+        margin: 20px auto;
     }
 
     .input-group {
-        margin-bottom: 10px;
-        font-weight: 700;
+        margin-bottom: 12px;
         display: flex;
         flex-direction: column;
     }
 
     .input-group label {
-        font-size: 0.9rem;
+        font-size: 1rem;
         color: #0039C8;
         margin-bottom: 5px;
     }
 
     .input-group input {
         padding: 8px;
-        font-size: 0.9rem;
+        font-size: 1rem;
         border-radius: 5px;
         border: 1px solid #ccc;
     }
 
-    .forgot-password-form p {
-        font-size: 0.9rem;
-        color: #0039C8;
-        margin-bottom: 15px;
-    }
-
-    .back-to-login {
+    .error-message {
         text-align: center;
+        color: red;
+        font-size: 0.9rem;
         margin-top: 10px;
     }
 
-    .back-to-login a {
-        text-decoration: none;
-        color: #0000EE;
-        font-size: 0.9rem;
-    }
-
-    .submit-button {
-        margin-top: 15px;
+    .send-button {
+        margin-top: 20px;
         background: #0000EE;
         color: white;
         border: none;
-        padding: 10px;
+        padding: 12px;
         width: 100%;
         border-radius: 30px;
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: bold;
         cursor: pointer;
     }
 
-    .submit-button:hover {
-        background: #0039C8;
+    .back-to-login {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .back-to-login a {
+        text-decoration: none;
+        color: #0039C8;
+        font-size: 1rem;
+    }
+
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        display: none;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #ccc;
+        border-top-color: #0039C8;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 40px;
+    }
+
+    .left-section,
+    .right-section {
+        width: 45%;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .app-name {
+        font-size: 3rem;
     }
 
     .system-description {
-        text-align: center;
-        font-size: 0.8rem;
-        color: white;
-        margin-top: 15px;
+        font-size: 1rem;
     }
 
-    @media (min-width: 768px) {
-        .container {
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 40px;
-        }
-
-        .left-section,
-        .right-section {
-            width: 45%;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-        }
-
-        .app-name {
-            font-size: 3rem;
-        }
-
-        .system-description {
-            font-size: 1rem;
-        }
-
-        .submit-button {
-            font-size: 1.2rem;
-        }
+    .login-button {
+        font-size: 1.2rem;
     }
+}
 </style>
 
+<div class="loading-overlay">
+    <div class="spinner"></div>
+</div>
+
 <div class="container">
-        <div class="left-section">
-            <div class="app-name-container">
-                <img class="logo" src="./public/component/logoHijau.png" alt="Logo">
-                <div class="app-name">
-                    <span class="simpa">SIMPA</span><span class="dash">-</span><span class="ti">TI</span>
-                </div>
-            </div>
-            <p class="system-description">
-                SISTEM INFORMASI MAHASISWA BERPRESTASI TEKNOLOGI INFORMASI
-            </p>
-        </div>
-
-        <div class="right-section">
-            <div class="header">
-                <h1>LUPA KATA SANDI</h1>
-            </div>
-            <form action="/send-password" method="post" class="forgotPasswordForm" id="forgotPasswordForm">
-
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input class="username" type="text" id="username" placeholder="Masukkan Username Anda" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input class="email" type="email" id="email" placeholder="Masukkan Email Anda" required>
-                </div>
-                <!-- Pesan Error / Sukses -->
-                <div class="text-danger mb-3">
-                    <?php echo app\cores\View::getData()["error"] ?? "" ?>
-                </div>
-                <div class="text-success mb-3">
-                    <?php echo app\cores\View::getData()["success"] ?? "" ?>
-                </div>
-
-                <button type="submit" class="submit-button">Kirim Sandi Baru</button>
-            </form>
-
-            <div class="back-to-login">
-                <a href="/login">Kembali untuk Login</a>
+    <div class="left-section">
+        <div class="app-name-container">
+            <img class="logo" src="../public/component/logoHijau.png" alt="Logo">
+            <div class="app-name">
+                <span class="simpa">SIMPA</span><span class="dash">-</span><span class="ti">TI</span>
             </div>
         </div>
     </div>
 
+    <div class="right-section">
+        <div class="header">
+            <h1>Lupa Kata Sandi</h1>
+        </div>
 
+        <form action="/send-password" method="post" class="forgot-password-form" id="forgotPasswordForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Masukkan username">
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Masukkan email">
+            </div>
+
+            <!-- Pesan Error -->
+            <div class="error-message" id="error-message">
+                <!-- PHP error message will be inserted here -->
+                <?php echo app\cores\View::getData()["error"] ?? "" ?>
+            </div>
+
+            <button type="submit" class="send-button">Kirim Kata Sandi Baru</button>
+
+            <!-- Kembali ke halaman login -->
+            <div class="back-to-login">
+                <a href="/login">Kembali ke halaman login</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- jQuery Library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Fungsi untuk menampilkan overlay loading saat form dikirim
+        $('#forgotPasswordForm').on('submit', function() {
+            $('.loading-overlay').show();
+        });
+    });
+</script>

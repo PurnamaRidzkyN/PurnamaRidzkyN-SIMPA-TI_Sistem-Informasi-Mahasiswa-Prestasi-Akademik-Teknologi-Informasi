@@ -26,6 +26,7 @@ class NewPassword extends BaseController
     public function handleForgotPassword(Request $req, Response $res): void
     {
         $body = $req->body();
+        Dump::out($body);
         $username = $body["username"];
         $email = $body["email"];
         $gmail = Config::getEmail();
