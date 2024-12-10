@@ -10,6 +10,7 @@ $dosen = $data["dosen"];
 $prestasi = $data["prestasi"]; 
 
 ?>
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -52,16 +53,15 @@ $prestasi = $data["prestasi"];
                 <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['tingkat_lomba']; ?>" readonly>
             </div>
 
-
-            <!-- Tingkat Kompetisi -->
+            <!-- Judul Kompetisi -->
             <div class="mb-3">
-                <label for="judul-kompetisi" class="form-label">judul kompetisi</label>
-                <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>" readonly>
-            </div><!-- Tingkat Kompetisi -->
+                <label for="judul-kompetisi" class="form-label">Judul Kompetisi</label>
+                <input type="text" class="form-control" id="judul-kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>" readonly>
+            </div>
 
             <div class="mb-3">
-                <label for="judul-kompetisi-en" class="form-label">judul kompetisi en</label>
-                <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['judul_kompetisi_en']; ?>" readonly>
+                <label for="judul-kompetisi-en" class="form-label">Judul Kompetisi EN</label>
+                <input type="text" class="form-control" id="judul-kompetisi-en" value="<?php echo $prestasi['judul_kompetisi_en']; ?>" readonly>
             </div>
 
             <!-- Kategori Kompetisi -->
@@ -126,7 +126,7 @@ $prestasi = $data["prestasi"];
 
             <!-- Kategori Partisipasi -->
             <div class="mb-3">
-                <label for="kategori-partisipasi" class="form-label">skor</label>
+                <label for="kategori-partisipasi" class="form-label">Skor</label>
                 <input type="text" class="form-control" id="kategori-partisipasi" value="<?php echo $prestasi['skor']; ?>" readonly>
             </div>
 
@@ -165,6 +165,7 @@ $prestasi = $data["prestasi"];
                 <label for="file-poster" class="form-label">File Poster</label>
                 <a href="<?php echo $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
             </div>
+
             <!-- Tombol Validasi dan Tolak Validasi -->
             <div class="mb-3">
                 <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
@@ -186,7 +187,163 @@ $prestasi = $data["prestasi"];
                 <?php endif; ?>
             </div>
 
-
         </form>
     </div>
 </div>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Galatea', sans-serif;
+        background-color: #f5f5f5;
+        color: white;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 30px;
+        background-color: #0039C8;
+        color: white;
+        align-items: center;
+    }
+
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar .logo img {
+        width: 80px;
+        height: 80px;
+        margin-right: 15px;
+    }
+
+    .navbar .logo h1 {
+        font-size: 30px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.5px;
+    }
+
+    .navbar .menu {
+        display: flex;
+        gap: 20px;
+    }
+
+    .navbar .menu a {
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .navbar .menu a:hover {
+        color: #AFFA08;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .form-container {
+        background-color: #0039C8;
+        padding: 30px;
+        padding-bottom: 50px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        min-height: 1200px;
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .form-container h3 {
+        color: #AFFA08;
+        font-size: 35px;
+        font-weight: 700;
+    }
+
+    .form-container label {
+        color: rgba(255, 255, 255, 0.90);
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .form-container input,
+    .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 16px;
+        border-radius: 25px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .dosen-entry {
+        margin-bottom: 16px;
+    }
+
+    .dosen-select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 25px;
+        border: none;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    .btn-tambah {
+        background-color: #AFFA08;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        color: black;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 16px;
+    }
+
+    .btn-tambah:hover {
+        background-color: #c5ff5f;
+    }
+
+    .form-container .submit-btn {
+        background-color: #AFFA08;
+        border-radius: 25px;
+        padding: 10px 20px;
+        color: black;
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .form-container input[type="file"] {
+        padding: 0;
+        font-size: 16px;
+    }
+
+    #addDosenBtn {
+        background-color: #AFFA08; 
+        padding: 5px 10px;
+        border: none;
+        border-radius: 25px;
+        color: black;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    #addDosenBtn:hover {
+        background-color: #c5ff5f;
+    }
+</style>
