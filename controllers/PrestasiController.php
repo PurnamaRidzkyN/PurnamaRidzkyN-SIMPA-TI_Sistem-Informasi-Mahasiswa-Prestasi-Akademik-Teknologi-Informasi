@@ -26,7 +26,7 @@ class PrestasiController extends BaseController
     {
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
-
+        Dump::out($body);
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
@@ -174,7 +174,7 @@ class PrestasiController extends BaseController
             } else {
                 $filtered_data = $data["result"];
             }
-            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
+            $this->view("dashboard/mahasiswa/listPrestasiMahasiswa", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
