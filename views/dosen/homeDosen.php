@@ -308,11 +308,8 @@
             color: #0039C8;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
 
 
@@ -422,21 +419,16 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
+        <img src="logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
-        <a href="/">Home</a>
-        <a href="#">Prestasi</a>
+        <a href="#">Home</a>
         <a href="#">Leaderboard</a>
+        <a href="#">Mahasiswa Bimbingan</a>
     </div>
     <div class="user-info">
-        <!-- Notification Bubble -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
-        </div>
-
-        <img src="../../../public/component/profilpic.png" alt="Profile">
+        <img src="profilpic.png" alt="Profile">
     </div>
 </div>
 
@@ -454,7 +446,7 @@
 <div class="main-container">
     <div class="left-container">
         <div class="blue-box">
-            <img class="image" src="../../../public/component/masti.png" alt="Image">
+            <img class="image" src="masti.png" alt="Image">
             <div class="text-container">
                 <div class="welcome-text">Selamat Datang, Masti!</div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
@@ -463,33 +455,123 @@
         <div class="upcoming-events">
             <div class="header">Upcoming Events</div>
             <div class="event-container">
-            <?php
-            // Data event disimpan dalam array
-            use app\cores\View;
-            use app\helpers\Dump;
-            $data = View::getData();  
-            $events = $data["info_lomba"]["result"];
-            // Dump::out($events);
+                <!-- Event 1 -->
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="pamflet sportif 2024.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">10 Nov</div>
+                        <div class="event-name">SPORTIF</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
 
-            // Loop untuk menampilkan setiap event
-            foreach ($events as $event) {
-                echo '<div class="event-box">';
-                echo '    <div class="event-img">';
-                echo '        <img src="' . $event['file_poster'] . '" alt="Event Image">';
-                echo '    </div>';
-                echo '    <div class="event-info">';
-                echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
-                echo '        <div class="event-name">' . $event['judul'] . '</div>';
-                echo '        <div class="categories">';
-                echo '            <ul>';
-                echo ($event['deskripsi_lomba']);
-                echo '            </ul>';
-                echo '        </div>';
-                echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                echo '    </div>';
-                echo '</div>';
-            }
-            ?>
+                <!-- Event 2 -->
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="pamflet sportif 2024.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">15 Dec</div>
+                        <div class="event-name">EXCITING</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="pamflet sportif 2024.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">12 Feb</div>
+                        <div class="event-name">FESTIVAL</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
+
+                <!-- Event 4 -->
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="pamflet sportif 2024.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">20 Mar</div>
+                        <div class="event-name">MUSIC FEST</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
+
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="pamflet sportif 2024.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">15 Dec</div>
+                        <div class="event-name">EXCITING</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
+
+                <div class="event-box">
+                    <div class="event-img">
+                        <img src="Innoverse.jpg" alt="Event Image">
+                    </div>
+                    <div class="event-info">
+                        <div class="date">15 Dec</div>
+                        <div class="event-name">EXCITING</div>
+                        <div class="categories">
+                            <ul>
+                                <li>Voli</li>
+                                <li>Futsal</li>
+                                <li>Mobile Legends</li>
+                                <li>Basket</li>
+                            </ul>
+                        </div>
+                        <div class="link"><a href="https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D" target="_blank">Klik disini</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -501,26 +583,61 @@
             <div class="header">LEADERBOARD</div>
         </div>
 
-        <?php
-        
+        <!-- Rank 1 -->
+        <div class="rank-item">
+            <div class="rank-number">1</div>
+            <img src="profilpic.png" alt="User Image">
+            <div class="rank-info">
+                <div class="name">M. Ulil Fahmi</div>
+                <div class="details">D-IV SIB</div>
+                <div class="points">100 pts</div>
+            </div>
+        </div>
 
-        // Data leaderboard
-        $data = View::getData();
-        $leaderboardData = $data["leaderboard"]["result"];
-        // Dump::out($data);
+        <!-- Rank 2 -->
+        <div class="rank-item">
+            <div class="rank-number">2</div>
+            <img src="profilpic.png" alt="User Image">
+            <div class="rank-info">
+                <div class="name">M. Ulil Fahmi</div>
+                <div class="details">D-IV SIB</div>
+                <div class="points">90 pts</div>
+            </div>
+        </div>
 
-        // Render leaderboard
-        foreach ($leaderboardData as $item) {
-            echo '<div class="rank-item">';
-            echo '<div class="rank-number">' . $item['rank'] . '</div>';
-            echo '<img src="' . $item['image'] . '" alt="User Image">';
-            echo '<div class="rank-info">';
-            echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
-            echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-            echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
-            echo '</div>'; // rank-info
-            echo '</div>'; // rank-item
-        }
-        ?>
+        <!-- Rank 3 -->
+        <div class="rank-item">
+            <div class="rank-number">3</div>
+            <img src="profilpic.png" alt="User Image">
+            <div class="rank-info">
+                <div class="name">M. Ulil Fahmi</div>
+                <div class="details">D-IV SIB</div>
+                <div class="points">85 pts</div>
+            </div>
+        </div>
+
+        <!-- Rank 4 -->
+        <div class="rank-item">
+            <div class="rank-number">4</div>
+            <img src="profilpic.png" alt="User Image">
+            <div class="rank-info">
+                <div class="name">M. Ulil Fahmi</div>
+                <div class="details">D-IV SIB</div>
+                <div class="points">80 pts</div>
+            </div>
+        </div>
+
+        <!-- Rank 5 -->
+        <div class="rank-item">
+            <div class="rank-number">5</div>
+            <img src="profilpic.png" alt="User Image">
+            <div class="rank-info">
+                <div class="name">M. Ulil Fahmi</div>
+                <div class="details">D-IV SIB</div>
+                <div class="points">75 pts</div>
+            </div>
+        </div>
+    </div>
+    </body>
 
 </html>

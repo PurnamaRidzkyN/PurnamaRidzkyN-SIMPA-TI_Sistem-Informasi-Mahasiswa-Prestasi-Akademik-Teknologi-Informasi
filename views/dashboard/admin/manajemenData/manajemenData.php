@@ -410,15 +410,6 @@ $user = Session::get('user');
                             </tr>
                         </tbody>
                     </table>
-                    <h4>Tambah Log Data Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID User" id="log-id-user">
-                        <input type="text" placeholder="ID Perubahan" id="log-id-perubahan">
-                        <input type="text" placeholder="Tabel Perubahan" id="log-tabel-perubahan">
-                        <textarea placeholder="Keterangan Kegiatan" id="log-keterangan"></textarea>
-                        <input type="date" placeholder="Tanggal" id="log-tanggal">
-                        <button onclick="addData('log')">Tambah Log Data</button>
-                    </div>
                 `;
             }
 

@@ -1,36 +1,196 @@
-<body class="bg-primary d-flex align-items-center justify-content-center h-screen">
-    <div class="bg-white rounded-4 px-5 py-4 shadow-lg text-center">
-        <h1 class="fw-bold text-primary">Lupa Kata Sandi</h1>
-        <p class="fs-5 mt-3 text-secondary">Masukkan email dan username Anda untuk mengatur ulang kata sandi</p>
+<style>
+    body {
+        background: linear-gradient(180deg, #0039C8 0%, #001C62 100%);
+        font-family: Poppins, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
 
-        <form action="/send-password" method="post" class="mt-4">
-            <!-- Username Input -->
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username Anda" required>
-            </div>
+    .container {
+        width: 90%;
+        max-width: 900px;
+        background: white;
+        border-radius: 30px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
 
-            <!-- Email Input -->
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email Anda" required>
-            </div>
+    .header h1 {
+        font-size: 2rem;
+        color: #0000EE;
+        margin: 0;
+    }
 
-            <!-- Pesan Error / Sukses -->
-            <div class="text-danger mb-3">
-                <?php echo app\cores\View::getData()["error"] ?? "" ?>
-            </div>
-            <div class="text-success mb-3">
-                <?php echo app\cores\View::getData()["success"] ?? "" ?>
-            </div>
+    .logo {
+        width: 250px;
+        height: auto;
+        margin-bottom: 10px;
+    }
 
-            <!-- Tombol Kirim -->
-            <button type="submit" class="btn btn-primary w-100 py-2">Kirim sandi baru</button>
+    .app-name {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+    }
 
-            <!-- Kembali ke Login -->
-            <div class="mt-3">
-                <a href="/login" class="text-decoration-none text-primary">Kembali ke Login</a>
+    .app-name .simpa {
+        color: #0039C8;
+    }
+
+    .app-name .dash {
+        color: #AFFA08;
+    }
+
+    .app-name .ti {
+        color: #0039C8;
+    }
+
+    .forgot-password-form {
+        width: 100%;
+        max-width: 350px;
+        margin: 10px auto;
+    }
+
+    .input-group {
+        margin-bottom: 10px;
+        font-weight: 700;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+        color: #0039C8;
+        margin-bottom: 5px;
+    }
+
+    .input-group input {
+        padding: 8px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .forgot-password-form p {
+        font-size: 0.9rem;
+        color: #0039C8;
+        margin-bottom: 15px;
+    }
+
+    .back-to-login {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .back-to-login a {
+        text-decoration: none;
+        color: #0000EE;
+        font-size: 0.9rem;
+    }
+
+    .submit-button {
+        margin-top: 15px;
+        background: #0000EE;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .submit-button:hover {
+        background: #0039C8;
+    }
+
+    .system-description {
+        text-align: center;
+        font-size: 0.8rem;
+        color: white;
+        margin-top: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 40px;
+        }
+
+        .left-section,
+        .right-section {
+            width: 45%;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+
+        .app-name {
+            font-size: 3rem;
+        }
+
+        .system-description {
+            font-size: 1rem;
+        }
+
+        .submit-button {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<div class="container">
+        <div class="left-section">
+            <div class="app-name-container">
+                <img class="logo" src="./public/component/logoHijau.png" alt="Logo">
+                <div class="app-name">
+                    <span class="simpa">SIMPA</span><span class="dash">-</span><span class="ti">TI</span>
+                </div>
             </div>
-        </form>
+            <p class="system-description">
+                SISTEM INFORMASI MAHASISWA BERPRESTASI TEKNOLOGI INFORMASI
+            </p>
+        </div>
+
+        <div class="right-section">
+            <div class="header">
+                <h1>LUPA KATA SANDI</h1>
+            </div>
+            <form action="/send-password" method="post" class="forgotPasswordForm" id="forgotPasswordForm">
+
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input class="username" type="text" id="username" placeholder="Masukkan Username Anda" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input class="email" type="email" id="email" placeholder="Masukkan Email Anda" required>
+                </div>
+                <!-- Pesan Error / Sukses -->
+                <div class="text-danger mb-3">
+                    <?php echo app\cores\View::getData()["error"] ?? "" ?>
+                </div>
+                <div class="text-success mb-3">
+                    <?php echo app\cores\View::getData()["success"] ?? "" ?>
+                </div>
+
+                <button type="submit" class="submit-button">Kirim Sandi Baru</button>
+            </form>
+
+            <div class="back-to-login">
+                <a href="/login">Kembali untuk Login</a>
+            </div>
+        </div>
     </div>
-</body>
+
+
