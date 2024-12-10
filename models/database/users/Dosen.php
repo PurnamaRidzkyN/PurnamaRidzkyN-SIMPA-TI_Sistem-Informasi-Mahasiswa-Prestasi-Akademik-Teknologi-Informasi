@@ -19,21 +19,26 @@ class Dosen extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::ID_USER,self::NIDN, self::NAMA,self::EMAIL,self::FOTO], $data);
-            
+            $table->insert([self::ID, self::ID_USER, self::NIDN, self::NAMA, self::EMAIL, self::FOTO], $data);
         });
     }
-    public static function displayDosen():array
+    public static function displayDosen(): array
     {
         return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
             $table->select();
         });
     }
-     public static function findNidn(string $nidn): array 
+    public static function findNidn(string $nidn): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nidn) {
-            $table->selectWhere(["nidn" => $nidn], [self::ID, self::ID_USER, self::NIDN,self::NAMA,self::FOTO, self::EMAIL]);
-        });   
+            $table->selectWhere(["nidn" => $nidn], [self::ID, self::ID_USER, self::NIDN, self::NAMA, self::FOTO, self::EMAIL]);
+        });
+    }
+    public static function findName(string $name): array
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($name) {
+            $table->selectWhere([self::NAMA => $name], [self::ID, self::ID_USER, self::NIDN, self::NAMA, self::FOTO, self::EMAIL]);
+        });
     }
 
     public static function deleteAll(): array
