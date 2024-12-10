@@ -156,7 +156,7 @@ $dosenList = $data["Dosen"];
 
 /* Green "Tambah Dosen" button with rounded borders */
 #addDosenBtn {
-    background-color: #AFFA08; /* Green color */
+    background-color: #AFFA08;
     padding: 5px 10px;
     border: none;
     border-radius: 25px;
@@ -172,7 +172,7 @@ $dosenList = $data["Dosen"];
 
 /* Red "Hapus" button with rounded borders */
 .dosen-container button {
-    background-color: #dc3545; /* Red color */
+    background-color: #dc3545;
     padding: 5px 10px;
     border: none;
     border-radius: 25px;
