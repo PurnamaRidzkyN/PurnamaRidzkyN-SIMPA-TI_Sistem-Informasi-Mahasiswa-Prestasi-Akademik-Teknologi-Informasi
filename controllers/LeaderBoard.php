@@ -16,15 +16,13 @@ class Leaderboard extends BaseController
      */
     public function renderLeaderboard(): void
     {
-        // Ambil data mahasiswa
+        $this->view("leaderboard/Leaderboard", "Leaderboard");
+    }
+    public function renderLeaderboardAll() : void {
         $mahasiswa = Mahasiswa::getLeaderboard();
-        $admin = Admin::getLeaderboard();
 
         $mahasiswa = $mahasiswa['result'];
-        $this->view("leaderboard/Leaderboard", "Leaderboard", $mahasiswa);
-        $admin = $admin["result"];
-        $this->view("leaderboard/Leaderboard", "Leaderboard", $admin);
+        $this->view("leaderboard/LeaderboardJti", "Leaderboard", $mahasiswa);
         
-
     }
 }

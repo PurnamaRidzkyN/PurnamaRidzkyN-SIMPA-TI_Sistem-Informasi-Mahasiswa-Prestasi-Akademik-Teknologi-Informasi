@@ -418,8 +418,10 @@
         }
     </style>
 </head>
-<?php use app\cores\Session;
-use app\models\database\users\Mahasiswa; ?> 
+<?php
+
+use app\cores\Session;
+use app\models\database\users\Mahasiswa; ?>
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
@@ -458,40 +460,41 @@ use app\models\database\users\Mahasiswa; ?>
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang, <?php echo Mahasiswa::findNim(Session::get("user"))["result"][0]["nama"];?></div>
+                <div class="welcome-text">Selamat Datang, <?php echo Mahasiswa::findNim(Session::get("user"))["result"][0]["nama"]; ?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>
         <div class="upcoming-events">
             <div class="header">Upcoming Events</div>
             <div class="event-container">
-            <?php
-            // Data event disimpan dalam array
-            use app\cores\View;
-            use app\helpers\Dump;
-            $data = View::getData();  
-            $events = $data["info_lomba"]["result"];
-            // Dump::out($events);
+                <?php
+                // Data event disimpan dalam array
+                use app\cores\View;
+                use app\helpers\Dump;
 
-            // Loop untuk menampilkan setiap event
-            foreach ($events as $event) {
-                echo '<div class="event-box">';
-                echo '    <div class="event-img">';
-                echo '        <img src="' . $event['file_poster'] . '" alt="Event Image">';
-                echo '    </div>';
-                echo '    <div class="event-info">';
-                echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
-                echo '        <div class="event-name">' . $event['judul'] . '</div>';
-                echo '        <div class="categories">';
-                echo '            <ul>';
-                echo ($event['deskripsi_lomba']);
-                echo '            </ul>';
-                echo '        </div>';
-                echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                echo '    </div>';
-                echo '</div>';
-            }
-            ?>
+                $data = View::getData();
+                $events = $data["info_lomba"]["result"];
+                // Dump::out($events);
+
+                // Loop untuk menampilkan setiap event
+                foreach ($events as $event) {
+                    echo '<div class="event-box">';
+                    echo '    <div class="event-img">';
+                    echo '        <img src="../../../' . $event['file_poster'] . '" alt="Event Image">';
+                    echo '    </div>';
+                    echo '    <div class="event-info">';
+                    echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
+                    echo '        <div class="event-name">' . $event['judul'] . '</div>';
+                    echo '        <div class="categories">';
+                    echo '            <ul>';
+                    echo ($event['deskripsi_lomba']);
+                    echo '            </ul>';
+                    echo '        </div>';
+                    echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+                    echo '    </div>';
+                    echo '</div>';
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -504,13 +507,12 @@ use app\models\database\users\Mahasiswa; ?>
         </div>
 
         <?php
-        
+
 
         // Data leaderboard
         $data = View::getData();
         $leaderboardData = $data["leaderboard"]["result"];
         // Dump::out($data);
-
         // Render leaderboard
         foreach ($leaderboardData as $item) {
             echo '<div class="rank-item">';
@@ -519,7 +521,7 @@ use app\models\database\users\Mahasiswa; ?>
             echo '<div class="rank-info">';
             echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
             echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-            echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+            echo '<div class="points">' . $item['Total_Skor'] . ' pts</div>';
             echo '</div>'; // rank-info
             echo '</div>'; // rank-item
         }

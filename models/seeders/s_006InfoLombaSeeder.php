@@ -26,7 +26,7 @@ class s_006InfoLombaSeeder implements BaseSeeder
         ];
         $file_poster = [
             "public/component/innoverse.jpg",
-            "public/component/innoverse.jpg",
+            "public/component/sportif.jpg",
             "public/component/innoverse.jpg"
         ];
 

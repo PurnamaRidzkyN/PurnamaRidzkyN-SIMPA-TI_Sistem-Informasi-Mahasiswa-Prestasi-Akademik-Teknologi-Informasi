@@ -30,7 +30,7 @@ $hasSuccess = in_array('benernjir', $data);
     <div class="user-info">
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
+            <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
 
         <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/profil' ?>>
