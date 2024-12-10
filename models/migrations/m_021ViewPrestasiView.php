@@ -39,12 +39,13 @@ SELECT
     jl.jenis_lomba,
     tl.tingkat_lomba,
     ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/10  AS skor
-FROM prestasi j
-JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
-JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
-JOIN mahasiswa m ON m.id = j.id_mahasiswa
-JOIN peringkat p ON p.id = j.id_peringkat
-JOIN admin a ON a.id = j.id_admin;");
+    FROM prestasi j
+    JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
+    JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
+    JOIN mahasiswa m ON m.id = j.id_mahasiswa
+    JOIN peringkat p ON p.id = j.id_peringkat
+    JOIN admin a ON a.id = j.id_admin;");
+
     }
 
     public function down(): array
