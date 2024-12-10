@@ -155,7 +155,7 @@
             gap: 20px;
             width: 70%;
             padding-left: 20px;
-            /* Menambahkan padding kiri */
+            
         }
 
         .blue-box {
@@ -207,8 +207,6 @@
             padding: 20px;
             /* Menambahkan padding untuk ruang di sekitar teks */
         }
-
-
 
         /* Upcoming Events Styling */
         .upcoming-events {
@@ -335,25 +333,17 @@
             color: #0039C8;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
 
-
-        /* Leaderboard Styling */
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
             border-radius: 20px;
             padding: 10px;
-            width: 25%;
-            /* Menentukan lebar untuk leaderboard */
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             height: 850px;
-            margin-left: 20px;
-            /* Menambahkan margin kiri untuk menggeser ke kiri */
+            margin-left: 10px;
         }
 
         .header-container {
@@ -367,13 +357,11 @@
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
             font-family: 'Robot Crush', sans-serif;
             margin-bottom: 15px;
-            /* Memberikan jarak lebih sedikit antara header dan isi */
         }
 
 
@@ -449,18 +437,18 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
+        <img src="../../../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
         <a href="#">Home</a>
-        <a href="#">Prestasi</a>
+        <a href="/">Prestasi</a>
         <a href="#">Leaderboard</a>
     </div>
     <div class="user-info">
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="notifikasi-03.png" alt="Notifikasi">
+            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
 
         <div class="login-text">Login</div>
@@ -475,96 +463,96 @@
 <div class="main-container">
     <div class="left-container">
         <div class="blue-box">
-            <img class="image" src="masti.png" alt="Image">
+            <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
                 <div class="welcome-text">Platform ini dirancang untuk membantu mahasiswa memantau peringkat, mengetahui informasi event mendatang, dan mengelola pencapaian prestasi. Login untuk mengakses fitur lengkap dan raih prestasi terbaikmu!
                 </div>
             </div>
         </div>
         <div class="upcoming-events">
-    <div class="header">Upcoming Events</div>
-    <div class="event-container">
-        <?php
-        // Data event dalam array
-        $eventData = [
-            [
-                'date' => '10 Nov',
-                'name' => 'SPORTIF',
-                'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                'image' => 'pamflet sportif 2024.jpg',
-                'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-            ],
-            [
-                'date' => '15 Dec',
-                'name' => 'EXCITING',
-                'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                'image' => 'pamflet sportif 2024.jpg',
-                'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-            ],
-            [
-                'date' => '12 Feb',
-                'name' => 'FESTIVAL',
-                'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                'image' => 'pamflet sportif 2024.jpg',
-                'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-            ]
-        ];
+            <div class="header">Upcoming Events</div>
+            <div class="event-container">
+                <?php
+                // Data event dalam array
+                $eventData = [
+                    [
+                        'date' => '10 Nov',
+                        'name' => 'SPORTIF',
+                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
+                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
+                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
+                    ],
+                    [
+                        'date' => '15 Dec',
+                        'name' => 'EXCITING',
+                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
+                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
+                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
+                    ],
+                    [
+                        'date' => '12 Feb',
+                        'name' => 'FESTIVAL',
+                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
+                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
+                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
+                    ]
+                ];
 
-        // Loop untuk menampilkan data event
-        foreach ($eventData as $event) {
-            echo '<div class="event-box">';
-            echo '<div class="event-img">';
-            echo '<img src="' . $event['image'] . '" alt="Event Image">';
-            echo '</div>';
-            echo '<div class="event-info">';
-            echo '<div class="date">' . $event['date'] . '</div>';
-            echo '<div class="event-name">' . $event['name'] . '</div>';
-            echo '<div class="categories">';
-            echo '<ul>';
-            foreach ($event['categories'] as $category) {
-                echo '<li>' . $category . '</li>';
-            }
-            echo '</ul>';
-            echo '</div>';
-            echo '<div class="link"><a href="' . $event['link'] . '" target="_blank">Klik disini</a></div>';
-            echo '</div>'; // event-info
-            echo '</div>'; // event-box
-        }
-        ?>
-    </div>
-</div>
+                // Loop untuk menampilkan data event
+                foreach ($eventData as $event) {
+                    echo '<div class="event-box">';
+                    echo '<div class="event-img">';
+                    echo '<img src="' . $event['image'] . '" alt="Event Image">';
+                    echo '</div>';
+                    echo '<div class="event-info">';
+                    echo '<div class="date">' . $event['date'] . '</div>';
+                    echo '<div class="event-name">' . $event['name'] . '</div>';
+                    echo '<div class="categories">';
+                    echo '<ul>';
+                    foreach ($event['categories'] as $category) {
+                        echo '<li>' . $category . '</li>';
+                    }
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="link"><a href="' . $event['link'] . '" target="_blank">Klik disini</a></div>';
+                    echo '</div>'; // event-info
+                    echo '</div>'; // event-box
+                }
+                ?>
+            </div>
+        </div>
 
     </div>
     <div class="leaderboard">
-    <div class="header-container">
-        <div class="header">LEADERBOARD</div>
-    </div>
-    <div class="rank-list">
-        <?php
-        // Data leaderboard dalam array
-        $leaderboardData = [
-            ['rank' => 1, 'name' => 'M. Ulil Fahmi', 'details' => 'D-IV SIB', 'points' => 100, 'image' => 'profilpic.png'],
-            ['rank' => 2, 'name' => 'Sarah Jessica', 'details' => 'D-IV TI', 'points' => 90, 'image' => 'profilpic.png'],
-            ['rank' => 3, 'name' => 'John Doe', 'details' => 'D-IV SIB', 'points' => 85, 'image' => 'profilpic.png'],
-            ['rank' => 4, 'name' => 'Jane Smith', 'details' => 'D-IV TI', 'points' => 80, 'image' => 'profilpic.png'],
-            ['rank' => 5, 'name' => 'Alex Martin', 'details' => 'D-IV TI', 'points' => 75, 'image' => 'profilpic.png']
-        ];
+        <div class="header-container">
+            <div class="header">LEADERBOARD</div>
+        </div>
+        <div class="rank-list">
+            <?php
+            // Data leaderboard dalam array
+            $leaderboardData = [
+                ['rank' => 1, 'name' => 'M. Ulil Fahmi', 'details' => 'D-IV SIB', 'points' => 100, 'image' => '../../../public/component/profilpic.png'],
+                ['rank' => 2, 'name' => 'Sarah Jessica', 'details' => 'D-IV TI', 'points' => 90, 'image' => '../../../public/component/profilpic.png'],
+                ['rank' => 3, 'name' => 'John Doe', 'details' => 'D-IV SIB', 'points' => 85, 'image' => '../../../public/component/profilpic.png'],
+                ['rank' => 4, 'name' => 'Jane Smith', 'details' => 'D-IV TI', 'points' => 80, 'image' => '../../../public/component/profilpic.png'],
+                ['rank' => 5, 'name' => 'Alex Martin', 'details' => 'D-IV TI', 'points' => 75, 'image' => '../../../public/component/profilpic.png']
+            ];
 
-        // Loop untuk menampilkan data leaderboard
-        foreach ($leaderboardData as $item) {
-            echo '<div class="rank-item">';
-            echo '<div class="rank-number">' . $item['rank'] . '</div>';
-            echo '<img src="' . $item['image'] . '" alt="User Image">';
-            echo '<div class="rank-info">';
-            echo '<div class="name">' . $item['name'] . '</div>';
-            echo '<div class="details">' . $item['details'] . '</div>';
-            echo '<div class="points">' . $item['points'] . ' pts</div>';
-            echo '</div>'; // rank-info
-            echo '</div>'; // rank-item
-        }
-        ?>
+            // Loop untuk menampilkan data leaderboard
+            foreach ($leaderboardData as $item) {
+                echo '<div class="rank-item">';
+                echo '<div class="rank-number">' . $item['rank'] . '</div>';
+                echo '<img src="' . $item['image'] . '" alt="User Image">';
+                echo '<div class="rank-info">';
+                echo '<div class="name">' . $item['name'] . '</div>';
+                echo '<div class="details">' . $item['details'] . '</div>';
+                echo '<div class="points">' . $item['points'] . ' pts</div>';
+                echo '</div>'; // rank-info
+                echo '</div>'; // rank-item
+            }
+            ?>
+        </div>
     </div>
-</div>
 
 </div>
 </div>
