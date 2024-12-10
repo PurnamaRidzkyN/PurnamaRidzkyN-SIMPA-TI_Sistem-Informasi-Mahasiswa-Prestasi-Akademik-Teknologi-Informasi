@@ -1,21 +1,19 @@
 {
-    "name": "nazwa/simpa-ti",
+    "name": "pbl/gilang",
     "autoload": {
         "psr-4": {
-            "app\\": "./",
-            "app\\models\\migrations\\": "./models/migrations/"      
+            "app\\" : "./",
+            "app\\models\\migrations\\": "./models/migrations/"
         }
     },
     "authors": [
         {
-            "name": "Zwaa",
-            "email": "nazwanrlwjy@gmail.com"
+            "name": "GilangAndhika18",
+            "email": "gilangandhikaerlangga18@gmail.com"
         }
     ],
     "require": {
         "ext-pdo": "*",
-        "ext-sqlsrv": "*",
-        "phpmailer/phpmailer":"^6.9"
-    
+        "ext-sqlsrv": "*"
     }
 }
