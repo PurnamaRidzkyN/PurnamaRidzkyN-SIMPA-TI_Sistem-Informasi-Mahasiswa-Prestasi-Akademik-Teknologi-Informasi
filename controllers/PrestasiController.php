@@ -174,7 +174,7 @@ class PrestasiController extends BaseController
             } else {
                 $filtered_data = $data["result"];
             }
-            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
+            $this->view("dashboard/mahasiswa/listPrestasiMahasiswa", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }

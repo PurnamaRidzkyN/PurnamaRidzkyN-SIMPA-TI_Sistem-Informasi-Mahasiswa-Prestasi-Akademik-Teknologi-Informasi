@@ -155,6 +155,8 @@ $dosenList = $data["Dosen"];
         font-size: 16px;
     }
 
+
+    /* Green "Tambah Dosen" button with rounded borders */
     #addDosenBtn {
         background-color: #AFFA08;
         padding: 5px 10px;
@@ -193,364 +195,368 @@ $dosenList = $data["Dosen"];
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
+        <img src="../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
+
     </div>
     <div class="menu">
         <a href="#home">Home</a>
         <a href="#prestasi">Prestasi</a>
         <a href="#leaderboard">Leaderboard</a>
     </div>
+</div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="form-container">
-            <h3>Form Prestasi Mahasiswa</h3>
+<!-- Main Content -->
+<div class="container">
+    <div class="form-container">
+        <h3>Form Prestasi Mahasiswa</h3>
 
-            <!-- Alert Placeholder -->
-            <div id="alert-placeholder"></div>
+        <!-- Alert Placeholder -->
+        <div id="alert-placeholder"></div>
 
-            <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-                <!-- Jenis Kompetisi -->
-                <label for="jenis-kompetisi">Jenis Kompetisi</label>
-                <select name="jenis-kompetisi" id="jenis-kompetisi" required>
-                    <option value="">Pilih Jenis Kompetisi</option>
-                    <?php foreach ($jenisKompetisi as $jenis) : ?>
-                        <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <!-- Jenis Kompetisi -->
+            <label for="jenis-kompetisi">Jenis Kompetisi</label>
+            <select name="jenis-kompetisi" id="jenis-kompetisi" required>
+                <option value="">Pilih Jenis Kompetisi</option>
+                <?php foreach ($jenisKompetisi as $jenis) : ?>
+                    <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
+                <?php endforeach; ?>
+            </select>
 
-                <!-- Tingkat Kompetisi -->
-                <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
-                <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
-                    <option value="">Pilih Tingkat Kompetisi</option>
-                    <?php foreach ($tingkatKompetisi as $tingkat) : ?>
-                        <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <!-- Tingkat Kompetisi -->
+            <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
+            <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
+                <option value="">Pilih Tingkat Kompetisi</option>
+                <?php foreach ($tingkatKompetisi as $tingkat) : ?>
+                    <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
+                <?php endforeach; ?>
+            </select>
 
-                <!-- Kategori Kompetisi -->
-                <label for="kategori-kompetisi">Kategori Kompetisi</label>
-                <select name="kategori-kompetisi" id="kategori-kompetisi" required>
-                    <option value="">Pilih Kategori Kompetisi</option>
-                    <?php foreach ($kategoriKompetisi as $kategori) : ?>
-                        <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <!-- Kategori Kompetisi -->
+            <label for="kategori-kompetisi">Kategori Kompetisi</label>
+            <select name="kategori-kompetisi" id="kategori-kompetisi" required>
+                <option value="">Pilih Kategori Kompetisi</option>
+                <?php foreach ($kategoriKompetisi as $kategori) : ?>
+                    <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
+                <?php endforeach; ?>
+            </select>
 
-                <!-- Peringkat -->
-                <label for="peringkat">Peringkat</label>
-                <select name="peringkat" id="peringkat" required>
-                    <option value="">Pilih Peringkat</option>
-                    <?php foreach ($urutanPeringkat as $peringkat) : ?>
-                        <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+            <!-- Peringkat -->
+            <label for="peringkat">Peringkat</label>
+            <select name="peringkat" id="peringkat" required>
+                <option value="">Pilih Peringkat</option>
+                <?php foreach ($urutanPeringkat as $peringkat) : ?>
+                    <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
+                <?php endforeach; ?>
+            </select>
 
-                <!-- Tempat Kompetisi -->
-                <label for="tempat-kompetisi">Tempat Kompetisi</label>
-                <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+            <!-- Tempat Kompetisi -->
+            <label for="tempat-kompetisi">Tempat Kompetisi</label>
+            <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
 
-                <!-- URL Kompetisi -->
-                <label for="url-kompetisi">URL Kompetisi</label>
-                <input type="url" name="url-kompetisi" id="url-kompetisi">
+            <!-- URL Kompetisi -->
+            <label for="url-kompetisi">URL Kompetisi</label>
+            <input type="url" name="url-kompetisi" id="url-kompetisi">
 
-                <!-- Tanggal Mulai -->
-                <label for="tanggal-mulai">Tanggal Mulai</label>
-                <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
+            <!-- Tanggal Mulai -->
+            <label for="tanggal-mulai">Tanggal Mulai</label>
+            <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
 
-                <!-- Tanggal Akhir -->
-                <label for="tanggal-akhir">Tanggal Akhir</label>
-                <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
+            <!-- Tanggal Akhir -->
+            <label for="tanggal-akhir">Tanggal Akhir</label>
+            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
 
-                <!-- Jumlah PT -->
-                <label for="jumlah-pt">Jumlah PT</label>
-                <input type="number" name="jumlah-pt" id="jumlah-pt" required>
+            <!-- Jumlah PT -->
+            <label for="jumlah-pt">Jumlah PT</label>
+            <input type="number" name="jumlah-pt" id="jumlah-pt" required>
 
-                <!-- Jumlah Peserta -->
-                <label for="jumlah-peserta">Jumlah Peserta</label>
-                <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
+            <!-- Jumlah Peserta -->
+            <label for="jumlah-peserta">Jumlah Peserta</label>
+            <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
 
-                <!-- No Surat Tugas -->
-                <label for="no-surat-tugas">No Surat Tugas</label>
-                <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
+            <!-- No Surat Tugas -->
+            <label for="no-surat-tugas">No Surat Tugas</label>
+            <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
 
-                <!-- Tanggal Surat Tugas -->
-                <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
-                <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+            <!-- Tanggal Surat Tugas -->
+            <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
+            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
 
-                <!-- Dosen Pembimbing -->
-                <label for="dosen-pembimbing">Dosen Pembimbing</label>
-                <button id="addDosenBtn">Tambah Dosen</button>
+            <!-- Dosen Pembimbing -->
+            <label for="dosen-pembimbing">Dosen Pembimbing</label>
+            <button id="addDosenBtn">Tambah Dosen</button>
 
-                <!-- Container to hold the dosen input fields -->
-                <div id="dosenFieldsContainer"></div>
+            <!-- Container to hold the dosen input fields -->
+            <div id="dosenFieldsContainer"></div>
 
-                <!-- File Surat Tugas -->
-                <label for="file-surat-tugas">File Surat Tugas</label>
-                <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <!-- File Surat Tugas -->
+            <label for="file-surat-tugas">File Surat Tugas</label>
+            <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                <!-- File Sertifikat -->
-                <label for="file-sertifikat">File Sertifikat</label>
-                <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <!-- File Sertifikat -->
+            <label for="file-sertifikat">File Sertifikat</label>
+            <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                <!-- Foto Kegiatan -->
-                <label for="file-foto-kegiatan">Foto Kegiatan</label>
-                <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <!-- Foto Kegiatan -->
+            <label for="file-foto-kegiatan">Foto Kegiatan</label>
+            <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                <!-- File Poster -->
-                <label for="file-poster">File Poster</label>
-                <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+            <!-- File Poster -->
+            <label for="file-poster">File Poster</label>
+            <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-                <button type="submit" class="submit-btn">Kirim</button>
-            </form>
-        </div>
+            <button type="submit" class="submit-btn">Kirim</button>
+        </form>
     </div>
+</div>
 
 
 
-    <script>
-        var dosenList = <?php echo json_encode($dosenList); ?>; // PHP array passed to JS
-        var dosenNames = dosenList.map(function(dosen) {
-            return dosen.nama; // Extracting dosen names
+<script>
+    var dosenList = <?php echo json_encode($dosenList); ?>; // PHP array passed to JS
+    var dosenNames = dosenList.map(function(dosen) {
+        return dosen.nama; // Extracting dosen names
+    });
+
+    function autocomplete(inp, arr) {
+        var currentFocus;
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            closeAllLists();
+
+            if (!val) {
+                return false;
+            }
+
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            this.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    b.addEventListener("click", function(e) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
         });
 
-        function autocomplete(inp, arr) {
-            var currentFocus;
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
-                closeAllLists();
-
-                if (!val) {
-                    return false;
-                }
-
-                currentFocus = -1;
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(a);
-
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                        b.addEventListener("click", function(e) {
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                    }
-                }
-            });
-
-            inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode == 40) {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.keyCode == 38) {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.keyCode == 13) {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                if (!x) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("autocomplete-active");
-            }
-
-            function removeActive(x) {
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x) x[currentFocus].click();
                 }
             }
-
-            function closeAllLists(elmnt) {
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function(e) {
-                closeAllLists(e.target);
-            });
-        }
-
-        // Function to add new dosen input field and delete button
-        document.getElementById("addDosenBtn").addEventListener("click", function() {
-            var container = document.getElementById("dosenFieldsContainer");
-
-            // Create a new div for the new dosen input
-            var newDiv = document.createElement("div");
-            newDiv.classList.add("dosen-container");
-
-            // Create the input field for dosen
-            var inputField = document.createElement("input");
-            inputField.setAttribute("type", "text");
-            inputField.setAttribute("placeholder", "Dosen Pembimbing");
-            inputField.setAttribute("name", "dosen[]"); // Make it an array to send multiple dosen names in the form
-            newDiv.appendChild(inputField);
-
-            // Initialize autocomplete on the new input field
-            autocomplete(inputField, dosenNames);
-
-            // Create delete button for this dosen input
-            var deleteButton = document.createElement("button");
-            deleteButton.innerText = "Hapus";
-            deleteButton.addEventListener("click", function() {
-                container.removeChild(newDiv); // Remove the corresponding input field and delete button
-            });
-            newDiv.appendChild(deleteButton);
-
-            // Append the new div to the container
-            container.appendChild(newDiv);
-        });
-    </script>
-
-    <script>
-        // Fetch the PHP array and create an array of dosen names
-        var dosenList = <?php echo json_encode($dosenList); ?>;
-        var dosenNames = dosenList.map(function(dosen) {
-            return dosen.nama; // Extract the 'nama' of each dosen
         });
 
-        // Autocomplete function
-        function autocomplete(inp, arr) {
-            var currentFocus;
-
-            inp.addEventListener("input", function(e) {
-                var a, b, i, val = this.value;
-                closeAllLists();
-
-                if (!val) {
-                    return false;
-                }
-
-                currentFocus = -1;
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                this.parentNode.appendChild(a);
-
-                for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-
-                        b.addEventListener("click", function(e) {
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            closeAllLists();
-                        });
-
-                        a.appendChild(b);
-                    }
-                }
-            });
-
-            inp.addEventListener("keydown", function(e) {
-                var x = document.getElementById(this.id + "autocomplete-list");
-                if (x) x = x.getElementsByTagName("div");
-                if (e.keyCode == 40) {
-                    currentFocus++;
-                    addActive(x);
-                } else if (e.keyCode == 38) {
-                    currentFocus--;
-                    addActive(x);
-                } else if (e.keyCode == 13) {
-                    e.preventDefault();
-                    if (currentFocus > -1) {
-                        if (x) x[currentFocus].click();
-                    }
-                }
-            });
-
-            function addActive(x) {
-                if (!x) return false;
-                removeActive(x);
-                if (currentFocus >= x.length) currentFocus = 0;
-                if (currentFocus < 0) currentFocus = (x.length - 1);
-                x[currentFocus].classList.add("autocomplete-active");
-            }
-
-            function removeActive(x) {
-                for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
-                }
-            }
-
-            function closeAllLists(elmnt) {
-                var x = document.getElementsByClassName("autocomplete-items");
-                for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                        x[i].parentNode.removeChild(x[i]);
-                    }
-                }
-            }
-
-            document.addEventListener("click", function(e) {
-                closeAllLists(e.target);
-            });
+        function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            x[currentFocus].classList.add("autocomplete-active");
         }
 
-        // Initialize the autocomplete function
-        autocomplete(document.getElementById("dosenInput"), dosenNames);
-    </script>
-
-    <script>
-        function formatDate(input) {
-            const date = new Date(input.value);
-            const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
-            input.value = formattedDate;
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
         }
 
-        // Form Validation
-        document.getElementById("prestasiForm").addEventListener("submit", function(event) {
-            let isValid = true;
-            const formElements = this.elements;
-            const alertPlaceholder = document.getElementById('alert-placeholder');
-            alertPlaceholder.innerHTML = ""; // Clear previous alerts
-
-            // Check if all fields are filled
-            for (let i = 0; i < formElements.length; i++) {
-                if (formElements[i].required && formElements[i].value.trim() === "") {
-                    isValid = false;
-                    break;
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
                 }
             }
+        }
 
-            if (!isValid) {
-                // Show Bootstrap alert for incomplete form
-                alertPlaceholder.innerHTML = `
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    // Function to add new dosen input field and delete button
+    document.getElementById("addDosenBtn").addEventListener("click", function() {
+        var container = document.getElementById("dosenFieldsContainer");
+
+        // Create a new div for the new dosen input
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("dosen-container");
+
+        // Create the input field for dosen
+        var inputField = document.createElement("input");
+        inputField.setAttribute("type", "text");
+        inputField.setAttribute("placeholder", "Dosen Pembimbing");
+        inputField.setAttribute("name", "dosen[]"); // Make it an array to send multiple dosen names in the form
+        newDiv.appendChild(inputField);
+
+        // Initialize autocomplete on the new input field
+        autocomplete(inputField, dosenNames);
+
+        // Create delete button for this dosen input
+        var deleteButton = document.createElement("button");
+        deleteButton.innerText = "Hapus";
+        deleteButton.addEventListener("click", function() {
+            container.removeChild(newDiv); // Remove the corresponding input field and delete button
+        });
+        newDiv.appendChild(deleteButton);
+
+        // Append the new div to the container
+        container.appendChild(newDiv);
+    });
+</script>
+
+<script>
+    // Fetch the PHP array and create an array of dosen names
+    var dosenList = <?php echo json_encode($dosenList); ?>;
+    var dosenNames = dosenList.map(function(dosen) {
+        return dosen.nama; // Extract the 'nama' of each dosen
+    });
+
+    // Autocomplete function
+    function autocomplete(inp, arr) {
+        var currentFocus;
+
+        inp.addEventListener("input", function(e) {
+            var a, b, i, val = this.value;
+            closeAllLists();
+
+            if (!val) {
+                return false;
+            }
+
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            this.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    b = document.createElement("DIV");
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+
+                    b.addEventListener("click", function(e) {
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        closeAllLists();
+                    });
+
+                    a.appendChild(b);
+                }
+            }
+        });
+
+        inp.addEventListener("keydown", function(e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(x);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+
+        function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+
+        function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+
+        function closeAllLists(elmnt) {
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        document.addEventListener("click", function(e) {
+            closeAllLists(e.target);
+        });
+    }
+
+    // Initialize the autocomplete function
+    autocomplete(document.getElementById("dosenInput"), dosenNames);
+</script>
+
+<script>
+    function formatDate(input) {
+        const date = new Date(input.value);
+        const formattedDate = date.getFullYear() + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getDate().toString().padStart(2, '0');
+        input.value = formattedDate;
+    }
+
+    // Form Validation
+    document.getElementById("
+    
+    tasiForm").addEventListener("submit", function(event) {
+        let isValid = true;
+        const formElements = this.elements;
+        const alertPlaceholder = document.getElementById('alert-placeholder');
+        alertPlaceholder.innerHTML = ""; // Clear previous alerts
+
+        // Check if all fields are filled
+        for (let i = 0; i < formElements.length; i++) {
+            if (formElements[i].required && formElements[i].value.trim() === "") {
+                isValid = false;
+                break;
+            }
+        }
+
+        if (!isValid) {
+            // Show Bootstrap alert for incomplete form
+            alertPlaceholder.innerHTML = `
                 <div class="alert alert-danger" role="alert">
                     Semua kolom wajib diisi!
                 </div>
             `;
-                event.preventDefault(); // Prevent form submission
-            } else {
-                // Show Bootstrap alert for success after submission
-                alertPlaceholder.innerHTML = `
+            event.preventDefault(); // Prevent form submission
+        } else {
+            // Show Bootstrap alert for success after submission
+            alertPlaceholder.innerHTML = `
                 <div class="alert alert-success" role="alert">
                     Form berhasil dikirim!
                 </div>
             `;
-            }
-        });
-    </script>
+        }
+    });
+</script>
