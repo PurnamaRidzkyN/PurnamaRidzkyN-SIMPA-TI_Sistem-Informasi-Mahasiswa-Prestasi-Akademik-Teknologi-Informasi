@@ -1,32 +1,36 @@
 <?php
 
-namespace Helpers;
+namespace app\helpers;
 
 class FileUpload
 {
     private const TARGET_DIR = "public/uploads/";
-    const TARGET_DIR_SURAT_TUGAS = self::TARGET_DIR . "suratTugas/";
-    const TARGET_DIR_SERTIFIKAT = self::TARGET_DIR . "sertifikat/";
-    const TARGET_DIR_FOTO = self::TARGET_DIR . "fotokegiatan/";
-    const TARGET_DIR_POSTER = self::TARGET_DIR . "poster/";
-    const TARGET_DIR_FOTO_PROFILE = self::TARGET_DIR . "fotoProfiles/";
-    const TARGET_DIR_LOMBA = self::TARGET_DIR . "lomba/";
-    
+    public const TARGET_DIR_SURAT_TUGAS = self::TARGET_DIR . "suratTugas/";
+    public const TARGET_DIR_SERTIFIKAT = self::TARGET_DIR . "sertifikat/";
+    public const TARGET_DIR_FOTO = self::TARGET_DIR . "fotokegiatan/";
+    public const TARGET_DIR_POSTER = self::TARGET_DIR . "poster/";
+    public const TARGET_DIR_FOTO_PROFILE = self::TARGET_DIR . "fotoProfiles/";
+    public const TARGET_DIR_LOMBA = self::TARGET_DIR . "lomba/";
+
     public static function uploadFile($file, $target_dir)
     {
-        $max_size = 5 * 1024 * 1024;
-        if ($file && isset($file["tmp_name"]) && $file["error"] == 0) {
-            $file_size = $file["size"];
-            if ($file_size > $max_size) {
-                // Handle the case where the file size exceeds the limit
+        try {
+            $max_size = 5 * 1024 * 1024;
+            if ($file && isset($file["tmp_name"]) ) {
+                $file_size = $file["size"];
+                if ($file_size > $max_size) {
+                    // Handle the case where the file size exceeds the limit
+                } else {
+                    $target_file = $target_dir . basename($file["name"]);
+                    move_uploaded_file($file["tmp_name"], $target_file);
+                }
             } else {
-                $target_file = $target_dir . basename($file["name"]);
-                move_uploaded_file($file["tmp_name"], $target_file);
+                echo "File tidak diunggah atau terjadi kesalahan.<br>";
             }
-        } else {
-            echo "File tidak diunggah atau terjadi kesalahan.<br>";
-        }
 
-        return $target_file;
+            return $target_file;
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
+        }
     }
 }

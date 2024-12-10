@@ -20,6 +20,8 @@ class Mahasiswa extends BaseModel
     public const TOTAL_SKOR = "total_skor";
     public const FOTO = "foto";
     public const EMAIL = "email";
+    public const VIEW = "GetLeaderboard";
+    
     
 
     public static function insert(array $data): array
@@ -56,23 +58,12 @@ class Mahasiswa extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
-    public static function findAll(): array
-{
-    return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
-        $table->select([
-            self::ID,
-            self::ID_USER,
-            self::NAMA,
-            self::NIM,
-            self::PRODI,
-            self::JURUSAN,
-            self::TAHUN_MASUK,
-            self::TOTAL_SKOR,
-            self::FOTO,
-            self::EMAIL
-        ]);
-    });
-}
 
+    public static function getLeaderboard(): array
+    {
+        return Schema::selectFrom(self::VIEW, function (Blueprint $table) {
+            $table->select();
+        });
+    }
 
 }

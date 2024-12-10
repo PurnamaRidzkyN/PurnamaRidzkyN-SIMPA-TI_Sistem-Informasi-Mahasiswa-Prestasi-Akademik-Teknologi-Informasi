@@ -1,4 +1,5 @@
 <?php
+namespace app\helpers;
 class ArrayFormatter {
 
     public static function formatKeyValue(array $data): string {

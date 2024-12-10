@@ -437,21 +437,24 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
+
+        <img src="./public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
-        <a href="#">Home</a>
-        <a href="/">Prestasi</a>
+        <a href="/">Home</a>
+        <a href="/login">Prestasi</a>
         <a href="#">Leaderboard</a>
     </div>
     <div class="user-info">
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
+
+            <img src="./public/component/notifikasi.png" alt="Notifikasi">
+
         </div>
 
-        <div class="login-text">Login</div>
+        <div class="login-text"><a href="/login">Login</a></div>
 
     </div>
 </div>
@@ -470,88 +473,66 @@
             </div>
         </div>
         <div class="upcoming-events">
-            <div class="header">Upcoming Events</div>
-            <div class="event-container">
-                <?php
-                // Data event dalam array
-                $eventData = [
-                    [
-                        'date' => '10 Nov',
-                        'name' => 'SPORTIF',
-                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
-                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-                    ],
-                    [
-                        'date' => '15 Dec',
-                        'name' => 'EXCITING',
-                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
-                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-                    ],
-                    [
-                        'date' => '12 Feb',
-                        'name' => 'FESTIVAL',
-                        'categories' => ['Voli', 'Futsal', 'Mobile Legends', 'Basket'],
-                        'image' => '../../../public/component/pamflet sportif 2024.jpg',
-                        'link' => 'https://www.instagram.com/p/DCCDC19P87_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA%3D%3D'
-                    ]
-                ];
 
-                // Loop untuk menampilkan data event
-                foreach ($eventData as $event) {
-                    echo '<div class="event-box">';
-                    echo '<div class="event-img">';
-                    echo '<img src="' . $event['image'] . '" alt="Event Image">';
-                    echo '</div>';
-                    echo '<div class="event-info">';
-                    echo '<div class="date">' . $event['date'] . '</div>';
-                    echo '<div class="event-name">' . $event['name'] . '</div>';
-                    echo '<div class="categories">';
-                    echo '<ul>';
-                    foreach ($event['categories'] as $category) {
-                        echo '<li>' . $category . '</li>';
-                    }
-                    echo '</ul>';
-                    echo '</div>';
-                    echo '<div class="link"><a href="' . $event['link'] . '" target="_blank">Klik disini</a></div>';
-                    echo '</div>'; // event-info
-                    echo '</div>'; // event-box
-                }
-                ?>
-            </div>
-        </div>
+    <div class="header">Upcoming Events</div>
+    <div class="event-container">
+        <?php
+        // Data event dalam array
+
+use app\cores\View;
+use app\helpers\Dump;
+
+        $data = View::getData();
+        $leaderboardData = $data["Leaderboard"]["result"];
+        $eventData= $data["Info_Lomba"]["result"];
+        // Dump::out($eventData);
+
+        
+
+        // Loop untuk menampilkan data event
+        foreach ($eventData as $event) {
+            echo '<div class="event-box">';
+            echo '<div class="event-img">';
+            echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
+            echo '</div>';
+            echo '<div class="event-info">';
+            echo '<div class="date">' . $event['tanggal_akhir_perndaftaran'] . '</div>';
+            echo '<div class="event-name">' . $event['judul'] . '</div>';
+            echo '<div class="categories">';
+            echo '<ul>';
+            echo ($event['deskripsi_lomba']);
+            echo '</ul>';
+            echo '</div>';
+            echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+            echo '</div>'; // event-info
+            echo '</div>'; // event-box
+        }
+        ?>
+    </div>
+</div>
 
     </div>
     <div class="leaderboard">
-        <div class="header-container">
-            <div class="header">LEADERBOARD</div>
-        </div>
-        <div class="rank-list">
-            <?php
-            // Data leaderboard dalam array
-            $leaderboardData = [
-                ['rank' => 1, 'name' => 'M. Ulil Fahmi', 'details' => 'D-IV SIB', 'points' => 100, 'image' => '../../../public/component/profilpic.png'],
-                ['rank' => 2, 'name' => 'Sarah Jessica', 'details' => 'D-IV TI', 'points' => 90, 'image' => '../../../public/component/profilpic.png'],
-                ['rank' => 3, 'name' => 'John Doe', 'details' => 'D-IV SIB', 'points' => 85, 'image' => '../../../public/component/profilpic.png'],
-                ['rank' => 4, 'name' => 'Jane Smith', 'details' => 'D-IV TI', 'points' => 80, 'image' => '../../../public/component/profilpic.png'],
-                ['rank' => 5, 'name' => 'Alex Martin', 'details' => 'D-IV TI', 'points' => 75, 'image' => '../../../public/component/profilpic.png']
-            ];
+    <div class="header-container">
+        <div class="header">LEADERBOARD</div>
+    </div>
+    <div class="rank-list">
+        <?php
+        // Data leaderboard dalam array 
 
-            // Loop untuk menampilkan data leaderboard
-            foreach ($leaderboardData as $item) {
-                echo '<div class="rank-item">';
-                echo '<div class="rank-number">' . $item['rank'] . '</div>';
-                echo '<img src="' . $item['image'] . '" alt="User Image">';
-                echo '<div class="rank-info">';
-                echo '<div class="name">' . $item['name'] . '</div>';
-                echo '<div class="details">' . $item['details'] . '</div>';
-                echo '<div class="points">' . $item['points'] . ' pts</div>';
-                echo '</div>'; // rank-info
-                echo '</div>'; // rank-item
-            }
-            ?>
-        </div>
+        // Loop untuk menampilkan data leaderboard
+        foreach ($leaderboardData as $item) {
+            echo '<div class="rank-item">';
+            echo '<div class="rank-number">' . $item['rank'] . '</div>';
+            echo '<img src="' . $item['image'] . '" alt="User Image">';
+            echo '<div class="rank-info">';
+            echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
+            echo '<div class="details">' . $item['Program_Studi'] . '</div>';
+            echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+            echo '</div>'; // rank-info
+            echo '</div>'; // rank-item
+        }
+        ?>
     </div>
 
 </div>

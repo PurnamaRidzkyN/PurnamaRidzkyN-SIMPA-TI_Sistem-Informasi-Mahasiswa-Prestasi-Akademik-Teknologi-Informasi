@@ -13,11 +13,13 @@ class Dosen extends BaseModel
     public const ID_USER = "id_user";
     public const NIDN = "nidn";
     public const NAMA = "nama";
+    public const  EMAIL = "email";
+    public const FOTO = "foto";
 
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::ID_USER,self::NIDN, self::NAMA], $data);
+            $table->insert([self::ID,self::ID_USER,self::NIDN, self::NAMA,self::EMAIL,self::FOTO], $data);
             
         });
     }
@@ -27,7 +29,12 @@ class Dosen extends BaseModel
             $table->select();
         });
     }
-
+     public static function findNidn(string $nidn): array 
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nidn) {
+            $table->selectWhere(["nidn" => $nidn], [self::ID, self::ID_USER, self::NIDN,self::NAMA,self::FOTO, self::EMAIL]);
+        });   
+    }
 
     public static function deleteAll(): array
     {

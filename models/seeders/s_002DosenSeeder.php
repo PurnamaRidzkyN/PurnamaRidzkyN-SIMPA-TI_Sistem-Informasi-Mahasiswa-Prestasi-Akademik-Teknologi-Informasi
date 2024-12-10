@@ -20,6 +20,16 @@ class s_002DosenSeeder implements BaseSeeder
             "Dr. Jane Smith",
             "Dr. Alan Turing"
         ];
+        $email =[
+            "jhonDoe@gmail.com",
+            "janeS@gmail.com",
+            "alan@gmail.com"
+        ];
+        $foto = [
+            "foto.jpeg",
+            "foto.jpeg",
+            "foto.jpeg"
+        ];
 
         $res = [];
 
@@ -29,6 +39,8 @@ class s_002DosenSeeder implements BaseSeeder
                 "id_user"=> $id_user[$i],
                 "nidn" => $nidn[$i],
                 "nama" => $nama[$i],
+                "email"=> $email[$i],
+                "foto"=> $foto[$i]
             ]);
         }
 

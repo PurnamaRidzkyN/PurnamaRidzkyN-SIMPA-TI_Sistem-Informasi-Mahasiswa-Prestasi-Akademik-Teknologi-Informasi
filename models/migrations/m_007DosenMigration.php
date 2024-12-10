@@ -13,6 +13,8 @@ class m_007DosenMigration implements BaseMigration
             $table->string("id_user",6);
             $table->string("nidn");
             $table->string("nama");
+            $table->string("email");
+            $table->string("foto");
 
             $table->primary("id");
             $table->unique("id");
