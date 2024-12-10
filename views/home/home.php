@@ -155,7 +155,7 @@
             gap: 20px;
             width: 70%;
             padding-left: 20px;
-            /* Menambahkan padding kiri */
+            
         }
 
         .blue-box {
@@ -207,8 +207,6 @@
             padding: 20px;
             /* Menambahkan padding untuk ruang di sekitar teks */
         }
-
-
 
         /* Upcoming Events Styling */
         .upcoming-events {
@@ -335,25 +333,17 @@
             color: #0039C8;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
 
-
-        /* Leaderboard Styling */
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
             border-radius: 20px;
             padding: 10px;
-            width: 25%;
-            /* Menentukan lebar untuk leaderboard */
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             height: 850px;
-            margin-left: 20px;
-            /* Menambahkan margin kiri untuk menggeser ke kiri */
+            margin-left: 10px;
         }
 
         .header-container {
@@ -367,13 +357,11 @@
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
             font-family: 'Robot Crush', sans-serif;
             margin-bottom: 15px;
-            /* Memberikan jarak lebih sedikit antara header dan isi */
         }
 
 
@@ -449,6 +437,7 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
+
         <img src="./public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
@@ -460,7 +449,9 @@
     <div class="user-info">
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
+
             <img src="./public/component/notifikasi.png" alt="Notifikasi">
+
         </div>
 
         <div class="login-text"><a href="/login">Login</a></div>
@@ -475,13 +466,14 @@
 <div class="main-container">
     <div class="left-container">
         <div class="blue-box">
-            <img class="image" src="masti.png" alt="Image">
+            <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
                 <div class="welcome-text">Platform ini dirancang untuk membantu mahasiswa memantau peringkat, mengetahui informasi event mendatang, dan mengelola pencapaian prestasi. Login untuk mengakses fitur lengkap dan raih prestasi terbaikmu!
                 </div>
             </div>
         </div>
         <div class="upcoming-events">
+
     <div class="header">Upcoming Events</div>
     <div class="event-container">
         <?php
@@ -542,7 +534,6 @@ use app\helpers\Dump;
         }
         ?>
     </div>
-</div>
 
 </div>
 </div>
