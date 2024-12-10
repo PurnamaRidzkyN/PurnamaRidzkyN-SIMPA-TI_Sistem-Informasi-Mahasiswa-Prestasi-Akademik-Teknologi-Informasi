@@ -449,7 +449,7 @@
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
+        <img src="./public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
@@ -460,7 +460,7 @@
     <div class="user-info">
         <!-- Notification Bubble -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="notifikasi-03.png" alt="Notifikasi">
+            <img src="./public/component/notifikasi.png" alt="Notifikasi">
         </div>
 
         <div class="login-text"><a href="/login">Login</a></div>
@@ -526,12 +526,10 @@ use app\helpers\Dump;
     </div>
     <div class="rank-list">
         <?php
-        // Data leaderboard dalam array
-        $leaderboardData = View::getData();
-        
+        // Data leaderboard dalam array 
 
         // Loop untuk menampilkan data leaderboard
-        foreach ($leaderboardData["result"] as $item) {
+        foreach ($leaderboardData as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
             echo '<img src="' . $item['image'] . '" alt="User Image">';

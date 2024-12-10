@@ -1,4 +1,4 @@
-a<?php
+<?php
 use app\cores\Session;
 use app\cores\View;
 
@@ -157,7 +157,7 @@ $dosenList = $data["Dosen"];
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
-            <img src=class="logo" src="../public/component/logoHijau.png" alt="Logo">
+            <img class="logo" src="../../../public/component/logoHijau.png" alt="Logo">
             <h1>SIMPA-TI</h1>
         </div>
         <div class="menu">
