@@ -11,6 +11,7 @@ $tingkatKompetisi = $data["TingkatLomba"];
 $kategoriKompetisi = ["tim", "individu"];
 $urutanPeringkat = $data["Peringkat"];
 $dosenList = $data["Dosen"];
+
 ?>
 
 <!-- Styles -->

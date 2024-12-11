@@ -517,7 +517,7 @@ use app\models\database\users\Mahasiswa; ?>
         foreach ($leaderboardData as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
-            echo '<img src="' . $item['image'] . '" alt="User Image">';
+            echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';
             echo '<div class="rank-info">';
             echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
             echo '<div class="details">' . $item['Program_Studi'] . '</div>';
