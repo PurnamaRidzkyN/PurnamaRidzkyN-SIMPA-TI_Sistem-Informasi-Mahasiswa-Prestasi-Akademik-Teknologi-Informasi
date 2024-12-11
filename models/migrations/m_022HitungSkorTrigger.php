@@ -10,12 +10,7 @@ class m_022HitungSkorTrigger implements BaseMigration
          IF EXISTS (SELECT 1 FROM inserted WHERE validasi = 1)
     BEGIN
         UPDATE mahasiswa
-        SET total_skor = total_skor + 
-            (
-                (
-                    (tl.skor * 2) + (p.skor)
-                ) + (i.jumlah_pt + i.jumlah_peserta)
-            ) / 100
+        SET total_skor = total_skor + (((tl.skor * 2) + (p.skor) + (i.jumlah_pt + i.jumlah_peserta)) / 10)
         FROM mahasiswa m
         INNER JOIN inserted i ON m.id = i.id_mahasiswa
         INNER JOIN tingkat_lomba tl ON tl.id = i.id_tingkat_kompetisi

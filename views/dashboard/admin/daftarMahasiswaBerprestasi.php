@@ -93,7 +93,7 @@ $mahasiswa = View::getData()["result"];
 	<!-- Navbar -->
 <div class="navbar">
     <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
+        <img src="../../../public/component/logoHijau.png" alt="Logo">
         <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
