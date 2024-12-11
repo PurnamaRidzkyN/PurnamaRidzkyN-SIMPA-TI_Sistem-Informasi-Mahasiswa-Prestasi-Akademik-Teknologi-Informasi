@@ -1,8 +1,10 @@
 <?php
 
 use app\cores\Session;
+use app\models\database\users\Admin;
 
 $user = Session::get('user');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -433,7 +435,7 @@ $user = Session::get('user');
     </div>
     <div class="menu">
         <a href="#">Home</a>
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
         <a href="#">Leaderboard</a>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
     </div>
@@ -466,7 +468,7 @@ $user = Session::get('user');
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang, Masti!</div>
+                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"]?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>
@@ -482,11 +484,11 @@ $user = Session::get('user');
                 $data = View::getData();
                 $events = $data["info_lomba"]["result"];
                 // Dump::out($data);
-                // Loop untuk menampilkan setiap event
+                // // Loop untuk menampilkan setiap event
                 foreach ($events as $event) {
                     echo '<div class="event-box">';
                     echo '    <div class="event-img">';
-                    echo '        <img src="../../../' . $event["foto"] . ' " alt="Event Image">';
+                    echo '        <img src="../../../' .$event["file_poster"] . ' " alt="Event Image">';
                     echo '    </div>';
                     echo '    <div class="event-info">';
                     echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';

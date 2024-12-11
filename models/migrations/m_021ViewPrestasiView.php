@@ -18,7 +18,7 @@ SELECT
     m.prodi,
     m.tahun_masuk,
     p.peringkat,
-    a.nama AS admin_nama,
+    COALESCE(a.nama, 'Tidak ada admin') AS admin_nama,
     j.tim,
     j.judul_kompetisi,
     j.judul_kompetisi_en,
@@ -39,12 +39,13 @@ SELECT
     jl.jenis_lomba,
     tl.tingkat_lomba,
     ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/10  AS skor
-    FROM prestasi j
-    JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
-    JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
-    JOIN mahasiswa m ON m.id = j.id_mahasiswa
-    JOIN peringkat p ON p.id = j.id_peringkat
-    JOIN admin a ON a.id = j.id_admin;");
+FROM prestasi j
+LEFT JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
+LEFT JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
+LEFT JOIN mahasiswa m ON m.id = j.id_mahasiswa
+LEFT JOIN peringkat p ON p.id = j.id_peringkat
+LEFT JOIN admin a ON a.id = j.id_admin;
+");
 
     }
 

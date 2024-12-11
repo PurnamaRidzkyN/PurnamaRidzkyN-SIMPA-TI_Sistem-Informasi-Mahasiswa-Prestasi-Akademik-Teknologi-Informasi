@@ -387,7 +387,7 @@
     <div class="menu">
         <a href="/">Home</a>
         <a href="/login">Prestasi</a>
-        <a href="#">Leaderboard</a>
+        <a href="/dashboard/leaderboard">Leaderboard</a>
     </div>
     <div class="user-info">
         <!-- Notification Bubble -->
