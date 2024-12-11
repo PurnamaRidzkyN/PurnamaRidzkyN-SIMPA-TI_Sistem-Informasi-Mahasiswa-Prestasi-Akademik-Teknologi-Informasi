@@ -45,8 +45,10 @@ $app::get("/dashboard/mahasiswa/:nim/profil", [Dashboard::class, "renderProfilMa
 $app::get("/dashboard/admin/:nip/log-data",[AuditLog::class,"renderWeb"],[AdminMiddleware::class]);
 $app::post("/dashboard/admin/:nip/log-data",[AuditLog::class,"getFilteredLog"],[AdminMiddleware::class]);
 
+$app::get("/dashboard/admin/:nip/daftar-mahasiswa",[PrestasiController::class,"renderDaftarMahasiswa"],[AdminMiddleware::class]);
+
 $app::get("/dashboard/mahasiswa/:nim/prestasi",[PrestasiController::class,"renderListPrestasi"],[StudentMiddleware::class]);
-$app::get("/dashboard/admin/:nip/prestasi",[PrestasiController::class,"renderListPrestasi"],[AdminMiddleware::class]);
+$app::post("/dashboard/admin/:nip/prestasi",[PrestasiController::class,"renderListPrestasi"],[AdminMiddleware::class]);
 
 $app::get("/dashboard/mahasiswa/:nim/upload-prestasi",[PrestasiController::class,"renderWeb"],[StudentMiddleware::class]);
 $app::post("/dashboard/mahasiswa/:nim/submit-prestasi",[PrestasiController::class,"upload"],[StudentMiddleware::class]);
@@ -63,9 +65,13 @@ $app::post("/dashboard/admin/:nip/dosen-data/insert", [UserManagement::class, "i
 $app::post("/dashboard/mahasiswa/:nim/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[StudentMiddleware::class]);
 $app::post("/dashboard/admin/:nip/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[AdminMiddleware::class]);
 
+$app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController::class,"validatePrestasi"],[AdminMiddleware::class]);
+
+
 $app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"render"],[AdminMiddleware::class]);
 
 $app::get("/dashboard/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
+$app::get("/dashboard/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);
 
 
 $app::get("/logout", [Auth::class, "logout"]);

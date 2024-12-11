@@ -236,7 +236,7 @@ $leaderboard = View::getData();
     <!-- Table Section (JTI, TI, SIB) -->
     <section class="leaderboard-table">
         <div class="table-link">
-            <a href="leaderboardJTI.php">
+            <a href="/dashboard/leaderboard/all">
                 <p class="table-title">JTI</p>
             </a>
         </div>

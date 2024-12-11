@@ -122,11 +122,16 @@ $profil =$profil[0];
 
 <!-- Main Content -->
 <div class="container">
-
     <img src="https://via.placeholder.com/200" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
         <h2 class="name"><?php echo $profil["nama"]; ?></h2>
         <p>Email : <?php echo $profil["email"] ?></p>
         <p>NIP : <?php echo $profil["nip"] ?></p>
+
+        <!-- Tombol Ubah Kata Sandi -->
+        <a href="/change-password" class="btn btn-warning">Ubah Kata Sandi</a>
+
+        <!-- Tombol Logout -->
+        <a href="/logout" class="btn btn-danger">Logout</a>
     </div>
 </div>
