@@ -347,7 +347,7 @@
         }
 
         .header-container {
-            background-color: #0039C8;
+            background-color: none;
             padding: 12px;
             border-radius: 10px;
             width: 90%;

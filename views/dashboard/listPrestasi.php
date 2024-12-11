@@ -106,6 +106,21 @@ $user = Session::get("user");
             background-color: #0039C8;
         }
 
+        .upload-btn {
+            font-family: 'Robot Crush', sans-serif;
+            font-size: 40px;
+            font-weight: 300;
+            background-color: #0039C8;
+            color: #AFFA08;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+
         /* Container Responsif */
         .container {
             max-width: 100%;
@@ -146,6 +161,22 @@ $user = Session::get("user");
 
         </div>
     </div>
+
+    <?php if (Session::get("role") == "2"): ?>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <!-- Filter Section -->
     <div class="section">
@@ -211,22 +242,6 @@ $user = Session::get("user");
             endforeach; ?>
         </div>
     </div>
-    <?php if (Session::get("role") == "2"): ?>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <a href="../<?= $user ?>/upload-prestasi" class="btn btn-success btn-lg" role="button">Upload Prestasi</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
 
     <!-- JS and Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
