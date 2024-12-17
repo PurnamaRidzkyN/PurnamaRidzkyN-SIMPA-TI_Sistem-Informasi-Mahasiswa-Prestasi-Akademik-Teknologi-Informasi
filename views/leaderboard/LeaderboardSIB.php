@@ -16,50 +16,6 @@
             padding: 0;
         }
 
-        /* Navbar Styles */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 20px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 10px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 15px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
         /* Leaderboard Styles */
         .leaderboard-container {
             position: relative;
@@ -137,19 +93,6 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <a href="#home">Home</a>
-            <a href="#prestasi">Prestasi</a>
-            <a href="#leaderboard">Leaderboard</a>
-        </div>
-    </div>
-
     <!-- Leaderboard Content -->
     <div class="leaderboard-container">
         <!-- Header Container with gradient blue to black -->
