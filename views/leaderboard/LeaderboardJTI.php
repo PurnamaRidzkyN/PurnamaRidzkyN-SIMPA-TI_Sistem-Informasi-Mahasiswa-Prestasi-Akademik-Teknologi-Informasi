@@ -149,7 +149,7 @@
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
-            <img src="logoHijau.png" alt="Logo">
+            <img src="../../public/component/logoHijau.png" alt="Logo">
             <h1>SIMPA-TI</h1>
         </div>
         <div class="menu">
@@ -176,7 +176,7 @@ use app\helpers\Dump;
         <?php foreach ($leaderboard as $rankItem): ?>
             <div class="rank-item">
                 <div class="rank-number"><?php echo $rankItem['Rank']; ?></div>
-                <img src="'../'.<?php echo $rankItem['Foto']; ?>" alt="User Image">
+                <img src=".<?php echo '../../'.$rankItem['Foto']; ?>" alt="User Image">
                 <div class="rank-info">
                     <div class="name"><?php echo $rankItem['Nama_Mahasiswa']; ?></div>
                     <div class="details"><?php echo $rankItem['Program_Studi']; ?></div>

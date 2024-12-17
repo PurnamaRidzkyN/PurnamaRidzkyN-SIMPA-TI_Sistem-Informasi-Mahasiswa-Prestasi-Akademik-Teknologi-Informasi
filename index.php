@@ -70,8 +70,8 @@ $app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController:
 
 $app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"render"],[AdminMiddleware::class]);
 
-$app::get("/dashboard/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
-$app::get("/dashboard/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);
+$app::get("/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
+$app::get("/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);
 
 
 $app::get("/logout", [Auth::class, "logout"]);
