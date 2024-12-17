@@ -24,49 +24,6 @@ $user = Session::get("user");
             background-color: #f5f5f5;
         }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 10px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 15px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
         /* Section Styles */
         .section {
             background-color: #0039C8;
@@ -76,6 +33,7 @@ $user = Session::get("user");
             max-width: 100%;
             word-wrap: break-word;
         }
+        
 
         .section-title {
             font-size: 2rem;
@@ -139,28 +97,6 @@ $user = Session::get("user");
 </head>
 
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="../../../public/component/logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <?php if (Session::get("role") == "1"): ?>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user"); ?>">Home</a>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Prestasi</a>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Leaderboard</a>
-
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data'; ?>">Management Data</a>
-            <?php else: ?>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Home</a>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Leaderboard</a>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi'; ?>">prestasi</a>
-            <?php endif; ?>
-
-        </div>
-    </div>
 
     <?php if (Session::get("role") == "2"): ?>
         <div class="container mt-4">

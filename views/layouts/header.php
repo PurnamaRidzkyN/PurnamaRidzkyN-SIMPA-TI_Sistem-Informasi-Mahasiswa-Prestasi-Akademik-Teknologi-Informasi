@@ -108,23 +108,25 @@
       <h1>SIMPA-TI</h1>
     </div>
     <div class="menu">
-      <a href="#">Home</a>
       <?php if (Session::get("role") === "1"): ?>
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") ?>>Home</a>
         <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
-        <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Manajemen Data</a>
+        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>>Manajemen Data</a>
       <?php elseif (Session::get("role") === "2"): ?>
+        <a href=<?php echo '/dashboard/mahasiswa/' . Session::get("user") ?>>Home</a>
         <a href=<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
+      <?php else: ?>
+        <a href="/">Home</a>
       <?php endif; ?>
-      <?php if (Session::get("role")): ?>
-        <a href="/leaderboard">Leaderboard</a>
-      <?php endif; ?>
+      <a href="/leaderboard">Leaderboard</a>
+
     </div>
 
     <div class="user-info">
       <?php if (Session::get("role") === "1"): ?>
         <!-- Jika role Admin -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-          <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
+          <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil'; ?>">
           <img src="../../../public/component/profilpic.png" alt="Profile">
@@ -132,7 +134,7 @@
       <?php elseif (Session::get("role") === "2"): ?>
         <!-- Jika role Mahasiswa -->
         <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-          <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
+          <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/profil'; ?>">
           <img src="../../../public/component/profilpic.png" alt="Profile">
