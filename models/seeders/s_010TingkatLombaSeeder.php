@@ -7,7 +7,7 @@ class s_010TingkatLombaSeeder implements BaseSeeder
 {
     public function create(): array
     {
-        $id = ["TL001", "TL002", "TL003"];
+        $id = ["TL001", "TL002", "TL003","TL004","TL005","TL006"];
         $tingkat_lomba = [
             "Sekolah",
             "Kecamatan",
@@ -16,7 +16,7 @@ class s_010TingkatLombaSeeder implements BaseSeeder
             "Nasional",
             "Internasional"
         ];
-        $skor = [5, 10, 20, 30, 40, 50];
+        $skor = [50, 100, 150, 200, 250, 300];
 
         $res = [];
 

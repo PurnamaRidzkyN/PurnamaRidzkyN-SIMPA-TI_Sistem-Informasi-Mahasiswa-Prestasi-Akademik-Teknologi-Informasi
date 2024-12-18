@@ -86,7 +86,16 @@
             justify-content: center;
             height: 40px;
             transition: background-color 0.3s;
+
         }
+
+        .login-text a {
+            text-decoration: none;
+            /* Menghapus underline */
+            color: inherit;
+            /* Menggunakan warna teks induk */
+        }
+
 
         .login-text:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -135,7 +144,7 @@
             gap: 20px;
             width: 70%;
             padding-left: 20px;
-            
+
         }
 
         .blue-box {
@@ -390,13 +399,6 @@
         <a href="/dashboard/leaderboard">Leaderboard</a>
     </div>
     <div class="user-info">
-        <!-- Notification Bubble -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-
-            <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
-
-        </div>
-
         <div class="login-text"><a href="/login">Login</a></div>
 
     </div>
@@ -417,60 +419,67 @@
         </div>
         <div class="upcoming-events">
 
-    <div class="header">Upcoming Events</div>
-    <div class="event-container">
-        <?php
+            <div class="header">Upcoming Events</div>
+            <div class="event-container">
+                <?php
+                // Data event dalam array
 
-use app\cores\View;
-use app\helpers\Dump;
+                use app\cores\View;
+                use app\helpers\Dump;
 
-        $data = View::getData();
-        $leaderboardData = $data["Leaderboard"]["result"];
-        $eventData= $data["Info_Lomba"]["result"];
+                $data = View::getData();
+                $leaderboardData = $data["Leaderboard"]["result"];
+                $eventData = $data["Info_Lomba"]["result"];
+                // Dump::out($eventData);
 
-        foreach ($eventData as $event) {
-            echo '<div class="event-box">';
-            echo '<div class="event-img">';
-            echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
-            echo '</div>';
-            echo '<div class="event-info">';
-            echo '<div class="date">' . $event['tanggal_akhir_perndaftaran'] . '</div>';
-            echo '<div class="event-name">' . $event['judul'] . '</div>';
-            echo '<div class="categories">';
-            echo '<ul>';
-            echo ($event['deskripsi_lomba']);
-            echo '</ul>';
-            echo '</div>';
-            echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-            echo '</div>'; // event-info
-            echo '</div>'; // event-box
-        }
-        ?>
-    </div>
-</div>
+
+                // Loop untuk menampilkan data event
+                foreach ($eventData as $event) {
+                    echo '<div class="event-box">';
+                    echo '<div class="event-img">';
+                    echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
+                    echo '</div>';
+                    echo '<div class="event-info">';
+                    echo '<div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
+                    echo '<div class="event-name">' . $event['judul'] . '</div>';
+                    echo '<div class="categories">';
+                    echo '<ul>';
+                    echo ($event['deskripsi_lomba']);
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+                    echo '</div>'; // event-info
+                    echo '</div>'; // event-box
+                }
+                ?>
+            </div>
+        </div>
 
     </div>
     <div class="leaderboard">
-    <div class="header-container">
-        <div class="header">LEADERBOARD</div>
-    </div>
-    <div class="rank-list">
-        <?php
-        foreach ($leaderboardData as $item) {
-            echo '<div class="rank-item">';
-            echo '<div class="rank-number">' . $item['rank'] . '</div>';
-            echo '<img src="' . $item['image'] . '" alt="User Image">';
-            echo '<div class="rank-info">';
-            echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
-            echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-            echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
-            echo '</div>'; // rank-info
-            echo '</div>'; // rank-item
-        }
-        ?>
-    </div>
+        <div class="header-container">
+            <div class="header">LEADERBOARD</div>
+        </div>
+        <div class="rank-list">
+            <?php
+            // Data leaderboard dalam array 
+            // Loop untuk menampilkan data leaderboard
+            foreach ($leaderboardData as $item) {
+                echo '<div class="rank-item">';
+                echo '<div class="rank-number">' . $item['rank'] . '</div>';
+                echo '<img src="./' . $item['Foto'] . '" alt="User Image">';
+                echo '<div class="rank-info">';
+                echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
+                echo '<div class="details">' . $item['Program_Studi'] . '</div>';
+                echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+                echo '</div>'; // rank-info
+                echo '</div>'; // rank-item
+            }
+            ?>
+        </div>
 
-</div>
+
+    </div>
 </div>
 </body>
 

@@ -210,7 +210,7 @@ class PrestasiController extends BaseController
             if ($validasiStatus == "1") {
                 $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
                 $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
-                $response->redirect("/dashboard/admin/{$user}/prestasi");
+                $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
             } else {
                 $response->redirect("/dashboard/admin/{$user}/prestasi");
             }

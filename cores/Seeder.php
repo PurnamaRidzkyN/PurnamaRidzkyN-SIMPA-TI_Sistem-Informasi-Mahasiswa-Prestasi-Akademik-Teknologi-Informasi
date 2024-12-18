@@ -49,7 +49,7 @@ class Seeder
     {
         $seederPath = realpath(__DIR__ . "/../models/seeders");
         $files = scandir($seederPath);
-
+        rsort($files);
         foreach ($files as $file) {
             if ($file === "." || $file === "..") {
                 continue;
