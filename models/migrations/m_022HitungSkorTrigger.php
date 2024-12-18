@@ -13,6 +13,7 @@ class m_022HitungSkorTrigger implements BaseMigration
     BEGIN
         UPDATE mahasiswa
         SET total_skor = total_skor + tl.skor + p.skor
+        FROM mahasiswa m
         INNER JOIN inserted i ON m.id = i.id_mahasiswa
         INNER JOIN tingkat_lomba tl ON tl.id = i.id_tingkat_kompetisi
         INNER JOIN peringkat p ON p.id = i.id_peringkat
