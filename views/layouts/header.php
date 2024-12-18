@@ -140,10 +140,6 @@
           <img src="../../../public/component/profilpic.png" alt="Profile">
         </a>
       <?php else: ?>
-        <!-- Jika belum login -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-          <img src="./public/component/notifikasi-03.png" alt="Notifikasi">
-        </div>
         <div class="login-text">
           <a href="/login">Login</a>
         </div>
