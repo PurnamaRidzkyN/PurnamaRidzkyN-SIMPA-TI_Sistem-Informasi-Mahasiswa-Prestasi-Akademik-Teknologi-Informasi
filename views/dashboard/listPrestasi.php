@@ -71,12 +71,12 @@ $user = Session::get("user");
             background-color: #0039C8;
             color: #AFFA08;
             border: none;
-            padding: 15px 30px;
+            padding: 20px;
             border-radius: 8px;
             cursor: pointer;
             text-align: center;
             display: inline-block;
-            width: 100%;
+            max width: 100%;
         }
 
         /* Container Responsif */
@@ -101,7 +101,7 @@ $user = Session::get("user");
     <?php if (Session::get("role") == "2"): ?>
         <div class="container mt-4">
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-5 text-center">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-grid gap-2">
