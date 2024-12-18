@@ -16,7 +16,7 @@ class s_010TingkatLombaSeeder implements BaseSeeder
             "Nasional",
             "Internasional"
         ];
-        $skor = [5, 10, 20, 30, 40, 50];
+        $skor = [50, 100, 150, 200, 250, 300];
 
         $res = [];
 

@@ -18,72 +18,6 @@ $user = Session::get('user');
             padding: 0;
             background-color: #f5f5f5;
         }
-
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-            /* Warna hijau saat hover */
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
         /* Konten Utama */
         .container {
             padding: 20px;
@@ -180,66 +114,38 @@ $user = Session::get('user');
 </head>
 
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="../../../public/component/logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") ?>">Home</a>
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>">Prestasi</a>
-            <a href="#">Leaderboard</a>
-            <a href="#">Management Data</a> <!-- Menu Management Data -->
-        </div>
-        <div class="user-info">
-            <!-- Notification Bubble -->
-            <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-                <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
-            </div>
-
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil' ?>">
-                <img src="../../../public/component/profilpic.png" alt="Profile">
-            </a>
-
-        </div>
+ <!-- Main Content -->
+<div class="container">
+    <div class="content-header">
+        Management Data
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <div class="content-header">
-            Management Data
-        </div>
-
-        <!-- Menu untuk pilih jenis data -->
-        <div class="management-section">
-            <div class="management-option" onclick="showData('admin')">Data Admin</div>
-            <div class="management-option" onclick="showData('mahasiswa')">Data Mahasiswa</div>
-            <div class="management-option" onclick="showData('dosen')">Data Dosen</div>
-            <div class="management-option" onclick="showData('lomba')">Data Info Lomba</div>
-            <div class="management-option" onclick="showData('log')">Log Data</div>
-        </div>
-
-        <!-- Tabel dan Form untuk menambah data -->
-        <div id="data-container" class="data-container"></div>
+    <!-- Menu untuk pilih jenis data -->
+    <div class="management-section">
+        <div class="management-option" onclick="showData('admin')">Data Admin</div>
+        <div class="management-option" onclick="showData('mahasiswa')">Data Mahasiswa</div>
+        <div class="management-option" onclick="showData('dosen')">Data Dosen</div>
+        <div class="management-option" onclick="showData('lomba')">Data Info Lomba</div>
+        <div class="management-option" onclick="showData('log')">Log Data</div>
     </div>
 
-    <script>
-        var adminData = <?php echo json_encode($adminData); ?>;
-        var mahasiswaData = <?php echo json_encode($mahasiswaData); ?>;
+    <!-- Tabel dan Form untuk menambah data -->
+    <div id="data-container" class="data-container"></div>
+</div>
 
-        // Additional data arrays can be added similarly
+<script>
+    var adminData = <?php echo json_encode($adminData); ?>;
+    var mahasiswaData = <?php echo json_encode($mahasiswaData); ?>;
 
-        function showData(type) {
-            let dataContainer = document.getElementById('data-container');
-            let dataHTML = '';
+    function showData(type) {
+        let dataContainer = document.getElementById('data-container');
+        let dataHTML = '';
 
-            // Admin
-            if (type === 'admin') {
-                let tableRows = '';
-                adminData.forEach(function(item) {
-                    tableRows += `
+        // Admin
+        if (type === 'admin') {
+            let tableRows = '';
+            adminData.forEach(function(item) {
+                tableRows += `
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.email}</td>
@@ -248,9 +154,9 @@ $user = Session::get('user');
                         <td><img src="${item.profile}" alt="Profil" width="40" height="40"></td>
                     </tr>
                 `;
-                });
+            });
 
-                dataHTML = `
+            dataHTML = `
                 <h3>Data Admin</h3>
                 <table>
                     <thead>
@@ -276,13 +182,13 @@ $user = Session::get('user');
                     <button onclick="addData('admin')">Tambah Data</button>
                 </div>
             `;
-            }
+        }
 
-            // Mahasiswa
-            else if (type === 'mahasiswa') {
-                let tableRows = '';
-                mahasiswaData.forEach(function(item) {
-                    tableRows += `
+        // Mahasiswa
+        else if (type === 'mahasiswa') {
+            let tableRows = '';
+            mahasiswaData.forEach(function(item) {
+                tableRows += `
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
@@ -294,9 +200,9 @@ $user = Session::get('user');
                         <td>${item.total_skor}</td>
                     </tr>
                 `;
-                });
+            });
 
-                dataHTML = `
+            dataHTML = `
                 <h3>Data Mahasiswa</h3>
                 <table>
                     <thead>
@@ -328,17 +234,56 @@ $user = Session::get('user');
                     <button onclick="addData('mahasiswa')">Tambah Data</button>
                 </div>
             `;
-            }
-
-            // Add similar blocks for 'dosen', 'lomba', and 'log'
-
-            dataContainer.innerHTML = dataHTML;
         }
 
-        // The rest of the JavaScript remains unchanged
-    </script>
+        // Add similar blocks for 'dosen', 'lomba', and 'log'
 
+        dataContainer.innerHTML = dataHTML;
+    }
 
-</body>
+    function addData(type) {
+        var formData = new FormData();
+        var data = {};
 
-</html>
+        if (type === 'admin') {
+            data.id = document.getElementById('admin-id').value;
+            data.email = document.getElementById('admin-email').value;
+            data.name = document.getElementById('admin-name').value;
+            data.nip = document.getElementById('admin-nip').value;
+            formData.append("profile", document.getElementById('admin-profile').files[0]);
+        }
+
+        if (type === 'mahasiswa') {
+            data.id = document.getElementById('mahasiswa-id').value;
+            data.name = document.getElementById('mahasiswa-name').value;
+            data.email = document.getElementById('mahasiswa-email').value;
+            data.nim = document.getElementById('mahasiswa-nim').value;
+            data.tanggal_lahir = document.getElementById('mahasiswa-tanggal-lahir').value;
+            data.prodi = document.getElementById('mahasiswa-prodi').value;
+            data.total_skor = document.getElementById('mahasiswa-total-skor').value;
+            formData.append("profile", document.getElementById('mahasiswa-profile').files[0]);
+        }
+
+        // Check for missing fields
+        if (!data.id || !data.name || !data.email || !data.nim || !data.tanggal_lahir || !data.prodi || !data.total_skor) {
+            alert("Harap isi semua field kecuali foto.");
+            return;
+        }
+
+        // Validate image size
+        var profileFile = formData.get("profile");
+        if (profileFile && profileFile.size > 5 * 1024 * 1024) { // 5MB
+            alert("Foto terlalu besar. Maksimal 5MB.");
+            return;
+        }
+
+        // Send the data via POST
+        formData.append("data", JSON.stringify(data));
+        fetch('your_backend_url_here', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+          .then(data => alert("Data berhasil ditambahkan!"))
+          .catch(error => alert("Terjadi kesalahan!"));
+    }
+</script>
