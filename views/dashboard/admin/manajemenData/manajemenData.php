@@ -12,7 +12,7 @@ $logData = $data["log data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
-var_dump($selectedData);
+
 ?>
 <!data html>
 <html lang="id">
