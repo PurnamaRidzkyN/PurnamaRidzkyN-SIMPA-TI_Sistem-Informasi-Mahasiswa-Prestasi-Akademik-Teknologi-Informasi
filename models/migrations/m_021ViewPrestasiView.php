@@ -38,7 +38,7 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    ((tl.skor*2)+p.skor + j.jumlah_pt + j.jumlah_peserta )/10  AS skor
+    tl.skor + p.skor  AS skor
 FROM prestasi j
 LEFT JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 LEFT JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi

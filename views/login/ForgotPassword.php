@@ -4,7 +4,6 @@
         padding: 0;
         background: linear-gradient(180deg, #0039C8 0%, #001C62 100%);
         font-family: Poppins, sans-serif;
-        display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;

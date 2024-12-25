@@ -23,49 +23,6 @@ $leaderboard = View::getData();
             color: white;
         }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 30px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 30px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 20px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
         .big-banner {
             height: 40vh;
             background: linear-gradient(270deg, #0039C8 0%, #001C62 100%);
@@ -92,7 +49,6 @@ $leaderboard = View::getData();
             color: white;
         }
 
-        /* Filter Section */
         .filter-section {
             background-color: #0039C8;
             padding: 30px;
@@ -128,7 +84,6 @@ $leaderboard = View::getData();
             background-color: rgba(0, 0, 0, 0.7);
         }
 
-        /* Leaderboard Tables */
         .leaderboard-table {
             display: flex;
             justify-content: space-evenly;
@@ -146,7 +101,6 @@ $leaderboard = View::getData();
             box-sizing: border-box;
         }
 
-        /* Remove right margin on last item */
         .table-link:last-child {
             margin-right: 0;
         }
@@ -178,7 +132,6 @@ $leaderboard = View::getData();
             background-color: #001C62;
         }
 
-        /* Media Query for Responsiveness */
         @media (max-width: 768px) {
             .leaderboard-table {
                 flex-direction: column;
@@ -202,19 +155,6 @@ $leaderboard = View::getData();
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <a href="#home">Home</a>
-            <a href="#prestasi">Prestasi</a>
-            <a href="#leaderboard">Leaderboard</a>
-        </div>
-    </div>
 
     <!-- Big Banner -->
     <section class="big-banner">

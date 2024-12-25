@@ -1,10 +1,20 @@
 <?php
 
 use app\cores\Session;
+use app\cores\View;
+use app\helpers\Dump;
 
 $user = Session::get('user');
+$data = View::getData();
+$adminData = $data["data"];
+$mahasiswaData = $data["mahasiswa"];
+$logData = $data["log data"];
+$dosenData = $data["dosen"];
+$selectedData = $data["data"]["data"];
+$manipulate = $data["data"]["edit"];
+var_dump($selectedData);
 ?>
-<!DOCTYPE html>
+<!data html>
 <html lang="id">
 
 <head>
@@ -17,71 +27,6 @@ $user = Session::get('user');
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
-        }
-
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-            /* Warna hijau saat hover */
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
         }
 
         /* Konten Utama */
@@ -180,32 +125,6 @@ $user = Session::get('user');
 </head>
 
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="../../../public/component/logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
-        </div>
-        <div class="menu">
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") ?>">Home</a>
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>">Prestasi</a>
-            <a href="#">Leaderboard</a>
-            <a href="#">Management Data</a> <!-- Menu Management Data -->
-        </div>
-        <div class="user-info">
-            <!-- Notification Bubble -->
-            <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-                <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
-            </div>
-
-            <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil' ?>">
-                <img src="../../../public/component/profilpic.png" alt="Profile">
-            </a>
-
-        </div>
-    </div>
-
     <!-- Main Content -->
     <div class="container">
         <div class="content-header">
@@ -214,11 +133,41 @@ $user = Session::get('user');
 
         <!-- Menu untuk pilih jenis data -->
         <div class="management-section">
-            <div class="management-option" onclick="showData('admin')">Data Admin</div>
-            <div class="management-option" onclick="showData('mahasiswa')">Data Mahasiswa</div>
-            <div class="management-option" onclick="showData('dosen')">Data Dosen</div>
-            <div class="management-option" onclick="showData('lomba')">Data Info Lomba</div>
-            <div class="management-option" onclick="showData('log')">Log Data</div>
+            <!-- Menu untuk pilih jenis data -->
+            <div class="management-section">
+                <!-- Form for Data Admin -->
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="post" class="data-form">
+                    <input type="hidden" name="data" value="admin">
+                    <button data="submit" class="management-option" value="admin">Data Admin</button>
+                </form>
+
+                <!-- Form for Data Mahasiswa -->
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="mahasiswa">
+                    <button data="submit" class="management-option">Data Mahasiswa</button>
+                </form>
+
+                <!-- Form for Data Dosen -->
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="dosen">
+                    <button data="submit" class="management-option">Data Dosen</button>
+                </form>
+
+                <!-- Form for Data Info Lomba -->
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="lomba">
+                    <button data="submit" class="management-option">Data Info Lomba</button>
+                </form>
+
+                <!-- Form for Log Data -->
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="log data">
+                    <button data="submit" class="management-option">Log Data</button>
+                </form>
+            </div>
+
+            <div id="data-container"></div>
+
         </div>
 
         <!-- Tabel dan Form untuk menambah data -->
@@ -333,7 +282,7 @@ $user = Session::get('user');
                                 <td>123456</td>
                                 <td>dosenA@domain.com</td>
                                 <td><img src="profileD.jpg" alt="Profil" width="40" height="40"></td>
-                            </tr>`
+                            </tr>
                         </tbody>
                     </table>
                     <h4>Tambah Data Dosen Baru</h4>

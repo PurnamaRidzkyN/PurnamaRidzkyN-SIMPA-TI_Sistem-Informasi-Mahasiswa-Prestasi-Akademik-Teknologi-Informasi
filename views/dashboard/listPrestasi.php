@@ -24,49 +24,6 @@ $user = Session::get("user");
             background-color: #f5f5f5;
         }
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 10px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 15px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
         /* Section Styles */
         .section {
             background-color: #0039C8;
@@ -76,6 +33,7 @@ $user = Session::get("user");
             max-width: 100%;
             word-wrap: break-word;
         }
+        
 
         .section-title {
             font-size: 2rem;
@@ -106,6 +64,21 @@ $user = Session::get("user");
             background-color: #0039C8;
         }
 
+        .upload-btn {
+            font-family: 'Robot Crush', sans-serif;
+            font-size: 40px;
+            font-weight: 300;
+            background-color: #0039C8;
+            color: #AFFA08;
+            border: none;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            max width: 100%;
+        }
+
         /* Container Responsif */
         .container {
             max-width: 100%;
@@ -125,27 +98,21 @@ $user = Session::get("user");
 
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <img src="../../../public/component/logoHijau.png" alt="Logo">
-            <h1>SIMPA-TI</h1>
+    <?php if (Session::get("role") == "2"): ?>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-5 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="menu">
-            <?php if (Session::get("role") == "1"): ?>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user"); ?>">Home</a>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Prestasi</a>
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa'; ?>">Leaderboard</a>
-
-                <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data'; ?>">Management Data</a>
-            <?php else: ?>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Home</a>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user"); ?>">Leaderboard</a>
-                <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi'; ?>">prestasi</a>
-            <?php endif; ?>
-
-        </div>
-    </div>
+    <?php endif; ?>
 
     <!-- Filter Section -->
     <div class="section">
@@ -211,22 +178,6 @@ $user = Session::get("user");
             endforeach; ?>
         </div>
     </div>
-    <?php if (Session::get("role") == "2"): ?>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <a href="../<?= $user ?>/upload-prestasi" class="btn btn-success btn-lg" role="button">Upload Prestasi</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
 
     <!-- JS and Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
