@@ -12,7 +12,7 @@ $logData = $data["log data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
-var_dump($selectedData);
+
 ?>
 <!data html>
 <html lang="id">
@@ -174,46 +174,109 @@ var_dump($selectedData);
         <div id="data-container" class="data-container"></div>
     </div>
 
-    <script>
-        // Fungsi untuk menampilkan tabel dan form berdasarkan jenis data
-        function showData(type) {
-            let dataContainer = document.getElementById('data-container');
-            let dataHTML = '';
+    
 
-            // Admin
-            if (type === 'admin') {
-                dataHTML = `
-                    <h3>Data Admin</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Nama</th>
-                                <th>NIP</th>
-                                <th>Profil</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>admin1@domain.com</td>
-                                <td>Admin Satu</td>
-                                <td>123456</td>
-                                <td><img src="profile1.jpg" alt="Profil" width="40" height="40"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4>Tambah Data Admin Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID Admin" id="admin-id">
-                        <input type="email" placeholder="Email Admin" id="admin-email">
-                        <input type="text" placeholder="Nama Admin" id="admin-name">
-                        <input type="text" placeholder="NIP" id="admin-nip">
-                        <input type="file" id="admin-profile">
-                        <button onclick="addData('admin')">Tambah Data</button>
-                    </div>
-                `;
+    <?php if (!empty($selectedData) && isset($data[$selectedData])): ?>
+    <h3>Data <?= formatTitle($selectedData) ?></h3>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <?php if (!empty($data[$selectedData])): ?>
+                    <?php foreach (array_keys($data[$selectedData][0]) as $column): ?>
+                        <th><?= formatTitle($column) ?></th>
+                    <?php endforeach; ?>
+                    <?php if ($selectedData !== 'log data'): ?>
+                        <th>Aksi</th> <!-- Kolom tambahan untuk aksi jika bukan log data -->
+                    <?php endif; ?>
+                <?php endif; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data[$selectedData] as $index => $row): ?>
+                <?php if ($selectedData === 'log data'): ?>
+                    <!-- Jika log data, hanya tampilkan data tanpa aksi -->
+                    <tr>
+                        <?php foreach ($row as $keyField => $value): ?>
+                            <td>
+                                <?php if ($keyField === 'foto' && !empty($value)): ?>
+                                    <img src="<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($selectedData) ?> Foto" width="40" height="40">
+                                <?php else: ?>
+                                    <?= htmlspecialchars($value) ?>
+                                <?php endif; ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php else: ?>
+                    <!-- Jika bukan log data -->
+                    <?php if (isset($key) && $row['id'] === $key['id']): ?> 
+                        <!-- Jika ID cocok, tampilkan form edit -->
+                        <tr>
+                            <form method="post" action="">
+                                <?php foreach ($row as $keyField => $value): ?>
+                                    <td>
+                                        <?php if ($keyField === 'foto'): ?>
+                                            <input type="file" name="<?= $keyField ?>" value="<?= htmlspecialchars($value) ?>">
+                                        <?php else: ?>
+                                            <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($value) ?>">
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                                <td>
+                                    <button type="submit" name="save" value="<?= $row['id'] ?>">Save</button>
+                                    <button type="submit" name="cancel" value="<?= $row['id'] ?>">Cancel</button>
+                                </td>
+                            </form>
+                        </tr>
+                    <?php else: ?>
+                        <!-- Jika ID tidak cocok, tampilkan data biasa -->
+                        <tr>
+                            <?php foreach ($row as $keyField => $value): ?>
+                                <td>
+                                    <?php if ($keyField === 'foto' && !empty($value)): ?>
+                                        <img src="../../../<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($selectedData) ?> Foto" width="40" height="40">
+                                    <?php else: ?>
+                                        <?= htmlspecialchars($value) ?>
+                                    <?php endif; ?>
+                                </td>
+                            <?php endforeach; ?>
+                            <td>
+                                <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
+                                    <input type="hidden" name="data" value="<?= $selectedData ?>">
+                                    <button type="submit" name="edit" value="<?= $row['id'] ?>">Edit</button>
+                                    <button type="submit" name="delete" value="<?= $row['id'] ?>">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </tbody>
+        
+    </table>
+    <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
+                                    <input type="hidden" name="data" value="<?= $selectedData ?>">
+                                    <button type="submit" name="edit" value="add">Tambah data</button>
+                                </form>
+<?php endif; ?>
+
+<?php if (!empty($manipulate)): ?>
+    <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
+    <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data/manipulate-data" enctype="multipart/form-data">
+        <table border="0" cellpadding="5" cellspacing="0">
+            <?php 
+            // Jika manipulate adalah 'add', buat array kosong sesuai dengan kolom yang ada
+            $currentData = ($manipulate === 'add') 
+                ? array_fill_keys(array_keys($data[$selectedData][0]), '') // Data kosong untuk tambah
+                : array_filter($data[$selectedData], function ($row) use ($manipulate) {
+                    return $row['id'] === $manipulate; // Cari data berdasarkan ID yang ada di variabel manipulate
+                });
+
+            // Ambil data pertama dari array yang sudah difilter (hanya ada satu data yang cocok)
+            $currentData = reset($currentData); // Mengambil data pertama dari hasil filter, bisa kosong jika tambah data
+
+            // Pastikan $currentData bukan kosong untuk menghindari error
+            if (!$currentData) {
+                $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
             }
 
             // Mahasiswa

@@ -61,7 +61,7 @@ $app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController:
 
 $app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
 $app::post("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
-$app::post("/dashboard/admin/:nip/manajemen/manipulate-data", [UserManagement::class, ""], [AdminMiddleware::class]);
+$app::post("/dashboard/admin/:nip/manajemen-data/manipulate-data", [UserManagement::class, "manageData"], [AdminMiddleware::class]);
 
 $app::get("/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
 $app::get("/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);

@@ -51,6 +51,10 @@ class Mahasiswa extends BaseModel
             $table->select();
         });
     }
+    public static function deleteData($id):array
+    {
+        return Schema::query("DELETE FROM mahasiswa WHERE id =$id ;");   
+    }
 
 
     public static function deleteAll(): array

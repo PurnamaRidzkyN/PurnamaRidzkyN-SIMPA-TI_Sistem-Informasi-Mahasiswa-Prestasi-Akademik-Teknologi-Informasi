@@ -50,6 +50,28 @@ class Admin extends BaseModel
         });
     }
 
+    public static function updateData($body):array{
+        
+        $id = $body['id'];  
+        $nama=$body["nama"];
+        $nip = $body["nip"];
+        $email=$body["email"];
+        $foto = $body["foto"];
+        return Schema::query(  
+        "UPDATE admin SET 
+        nama = '$nama',
+        nip = '$nip',
+        foto = '$foto',
+        email = '$email'
+        WHERE id = '$id';
+        ");
+    }
+
+    public static function deleteData($id):array
+    {
+        return Schema::query("DELETE FROM admin WHERE id =$id ;");   
+    }
+
 
 
     public static function deleteAll(): array
