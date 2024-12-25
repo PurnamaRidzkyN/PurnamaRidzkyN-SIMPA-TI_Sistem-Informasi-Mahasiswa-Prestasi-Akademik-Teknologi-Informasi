@@ -83,6 +83,9 @@ class UserManagement extends BaseController
     {
         $Admin = Admin::findNip(Session::get("user"));
         $body = $req->body();
+
+        Dump::out($body);
+        exit;
         $name = $body['nama'];
         $nim = $body['nim'];
         $prodi = $body['prodi'];
@@ -215,23 +218,4 @@ class UserManagement extends BaseController
     }
     
 
-    public function renderDataAdmin()
-    {
-        $data = Admin::displayAdmin();
-        $dataAdmin = $data["result"];
-        $this->view("dashboard/admin/manajemenData/adminData", "Admin Data", $dataAdmin);
-    }
-    public function renderDataMahasiswa()
-    {
-        $data = Mahasiswa::displayMahasiswa();
-        $dataMahasiswa = $data["result"];
-        $this->view("dashboard/admin/manajemenData/mahasiswaData", "list mahasiswa", $dataMahasiswa);
-    }
-
-    public function renderDataDosen()
-    {
-        $data = Dosen::displayDosen();
-        $dataDosen = $data["result"];
-        $this->view("dashboard/admin/manajemenData/dosenData", "list dosen", $dataDosen);
-    }
 }

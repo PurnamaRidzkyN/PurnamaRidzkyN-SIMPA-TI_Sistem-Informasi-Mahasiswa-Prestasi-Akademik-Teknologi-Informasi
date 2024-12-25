@@ -68,7 +68,8 @@ $app::post("/dashboard/admin/:nip/detail-prestasi",[PrestasiController::class,"r
 $app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController::class,"validatePrestasi"],[AdminMiddleware::class]);
 
 
-$app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"render"],[AdminMiddleware::class]);
+$app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
+$app::post("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
 
 $app::get("/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
 $app::get("/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);

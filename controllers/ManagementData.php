@@ -2,20 +2,26 @@
 
 namespace app\controllers;
 
+use app\cores\Request;
+use app\cores\Response;
 use app\helpers\Dump;
 use app\models\database\logData\LogData;
+use app\models\database\users\Admin;
+use app\models\database\users\Dosen;
 use app\models\database\users\Mahasiswa;
 
 class ManagementData extends BaseController
 {
-    public function render(): void
-    {   
-       $log = LogData::logDataDisplay();
-        $log = $log["result"];
-        if (is_null($log)){
-            $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data");
+    public function renderManagementData(Request $req, Response $res): void
+    {
+        $body = $req->body();
+        Dump::out($body);
+        $log = LogData::logDataDisplay()["result"];
+        $admin = Admin::displayAdmin()["result"];
+        $mahasiswa = Mahasiswa::displayMahasiswa()["result"];
+        $dosen = Dosen::displayDosen()["result"];
 
-        }
-        $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data",$log);
+        $data = ["data"=>$body,"admin"=> $admin,"mahasiswa"=>$mahasiswa,"dosen"=>$dosen,"log data"=>$log];
+        $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data", $data);
     }
 }
