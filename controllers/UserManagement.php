@@ -18,10 +18,22 @@ use app\helpers\FileUpload;
 
 class UserManagement extends BaseController
 {
-    public function insertAdminUsers(Request $req, Response $res)
+
+    public function maanageData(Request $req, Response $res){
+        $body = $req->body();
+        if ($body["action"] ==="add"){
+            if ($body["data"]==="admin"){
+                $this->insertAdminUsers($body);
+            }else if( $body["data"]=="mahasiswa"){
+                $this->insertMahasiswaUsers($body);
+            }else if($body["data"=="dosen"]){
+                $this->insertDosenUsers($body);
+            }
+        }
+    }
+    public function insertAdminUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
-        $body = $req->body();
         $name = $body['name'];
         $email = $body['email'];
         $foto = $body['photo'];
@@ -74,16 +86,13 @@ class UserManagement extends BaseController
                 "null",
                 $data
             );
-            $res->redirect("/dashboard/admin/{$Admin['result'][0]["nip"]}/admin-data");
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    public function insertMahasiswaUsers(Request $req, Response $res)
+    public function insertMahasiswaUsers( array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
-        $body = $req->body();
-
         $name = $body['nama'];
         $nim = $body['nim'];
         $prodi = $body['prodi'];
@@ -147,16 +156,14 @@ class UserManagement extends BaseController
                 $data
             );
     
-            $res->redirect("/dashboard/admin/{$Admin['result'][0]["nip"]}/mahasiswa-data");
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
     
-    public function insertDosenUsers(Request $req, Response $res)
+    public function insertDosenUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
-        $body = $req->body();
         $name = $body['nama'];
         $nidn = $body['nidn'];
         $email = $body['email'];
@@ -209,7 +216,6 @@ class UserManagement extends BaseController
                 $data
             );
     
-            $res->redirect("/dashboard/admin/{$Admin['result'][0]["nip"]}/dosen-data");
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }

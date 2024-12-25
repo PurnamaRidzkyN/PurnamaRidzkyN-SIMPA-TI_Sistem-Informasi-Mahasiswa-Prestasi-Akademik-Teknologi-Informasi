@@ -12,6 +12,7 @@ $logData = $data["log data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
+var_dump($selectedData);
 ?>
 <!data html>
 <html lang="id">
@@ -256,12 +257,13 @@ $manipulate = $data["data"]["edit"];
                                     <button type="submit" name="edit" value="add">Tambah data</button>
                                 </form>
 <?php endif; ?>
+
 <?php if (!empty($manipulate)): ?>
     <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
     <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data" enctype="multipart/form-data">
         <table border="0" cellpadding="5" cellspacing="0">
             <?php 
-            // Ambil data berdasarkan ID yang ada di variabel $manipulate jika sedang edit, jika tambah data, buat array kosong
+            // Jika manipulate adalah 'add', buat array kosong sesuai dengan kolom yang ada
             $currentData = ($manipulate === 'add') 
                 ? array_fill_keys(array_keys($data[$selectedData][0]), '') // Data kosong untuk tambah
                 : array_filter($data[$selectedData], function ($row) use ($manipulate) {
@@ -269,7 +271,12 @@ $manipulate = $data["data"]["edit"];
                 });
 
             // Ambil data pertama dari array yang sudah difilter (hanya ada satu data yang cocok)
-            $currentData = reset($currentData); // Mengambil data pertama dari hasil filter
+            $currentData = reset($currentData); // Mengambil data pertama dari hasil filter, bisa kosong jika tambah data
+
+            // Pastikan $currentData bukan kosong untuk menghindari error
+            if (!$currentData) {
+                $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
+            }
 
             foreach (array_keys($currentData) as $keyField): ?>
                 <tr>
@@ -292,6 +299,7 @@ $manipulate = $data["data"]["edit"];
                     <button type="submit" name="save" value="<?= $manipulate === 'add' ? 'submit' : $currentData['id'] ?>">
                         <?= $manipulate === 'add' ? 'Submit' : 'Save' ?>
                     </button>
+                    <input type="hidden" name="action" value="<?= $manipulate === 'add' ? 'add' : 'update' ?>">
                     <button type="submit" name="cancel" value="cancel">Cancel</button>
                 </td>
             </tr>
