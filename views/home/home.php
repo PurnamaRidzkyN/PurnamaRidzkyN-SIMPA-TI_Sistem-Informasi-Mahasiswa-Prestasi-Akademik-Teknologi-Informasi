@@ -19,60 +19,6 @@
             background-color: #f5f5f5;
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
 
         .login-text {
             font-size: 18px;
@@ -93,14 +39,7 @@
         }
 
 
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+       
 
         .header {
             margin-top: 2px;
@@ -377,30 +316,6 @@
     </style>
 </head>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href="/">Home</a>
-        <a href="/login">Prestasi</a>
-        <a href="/dashboard/leaderboard">Leaderboard</a>
-    </div>
-    <div class="user-info">
-        <!-- Notification Bubble -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-
-            <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
-
-        </div>
-
-        <div class="login-text"><a href="/login">Login</a></div>
-
-    </div>
-</div>
 
 <!-- Konten Header -->
 <div class="header">

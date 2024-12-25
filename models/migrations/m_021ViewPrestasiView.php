@@ -54,3 +54,4 @@ LEFT JOIN admin a ON a.id = j.id_admin;
         return Schema::query("DROP VIEW view_prestasi");
     }
 }
+`

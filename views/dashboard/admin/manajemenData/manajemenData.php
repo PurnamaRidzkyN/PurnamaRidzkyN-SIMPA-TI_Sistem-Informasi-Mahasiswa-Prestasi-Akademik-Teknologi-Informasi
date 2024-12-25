@@ -333,7 +333,7 @@ $user = Session::get('user');
                                 <td>123456</td>
                                 <td>dosenA@domain.com</td>
                                 <td><img src="profileD.jpg" alt="Profil" width="40" height="40"></td>
-                            </tr>
+                            </tr>`
                         </tbody>
                     </table>
                     <h4>Tambah Data Dosen Baru</h4>
