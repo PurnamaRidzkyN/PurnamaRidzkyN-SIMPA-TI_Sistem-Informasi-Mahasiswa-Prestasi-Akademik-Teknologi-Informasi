@@ -84,8 +84,6 @@ class UserManagement extends BaseController
         $Admin = Admin::findNip(Session::get("user"));
         $body = $req->body();
 
-        Dump::out($body);
-        exit;
         $name = $body['nama'];
         $nim = $body['nim'];
         $prodi = $body['prodi'];

@@ -11,7 +11,7 @@ $mahasiswaData = $data["mahasiswa"];
 $logData = $data["log data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
-$manipulate = $data["data"]["id"];
+$manipulate = $data["data"]["edit"];
 ?>
 <!data html>
 <html lang="id">
@@ -240,7 +240,7 @@ $manipulate = $data["data"]["id"];
                             <td>
                                 <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
                                     <input type="hidden" name="data" value="<?= $selectedData ?>">
-                                    <button type="submit" name="id" value="<?= $row['id'] ?>">Edit</button>
+                                    <button type="submit" name="edit" value="<?= $row['id'] ?>">Edit</button>
                                     <button type="submit" name="delete" value="<?= $row['id'] ?>">Delete</button>
                                 </form>
                             </td>
@@ -253,19 +253,24 @@ $manipulate = $data["data"]["id"];
     </table>
     <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
                                     <input type="hidden" name="data" value="<?= $selectedData ?>">
-                                    <button type="submit" name="id" value="add">Tambah data</button>
+                                    <button type="submit" name="edit" value="add">Tambah data</button>
                                 </form>
 <?php endif; ?>
-
 <?php if (!empty($manipulate)): ?>
     <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
     <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data" enctype="multipart/form-data">
         <table border="0" cellpadding="5" cellspacing="0">
             <?php 
-            // Jika add data, buat form kosong, jika edit ambil data sesuai ID
-            $currentData = $manipulate === 'add' 
+            // Ambil data berdasarkan ID yang ada di variabel $manipulate jika sedang edit, jika tambah data, buat array kosong
+            $currentData = ($manipulate === 'add') 
                 ? array_fill_keys(array_keys($data[$selectedData][0]), '') // Data kosong untuk tambah
-                : $data[$selectedData][0]; // Data dari array untuk edit
+                : array_filter($data[$selectedData], function ($row) use ($manipulate) {
+                    return $row['id'] === $manipulate; // Cari data berdasarkan ID yang ada di variabel manipulate
+                });
+
+            // Ambil data pertama dari array yang sudah difilter (hanya ada satu data yang cocok)
+            $currentData = reset($currentData); // Mengambil data pertama dari hasil filter
+
             foreach (array_keys($currentData) as $keyField): ?>
                 <tr>
                     <td><strong><?= formatTitle($keyField) ?></strong></td>
@@ -293,6 +298,7 @@ $manipulate = $data["data"]["id"];
         </table>
     </form>
 <?php endif; ?>
+
 
 <?php
 function formatTitle($title) {
