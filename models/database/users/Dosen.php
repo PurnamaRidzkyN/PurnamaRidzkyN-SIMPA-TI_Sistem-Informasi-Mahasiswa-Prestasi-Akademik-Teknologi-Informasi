@@ -40,7 +40,10 @@ class Dosen extends BaseModel
             $table->selectWhere([self::NAMA => $name], [self::ID, self::ID_USER, self::NIDN, self::NAMA, self::FOTO, self::EMAIL]);
         });
     }
-
+ public static function deleteData($id):array
+    {
+        return Schema::query("DELETE FROM dosen WHERE id =$id ;");   
+    }
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);

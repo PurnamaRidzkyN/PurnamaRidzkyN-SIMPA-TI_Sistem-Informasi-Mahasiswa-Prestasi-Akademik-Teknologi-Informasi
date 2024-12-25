@@ -260,7 +260,7 @@ var_dump($selectedData);
 
 <?php if (!empty($manipulate)): ?>
     <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
-    <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data" enctype="multipart/form-data">
+    <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data/manipulate-data" enctype="multipart/form-data">
         <table border="0" cellpadding="5" cellspacing="0">
             <?php 
             // Jika manipulate adalah 'add', buat array kosong sesuai dengan kolom yang ada

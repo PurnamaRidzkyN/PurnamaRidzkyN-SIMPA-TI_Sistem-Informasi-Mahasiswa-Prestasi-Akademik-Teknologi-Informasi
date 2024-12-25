@@ -74,33 +74,7 @@
             gap: 16px;
         }
 
-        .login-text {
-            font-size: 18px;
-            color: white;
-            padding: 10px 15px;
-            border: 2px solid white;
-            border-radius: 20px;
-            background-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            transition: background-color 0.3s;
-
-        }
-
-        .login-text a {
-            text-decoration: none;
-            /* Menghapus underline */
-            color: inherit;
-            /* Menggunakan warna teks induk */
-        }
-
-
-        .login-text:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
+        
 
         .navbar .user-info .notifications {
             width: 40px;

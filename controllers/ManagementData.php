@@ -15,7 +15,6 @@ class ManagementData extends BaseController
     public function renderManagementData(Request $req, Response $res): void
     {
         $body = $req->body();
-        Dump::out($body);
         $log = LogData::logDataDisplay()["result"];
         $admin = Admin::displayAdmin()["result"];
         $mahasiswa = Mahasiswa::displayMahasiswa()["result"];

@@ -19,15 +19,30 @@ use app\helpers\FileUpload;
 class UserManagement extends BaseController
 {
 
-    public function maanageData(Request $req, Response $res){
+    public function manageData(Request $req, Response $res)
+    {
         $body = $req->body();
-        if ($body["action"] ==="add"){
-            if ($body["data"]==="admin"){
+        if ($body["action"] === "add") {
+            if ($body["data"] === "admin") {
                 $this->insertAdminUsers($body);
-            }else if( $body["data"]=="mahasiswa"){
+            } else if ($body["data"] === "mahasiswa") {
                 $this->insertMahasiswaUsers($body);
-            }else if($body["data"=="dosen"]){
+            } else if ($body["data" === "dosen"]) {
                 $this->insertDosenUsers($body);
+            }
+        } else if ($body["action"] === "update") {
+            if ($body["data"] === "admin") {
+                $this->updateDataAdmin($body);
+            } else if ($body["data"] === "mahasiswa") {
+            } else if ($body["data" === "dosen"]) {
+            }
+        } else if (!is_null($body["delete"])) {
+            if ($body["data"] === "admin") {
+                Admin::deleteData($body["delete"]);
+            } else if ($body["data"] === "mahasiswa") {
+                Mahasiswa::deleteData($body["delete"]);
+            } else if ($body["data" === "dosen"]) {
+                Dosen::deleteData($body["delete"]);
             }
         }
     }
@@ -42,7 +57,7 @@ class UserManagement extends BaseController
         try {
 
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
-            
+
             $userData = [
                 "id" => UUID::generate("[user]", "U"),
                 "username" => $nip,
@@ -50,9 +65,9 @@ class UserManagement extends BaseController
                 "role" => 1
             ];
             User::insert($userData);
-            
+
             $Data = ArrayFormatter::formatKeyValue($userData);
-            
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -64,7 +79,7 @@ class UserManagement extends BaseController
                 $Data
             );
 
-            $dataAdmin =[
+            $dataAdmin = [
                 Admin::ID => UUID::generate(Admin::TABLE, "A"),
                 Admin::ID_USER => $userData["id"],
                 Admin::NIP => $nip,
@@ -73,7 +88,7 @@ class UserManagement extends BaseController
                 Admin::EMAIL => $email,
             ];
             Admin::insert($dataAdmin);
-        
+
             $data = ArrayFormatter::formatKeyValue($dataAdmin);
 
             LogData::insert(
@@ -90,7 +105,7 @@ class UserManagement extends BaseController
             var_dump($e->getMessage());
         }
     }
-    public function insertMahasiswaUsers( array $body)
+    public function insertMahasiswaUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
         $name = $body['nama'];
@@ -104,10 +119,9 @@ class UserManagement extends BaseController
         try {
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
             if (!isset($user["result"])) {
-                $this->view("dashboard/admin/manajemenData/mahasiswaData", "list mahasiswa",[ "error" => "nim sudah digunakan"]);
+                $this->view("dashboard/admin/manajemenData/mahasiswaData", "list mahasiswa", ["error" => "nim sudah digunakan"]);
                 var_dump("hehe");
                 return;
-            
             }
             $userData = [
                 "id" => UUID::generate("[user]", "U"),
@@ -116,9 +130,9 @@ class UserManagement extends BaseController
                 "role" => 2
             ];
             User::insert($userData);
-    
+
             $Data = ArrayFormatter::formatKeyValue($userData);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -129,7 +143,7 @@ class UserManagement extends BaseController
                 "null",
                 $Data
             );
-    
+
             $dataMahasiswa = [
                 Mahasiswa::ID => UUID::generate(Mahasiswa::TABLE, "M"),
                 Mahasiswa::ID_USER => $userData["id"],
@@ -142,9 +156,9 @@ class UserManagement extends BaseController
                 Mahasiswa::EMAIL => $email,
             ];
             Mahasiswa::insert($dataMahasiswa);
-    
+
             $data = ArrayFormatter::formatKeyValue($dataMahasiswa);
-            
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -155,12 +169,11 @@ class UserManagement extends BaseController
                 "null",
                 $data
             );
-    
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    
+
     public function insertDosenUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
@@ -168,10 +181,10 @@ class UserManagement extends BaseController
         $nidn = $body['nidn'];
         $email = $body['email'];
         $foto = $body['fotoProfil'];
-    
+
         try {
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
-    
+
             $userData = [
                 "id" => UUID::generate("[user]", "U"),
                 "username" => $nidn,
@@ -179,9 +192,9 @@ class UserManagement extends BaseController
                 "role" => 3
             ];
             User::insert($userData);
-    
+
             $Data = ArrayFormatter::formatKeyValue($userData);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -192,7 +205,7 @@ class UserManagement extends BaseController
                 "null",
                 $Data
             );
-    
+
             $dataDosen = [
                 Dosen::ID => UUID::generate(Dosen::TABLE, "D"),
                 Dosen::ID_USER => $userData["id"],
@@ -202,9 +215,9 @@ class UserManagement extends BaseController
                 Dosen::EMAIL => $email,
             ];
             Dosen::insert($dataDosen);
-    
+
             $data = ArrayFormatter::formatKeyValue($dataDosen);
-    
+
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
                 $Admin['result'][0]["id_user"],
@@ -215,11 +228,74 @@ class UserManagement extends BaseController
                 "null",
                 $data
             );
-    
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
-    
+    public function updateDataAdmin(array $body)
+    {
+        $Admin = Admin::findNip(Session::get("user"));
+        $id = $body['id'];
+        $id_user = $body['id_user'];
+        $name = $body['nama'];
+        $email = $body['email'];
+        $foto = $body['photo'];
+        $nip = $body['nip'];
 
+        try {
+            // Validasi data lama
+            $oldData = Admin::findNip($nip)['result'][0];
+            // Proses foto
+            if (isset($foto['type']) && !is_null($foto['type'])) {
+                $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
+            } else {
+                $fileFoto = $oldData['foto'];
+            }
+
+            // Data baru
+            $newData = [
+                Admin::ID => $id,
+                Admin::NIP => $nip,
+                Admin::NAMA => $name,
+                Admin::FOTO => $fileFoto,
+                Admin::EMAIL => $email,
+            ];
+
+            // Identifikasi kolom yang diubah
+            $differences = [];
+
+            foreach ($newData as $key => $newValue) {
+                $oldValue = $oldData[$key] ?? null; // Ambil nilai lama, default ke null jika tidak ada
+                if ($oldValue !== $newValue) {
+                    $differences[] = [
+                        'column' => $key,
+                        'old_value' => $oldValue,
+                        'new_value' => $newValue,
+                    ];
+                }
+            }
+
+            // Perbarui data
+            Admin::updateData($newData);
+
+            // Format data untuk log
+            $formatChangedColumns = ArrayFormatter::formatKeyValue($differences['column']);
+            $formattedNewData = ArrayFormatter::formatKeyValue($differences['new_value']);
+            $formattedOldData = ArrayFormatter::formatKeyValue($differences['old_value']);
+
+            // Masukkan log
+            LogData::insert(
+                UUID::generate(LogData::TABLE, "LD"),
+                $Admin['result'][0]["id_user"],
+                $id,
+                Admin::TABLE,
+                "update",
+                $formatChangedColumns, // Catat kolom yang berubah
+                $formattedOldData,
+                $formattedNewData
+            );
+        } catch (\PDOException $e) {
+            var_dump($e->getMessage());
+        }
+    }
 }
