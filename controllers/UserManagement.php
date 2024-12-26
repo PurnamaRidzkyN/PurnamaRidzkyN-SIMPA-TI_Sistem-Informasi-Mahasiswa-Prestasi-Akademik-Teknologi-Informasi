@@ -27,7 +27,7 @@ class UserManagement extends BaseController
                 $this->insertAdminUsers($body);
             } else if ($body["data"] === "mahasiswa") {
                 $this->insertMahasiswaUsers($body);
-            } else if ($body["data" === "dosen"]) {
+            } else if ($body["data"] === "dosen") {
                 $this->insertDosenUsers($body);
             }
         } else if ($body["action"] === "update") {
@@ -49,9 +49,9 @@ class UserManagement extends BaseController
     public function insertAdminUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
-        $name = $body['name'];
+        $name = $body['nama'];
         $email = $body['email'];
-        $foto = $body['photo'];
+        $foto = $body['foto'];
         $nip = $body['nip'];
 
         try {
@@ -108,19 +108,20 @@ class UserManagement extends BaseController
     public function insertMahasiswaUsers(array $body)
     {
         $Admin = Admin::findNip(Session::get("user"));
+ 
         $name = $body['nama'];
         $nim = $body['nim'];
         $prodi = $body['prodi'];
         $jurusan = $body['jurusan'];
         $tahun_masuk = $body['tahun_masuk'];
-        $foto = $body['photo'];
+        $foto = $body['foto'];
         $email = $body['email'];
         $user = User::findOne($nim);
         try {
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
-            if (!isset($user["result"])) {
-                $this->view("dashboard/admin/manajemenData/mahasiswaData", "list mahasiswa", ["error" => "nim sudah digunakan"]);
-                var_dump("hehe");
+
+            if (!is_null($user["result"])) {
+                $this->view("dashboard/admin/manajemenData", "Manajemen Data", ["error" => "nim sudah digunakan"]);
                 return;
             }
             $userData = [
@@ -147,11 +148,12 @@ class UserManagement extends BaseController
             $dataMahasiswa = [
                 Mahasiswa::ID => UUID::generate(Mahasiswa::TABLE, "M"),
                 Mahasiswa::ID_USER => $userData["id"],
-                Mahasiswa::NIM => $nim,
                 Mahasiswa::NAMA => $name,
+                Mahasiswa::NIM => $nim,
                 Mahasiswa::PRODI => $prodi,
                 Mahasiswa::JURUSAN => $jurusan,
                 Mahasiswa::TAHUN_MASUK => $tahun_masuk,
+                Mahasiswa::TOTAL_SKOR => 0,
                 Mahasiswa::FOTO => $fileFoto,
                 Mahasiswa::EMAIL => $email,
             ];
@@ -180,7 +182,7 @@ class UserManagement extends BaseController
         $name = $body['nama'];
         $nidn = $body['nidn'];
         $email = $body['email'];
-        $foto = $body['fotoProfil'];
+        $foto = $body['foto'];
 
         try {
             $fileFoto = FileUpload::uploadFile($foto, FileUpload::TARGET_DIR_FOTO_PROFILE);
@@ -211,8 +213,9 @@ class UserManagement extends BaseController
                 Dosen::ID_USER => $userData["id"],
                 Dosen::NIDN => $nidn,
                 Dosen::NAMA => $name,
-                Dosen::FOTO => $fileFoto,
                 Dosen::EMAIL => $email,
+                Dosen::FOTO => $fileFoto,
+
             ];
             Dosen::insert($dataDosen);
 
@@ -239,7 +242,7 @@ class UserManagement extends BaseController
         $id_user = $body['id_user'];
         $name = $body['nama'];
         $email = $body['email'];
-        $foto = $body['photo'];
+        $foto = $body['foto'];
         $nip = $body['nip'];
 
         try {
@@ -275,13 +278,24 @@ class UserManagement extends BaseController
                 }
             }
 
-            // Perbarui data
-            Admin::updateData($newData);
+            $columns = [];
+            $oldValues = [];
+            $newValues = [];
 
-            // Format data untuk log
-            $formatChangedColumns = ArrayFormatter::formatKeyValue($differences['column']);
-            $formattedNewData = ArrayFormatter::formatKeyValue($differences['new_value']);
-            $formattedOldData = ArrayFormatter::formatKeyValue($differences['old_value']);
+            // Iterasi tanpa membawa indeks
+            foreach ($differences as $difference) {
+                $columns[] = $difference['column'];
+                $oldValues[] = $difference['old_value'];
+                $newValues[] = $difference['new_value'];
+            }
+            
+            $columns = implode(', ', $columns);
+            $oldValues = implode(', ', $oldValues);
+            $newValues = implode(', ', $newValues);
+
+            Dump::out($columns);
+
+            Admin::updateData($newData);
 
             // Masukkan log
             LogData::insert(
@@ -290,10 +304,11 @@ class UserManagement extends BaseController
                 $id,
                 Admin::TABLE,
                 "update",
-                $formatChangedColumns, // Catat kolom yang berubah
-                $formattedOldData,
-                $formattedNewData
+                $columns, // Catat kolom yang berubah
+                $oldValues,
+                $newValues
             );
+            $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data", $body);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
