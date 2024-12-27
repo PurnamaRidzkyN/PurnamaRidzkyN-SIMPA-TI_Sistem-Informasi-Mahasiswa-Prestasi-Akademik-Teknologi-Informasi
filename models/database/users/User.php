@@ -40,6 +40,10 @@ class User extends BaseModel
             $table->select([self::ID, self::USERNAME, self::PASSWORD, self::ROLE]);
         });
     }
+    public static function deleteData($id):array
+    {
+        return Schema::query("DELETE FROM [user] WHERE id = '$id' ;");   
+    }
 
     public static function deleteAll(): array
     {
