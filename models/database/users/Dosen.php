@@ -42,10 +42,30 @@ class Dosen extends BaseModel
     }
  public static function deleteData($id):array
     {
-        return Schema::query("DELETE FROM dosen WHERE id =$id ;");   
+        return Schema::query("DELETE FROM dosen WHERE id ='$id' ;");   
     }
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);
+    }
+
+    
+    public static function updateData($body): array
+    {
+
+        $id = $body['id'];
+        $nama = $body["nama"];
+        $nidn = $body["nidn"];
+        $email = $body["email"];
+        $foto = $body["foto"];
+        return Schema::query(
+            "UPDATE dosen SET 
+        nama = '$nama',
+        nidn = '$nidn',
+        foto = '$foto',
+        email = '$email'
+        WHERE id = '$id';
+        "
+        );
     }
 }

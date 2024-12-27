@@ -69,7 +69,7 @@ class Admin extends BaseModel
 
     public static function deleteData($id):array
     {
-        return Schema::query("DELETE FROM admin WHERE id =$id ;");   
+        return Schema::query("DELETE FROM admin WHERE id = '$id' ;");   
     }
 
 
