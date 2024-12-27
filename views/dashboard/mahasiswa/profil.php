@@ -6,42 +6,6 @@
         color: white;
     }
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #0039C8;
-        padding: 15px 30px;
-        color: white;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    .navbar .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .navbar .logo img {
-        height: 50px;
-        margin-right: 10px;
-    }
-
-    .navbar .logo h1 {
-        font-size: 24px;
-        margin: 0;
-    }
-
-    .navbar .menu a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-        font-size: 18px;
-    }
-
-    .navbar .menu a:hover {
-        text-decoration: underline;
-    }
-
     .container {
         max-width: 700px;
         margin: 80px auto;
