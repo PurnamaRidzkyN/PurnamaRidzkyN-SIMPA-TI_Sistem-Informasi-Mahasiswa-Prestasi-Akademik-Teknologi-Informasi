@@ -47,6 +47,12 @@ class Mahasiswa extends BaseModel
             $table->selectWhere(["email" => $email], [self::ID_USER, self::NAMA, self::EMAIL]);
         });
     }
+    public static function findId($id): array
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($id) {
+            $table->selectWhere(["id" => $id], [self::ID_USER, self::NAMA]);
+        });
+    }
     public static function findNim($nim): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nim) {

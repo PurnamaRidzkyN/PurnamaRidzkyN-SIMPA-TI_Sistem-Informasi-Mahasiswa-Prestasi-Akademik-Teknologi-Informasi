@@ -152,7 +152,7 @@
     <div class="user-info">
       <?php if (Session::get("role") === "1"): ?>
         <!-- Jika role Admin -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
+        <div class="notification-bubble" onclick="window.location.href='<?php echo '/dashboard/admin/' . Session::get("user") . '/notifikasi'; ?>'">
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil'; ?>">
@@ -160,7 +160,7 @@
         </a>
       <?php elseif (Session::get("role") === "2"): ?>
         <!-- Jika role Mahasiswa -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
+        <div class="notification-bubble" onclick="window.location.href='<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/notifikasi'; ?>'">
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/profil'; ?>">

@@ -11,6 +11,7 @@ class m_023NotifikasiMigration implements BaseMigration
         return Schema::createTableIfNotExist("notifikasi", function (Blueprint $table) {
             $table->string("id",6);
             $table->string("id_user",6);
+            $table->tinyInt("role");
             $table->string("pesan");
             $table->string("tipe");
             $table->string("status");

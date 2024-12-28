@@ -12,70 +12,6 @@
             background-color: #f5f5f5;
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
         /* Main Container Styling */
         .container {
             padding: 0px;
@@ -156,24 +92,6 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<div class="navbar" id="navbar">
-    <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
-        <div>
-            <h1>SIMPA-TI</h1>
-        </div>
-    </div>
-    <div class="menu" id="menu">
-        <!-- Menu items will be dynamically updated here -->
-    </div>
-    <div class="user-info">
-        <div class="notifications" onclick="window.location.href='notifikasi.html'">
-            <img src="notifikasi-03.png" alt="Notifikasi">
-        </div>
-        <img src="profilpic.png" alt="Profile">
-    </div>
-</div>
 
 <!-- Konten Header -->
 <div class="header">
@@ -208,57 +126,6 @@
         <div class="delete-notification" onclick="deleteNotification(event, this)">Hapus</div>
     </div>
 </div>
-
-<script>
-    // Variabel role untuk menentukan peran pengguna (mahasiswa atau admin)
-    var role = 'admin'; // Gantilah sesuai dengan peran yang sesungguhnya
-
-    // Function to dynamically populate the menu based on user role
-    function updateNavbarMenu() {
-        var menuContainer = document.getElementById('menu');
-        
-        // Menu untuk admin
-        if (role === 'admin') {
-            menuContainer.innerHTML = `
-                <a href="#">Home</a>
-                <a href="#">Prestasi</a>
-                <a href="#">Leaderboard</a>
-                <a href="#">Management Data</a>
-            `;
-        } else {
-            // Menu untuk mahasiswa
-            menuContainer.innerHTML = `
-                <a href="#">Home</a>
-                <a href="#">Prestasi</a>
-                <a href="#">Leaderboard</a>
-            `;
-        }
-    }
-
-    // Call the function to update navbar menu when the page loads
-    updateNavbarMenu();
-
-    // Function to mark notification as read or unread
-    function markAsRead(notification) {
-        if (notification.classList.contains('unread')) {
-            notification.classList.remove('unread');
-            notification.classList.add('read');
-        }
-    }
-
-    // Function to delete the notification
-    function deleteNotification(event, notificationElement) {
-        // Prevent the click event from propagating to the parent
-        event.stopPropagation();
-
-        // Admin dapat menghapus notifikasi
-        if (role === 'admin') {
-            notificationElement.closest('.bubble-notification').remove();
-        } else {
-            alert("Anda tidak memiliki izin untuk menghapus notifikasi.");
-        }
-    }
-</script>
 
 </body>
 </html>
