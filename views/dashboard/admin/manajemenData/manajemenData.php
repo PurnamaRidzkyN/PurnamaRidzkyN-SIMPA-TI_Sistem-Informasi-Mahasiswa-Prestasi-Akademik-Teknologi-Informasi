@@ -22,105 +22,234 @@ $manipulate = $data["data"]["edit"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMPA-TI</title>
     <style>
-        body {
-            font-family: Galatea, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
 
-        /* Konten Utama */
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 30px auto;
-            position: relative;
-        }
+     body {
+    font-family: Galatea, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
 
-        .content-header {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0039C8;
-            margin-bottom: 20px;
-        }
+/* Konten Utama */
+.container {
+    padding: 5px;
+    max-width: 1200px;
+    margin: 30px auto;
+    position: relative;
+}
 
-        /* Management Data Section */
-        .management-section {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
+.content-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0039C8;
+    margin-bottom: 20px;
+}
 
-        .management-option {
-            background-color: #0039C8;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            width: 200px;
-            text-align: center;
-            cursor: pointer;
-        }
+/* Management Data Section */
+.management-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
 
-        .management-option:hover {
-            background-color: #1e3c94;
-        }
+.management-option {
+    background-color: #0039C8;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    flex: 1 1 200px; /* Responsive flexbox */
+}
 
-        /* Tabel Data */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+.management-option:hover {
+    background-color: #1e3c94;
+}
 
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
+/* Tabel Data */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
 
-        th,
-        td {
-            padding: 10px;
-            font-size: 16px;
-        }
+table, th, td {
+    border: 1px solid #ddd;
+    text-align: left;
+}
 
-        th {
-            background-color: #0039C8;
-            color: white;
-        }
+th, td {
+    padding: 10px;
+    font-size: 16px;
+}
 
-        /* Form Add Data */
-        .form-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-        }
+th {
+    background-color: #0039C8;
+    color: white;
+    text-align: center;
 
-        .form-container input,
-        .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
+}
 
-        .form-container button {
-            background-color: #0039C8;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-        }
+/* Form styles */
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+}
 
-        .form-container button:hover {
-            background-color: #1e3c94;
-        }
+.form-container input[type="text"],
+.form-container input[type="file"],
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="file"]:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #0039C8;
+    box-shadow: 0 0 0 3px rgba(0, 57, 200, 0.1);
+}
+
+.form-container small {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    color: gray;
+    font-size: 14px;
+}
+td.actions {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 0.5rem; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    height: 100%; 
+}
+/* Button styles */
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+button[type="submit"] {
+    background-color: #0039C8;
+    color: white;
+    margin-right: 0.5rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #002c9d;
+}
+
+button[name="cancel"] {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+button[name="cancel"]:hover {
+    background-color: #d1d5db;
+}
+
+button[name="edit"] {
+    background-color: #0039C8;
+    color: white;
+    
+}
+
+button[name="edit"]:hover {
+    background-color: #002c9d;
+}
+
+button[name="delete"] {
+    background-color: #dc2626;
+    color: white;
+}
+
+button[name="delete"]:hover {
+    background-color: #b91c1c;
+}
+
+/* Add data button */
+button[value="add"] {
+    margin-top: 1rem;
+    background-color: #059669;
+    color: white;
+}
+
+button[value="add"]:hover {
+    background-color: #047857;
+}
+
+.table-wrapper {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px;
+    
+}
+
+/* Judul di dalam kotak */
+.table-wrapper h3 {
+    margin: 0 0 20px;
+    font-size: 20px;
+    color: #0039C8;
+    border-bottom: 2px solid #0039C8;
+    padding-bottom: 10px;
+}
+
+th, td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 12px;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        margin: 10px;
+    }
+    
+    .management-section {
+        flex-direction: column;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    th, td {
+        padding: 0.75rem;
+    }
+}
     </style>
 </head>
 
@@ -173,10 +302,10 @@ $manipulate = $data["data"]["edit"];
         <!-- Tabel dan Form untuk menambah data -->
         <div id="data-container" class="data-container"></div>
     </div>
-
     
 
     <?php if (!empty($selectedData) && isset($data[$selectedData])): ?>
+        <div class="table-wrapper"> <!-- Tambahkan div pembungkus di sini -->
     <h3>Data <?= formatTitle($selectedData) ?></h3>
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>
@@ -230,22 +359,24 @@ $manipulate = $data["data"]["edit"];
                     <?php else: ?>
                         <!-- Jika ID tidak cocok, tampilkan data biasa -->
                         <tr>
-                            <?php foreach ($row as $keyField => $value): ?>
-                                <td>
-                                    <?php if ($keyField === 'foto' && !empty($value)): ?>
-                                        <img src="../../../<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($selectedData) ?> Foto" width="40" height="40">
-                                    <?php else: ?>
-                                        <?= htmlspecialchars($value) ?>
-                                    <?php endif; ?>
-                                </td>
-                            <?php endforeach; ?>
-                            <td>
-                                <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
-                                    <input type="hidden" name="data" value="<?= $selectedData ?>">
-                                    <button type="submit" name="edit" value="<?= $row['id'] ?>">Edit</button>
-                                    <button type="submit" name="delete" value="<?= $row['id'] ?>">Delete</button>
-                                </form>
-                            </td>
+                        <?php foreach ($row as $keyField => $value): ?>
+        <td>
+            <?php if ($keyField === 'foto' && !empty($value)): ?>
+                <img src="../../../<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($selectedData) ?> Foto" width="40" height="40">
+            <?php else: ?>
+                <?= htmlspecialchars($value) ?>
+            <?php endif; ?>
+        </td>
+    <?php endforeach; ?>
+    <td class="actions">
+        <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
+            <input type="hidden" name="data" value="<?= $selectedData ?>">
+            <button type="submit" name="edit" value="<?= $row['id'] ?>">Edit</button>
+            <button type="submit" name="delete" value="<?= $row['id'] ?>">Delete</button>
+        </form>
+    </td>
+
+    </td>
                         </tr>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -279,196 +410,39 @@ $manipulate = $data["data"]["edit"];
                 $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
             }
 
-            // Mahasiswa
-            else if (type === 'mahasiswa') {
-                dataHTML = `
-                    <h3>Data Mahasiswa</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>NIM</th>
-                                <th>Profil</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Prodi</th>
-                                <th>Total Skor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Mahasiswa A</td>
-                                <td>mahasiswaA@domain.com</td>
-                                <td>123456789</td>
-                                <td><img src="profileA.jpg" alt="Profil" width="40" height="40"></td>
-                                <td>1999-01-01</td>
-                                <td>TI</td>
-                                <td>100</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4>Tambah Data Mahasiswa Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID Mahasiswa" id="mahasiswa-id">
-                        <input type="text" placeholder="Nama Mahasiswa" id="mahasiswa-name">
-                        <input type="email" placeholder="Email Mahasiswa" id="mahasiswa-email">
-                        <input type="text" placeholder="NIM" id="mahasiswa-nim">
-                        <input type="date" placeholder="Tanggal Lahir" id="mahasiswa-tanggal-lahir">
-                        <input type="text" placeholder="Prodi" id="mahasiswa-prodi">
-                        <input type="number" placeholder="Total Skor" id="mahasiswa-total-skor">
-                        <input type="file" id="mahasiswa-profile">
-                        <button onclick="addData('mahasiswa')">Tambah Data</button>
-                    </div>
-                `;
-            }
+            foreach (array_keys($currentData) as $keyField): ?>
+            <tr>
+  <td><strong><?= formatTitle($keyField) ?></strong></td>
+                    <td>
+                        <?php if ($keyField === 'foto'): ?>
+                            <input type="file" name="<?= $keyField ?>"accept="image/*">
+                            <small>Format: JPG, PNG. Maksimal 2MB.</small>
+                            <?php if ($manipulate !== 'add'): ?>
+                                <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                        <?php endif; ?>
+                        <input type="hidden" name="data" value="<?= $selectedData ?>">
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button type="submit" name="save" value="<?= $manipulate === 'add' ? 'submit' : $currentData['id'] ?>">
+                        <?= $manipulate === 'add' ? 'Submit' : 'Save' ?>
+                    </button>
+                    <input type="hidden" name="action" value="<?= $manipulate === 'add' ? 'add' : 'update' ?>">
+                    <button type="submit" name="cancel" value="cancel">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+<?php endif; ?>
 
-            // Dosen
-            else if (type === 'dosen') {
-                dataHTML = `
-                    <h3>Data Dosen</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nama</th>
-                                <th>NIP</th>
-                                <th>Email</th>
-                                <th>Profil</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Dosen A</td>
-                                <td>123456</td>
-                                <td>dosenA@domain.com</td>
-                                <td><img src="profileD.jpg" alt="Profil" width="40" height="40"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4>Tambah Data Dosen Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID Dosen" id="dosen-id">
-                        <input type="text" placeholder="Nama Dosen" id="dosen-name">
-                        <input type="email" placeholder="Email Dosen" id="dosen-email">
-                        <input type="text" placeholder="NIP" id="dosen-nip">
-                        <input type="file" id="dosen-profile">
-                        <button onclick="addData('dosen')">Tambah Data</button>
-                    </div>
-                `;
-            }
 
-            // Info Lomba
-            else if (type === 'lomba') {
-                dataHTML = `
-                    <h3>Info Lomba</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Judul</th>
-                                <th>Deskripsi</th>
-                                <th>Tanggal Akhir Pendaftaran</th>
-                                <th>Link</th>
-                                <th>File Poster</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Lomba A</td>
-                                <td>Deskripsi Lomba A</td>
-                                <td>2024-12-31</td>
-                                <td><a href="linkLombaA.com">Link</a></td>
-                                <td><img src="posterA.jpg" alt="Poster" width="40" height="40"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4>Tambah Info Lomba Baru</h4>
-                    <div class="form-container">
-                        <input type="text" placeholder="ID Lomba" id="lomba-id">
-                        <input type="text" placeholder="Judul Lomba" id="lomba-judul">
-                        <textarea placeholder="Deskripsi Lomba" id="lomba-deskripsi"></textarea>
-                        <input type="date" placeholder="Tanggal Akhir Pendaftaran" id="lomba-tanggal-akhir">
-                        <input type="url" placeholder="Link Pendaftaran" id="lomba-link">
-                        <input type="file" id="lomba-poster">
-                        <button onclick="addData('lomba')">Tambah Info Lomba</button>
-                    </div>
-                `;
-            }
-
-            // Log Data
-            else if (type === 'log') {
-                dataHTML = `
-                    <h3>Log Data</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>ID User</th>
-                                <th>ID Perubahan</th>
-                                <th>Tabel Perubahan</th>
-                                <th>Keterangan Kegiatan</th>
-                                <th>Tanggal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1001</td>
-                                <td>2001</td>
-                                <td>admin</td>
-                                <td>Update data admin</td>
-                                <td>2024-12-08</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                `;
-            }
-
-            dataContainer.innerHTML = dataHTML;
-        }
-
-        // Fungsi untuk menambah data
-        function addData(type) {
-            let data = {};
-            if (type === 'admin') {
-                data.id = document.getElementById('admin-id').value;
-                data.email = document.getElementById('admin-email').value;
-                data.name = document.getElementById('admin-name').value;
-                data.nip = document.getElementById('admin-nip').value;
-            } else if (type === 'mahasiswa') {
-                data.id = document.getElementById('mahasiswa-id').value;
-                data.name = document.getElementById('mahasiswa-name').value;
-                data.nim = document.getElementById('mahasiswa-nim').value;
-                data.tanggal_lahir = document.getElementById('mahasiswa-tanggal-lahir').value;
-                data.prodi = document.getElementById('mahasiswa-prodi').value;
-                data.total_skor = document.getElementById('mahasiswa-total-skor').value;
-            } else if (type === 'dosen') {
-                data.id = document.getElementById('dosen-id').value;
-                data.name = document.getElementById('dosen-name').value;
-                data.nip = document.getElementById('dosen-nip').value;
-                data.email = document.getElementById('dosen-email').value;
-            } else if (type === 'lomba') {
-                data.id = document.getElementById('lomba-id').value;
-                data.judul = document.getElementById('lomba-judul').value;
-                data.deskripsi = document.getElementById('lomba-deskripsi').value;
-                data.tanggal_akhir = document.getElementById('lomba-tanggal-akhir').value;
-                data.link = document.getElementById('lomba-link').value;
-            } else if (type === 'log') {
-                data.id_user = document.getElementById('log-id-user').value;
-                data.id_perubahan = document.getElementById('log-id-perubahan').value;
-                data.tabel_perubahan = document.getElementById('log-tabel-perubahan').value;
-                data.keterangan_kegiatan = document.getElementById('log-keterangan').value;
-                data.tanggal = document.getElementById('log-tanggal').value;
-            }
-            console.log(data); // Data yang dimasukkan akan ditampilkan di konsol
-            alert(type + " data has been added!");
-        }
-    </script>
-
-</body>
-
-</html>
+<?php
+function formatTitle($title) {
+    return ucwords(str_replace('_', ' ', $title));
+}
+?>

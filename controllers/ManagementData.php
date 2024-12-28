@@ -17,6 +17,9 @@ class ManagementData extends BaseController
         $body = $req->body();
         $log = LogData::logDataDisplay()["result"];
         $admin = Admin::displayAdmin()["result"];
+        $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data", [
+            "adminData" => $admin
+        ]);
         $mahasiswa = Mahasiswa::displayMahasiswa()["result"];
         $dosen = Dosen::displayDosen()["result"];
 
