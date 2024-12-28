@@ -23,49 +23,6 @@ $dosenList = $data["Dosen"];
         color: white;
     }
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 30px;
-        background-color: #0039C8;
-        color: white;
-        align-items: center;
-    }
-
-    .navbar .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .navbar .logo img {
-        width: 80px;
-        height: 80px;
-        margin-right: 15px;
-    }
-
-    .navbar .logo h1 {
-        font-size: 30px;
-        font-weight: 700;
-        color: white;
-        letter-spacing: 0.5px;
-    }
-
-    .navbar .menu {
-        display: flex;
-        gap: 20px;
-    }
-
-    .navbar .menu a {
-        text-decoration: none;
-        color: white;
-        font-size: 20px;
-        font-weight: 500;
-    }
-
-    .navbar .menu a:hover {
-        color: #AFFA08;
-    }
-
     .container {
         max-width: 1000px;
         margin: 0 auto;
@@ -78,7 +35,7 @@ $dosenList = $data["Dosen"];
         padding-bottom: 50px;
         border-radius: 15px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        min-height: 1200px;
+        min-height: 1000px;
         position: relative;
         max-width: 900px;
         margin: 0 auto;
@@ -105,6 +62,17 @@ $dosenList = $data["Dosen"];
         border-radius: 25px;
         border: none;
         font-size: 16px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+        min-width: 300px;
     }
 
     .dosen-entry {
@@ -136,7 +104,7 @@ $dosenList = $data["Dosen"];
         background-color: #c5ff5f;
     }
 
-    .form-container .submit-btn {
+   .form-container .submit-btn {
         background-color: #AFFA08;
         border-radius: 25px;
         padding: 10px 20px;
@@ -146,18 +114,40 @@ $dosenList = $data["Dosen"];
         text-align: center;
         cursor: pointer;
         border: none;
-        position: absolute;
+	   position: absolute;
         bottom: 20px;
-        right: 20px;
+        left: 20px;
     }
+
+    .form-container .submit-btn:hover {
+        background-color: #c5ff5f;
+    }
+	
+	.form-container .back-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+	.form-container .back-btn:hover {
+		background-color: #c82333;
+	}
+
 
     .form-container input[type="file"] {
         padding: 0;
         font-size: 16px;
     }
 
-
-    /* Green "Tambah Dosen" button with rounded borders */
     #addDosenBtn {
         background-color: #AFFA08;
         padding: 5px 10px;
@@ -171,10 +161,8 @@ $dosenList = $data["Dosen"];
 
     #addDosenBtn:hover {
         background-color: #218838;
-        /* Darker green for hover effect */
     }
 
-    /* Red "Hapus" button with rounded borders */
     .dosen-container button {
         background-color: #dc3545;
         padding: 5px 10px;
@@ -189,24 +177,8 @@ $dosenList = $data["Dosen"];
 
     .dosen-container button:hover {
         background-color: #c82333;
-        /* Darker red for hover effect */
     }
 </style>
-
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-
-    </div>
-    <div class="menu">
-        <a href="#home">Home</a>
-        <a href="#prestasi">Prestasi</a>
-        <a href="#leaderboard">Leaderboard</a>
-    </div>
-</div>
-
 
 <!-- Main Content -->
 <div class="container">
@@ -218,85 +190,94 @@ $dosenList = $data["Dosen"];
 
         <form id="prestasiForm" action="/dashboard/mahasiswa/<?php echo $user; ?>/submit-prestasi" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-            <!-- Jenis Kompetisi -->
-            <label for="jenis-kompetisi">Jenis Kompetisi</label>
-            <select name="jenis-kompetisi" id="jenis-kompetisi" required>
-                <option value="">Pilih Jenis Kompetisi</option>
-                <?php foreach ($jenisKompetisi as $jenis) : ?>
-                    <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+            <!-- Jenis Kompetisi, Tingkat Kompetisi, Kategori, Peringkat -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jenis-kompetisi">Jenis Kompetisi</label>
+                    <select name="jenis-kompetisi" id="jenis-kompetisi" required>
+                        <option value="">Pilih Jenis Kompetisi</option>
+                        <?php foreach ($jenisKompetisi as $jenis) : ?>
+                            <option value="<?php echo $jenis['id']; ?>"><?php echo $jenis['jenis_lomba']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-            <!-- Tingkat Kompetisi -->
-            <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
-            <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
-                <option value="">Pilih Tingkat Kompetisi</option>
-                <?php foreach ($tingkatKompetisi as $tingkat) : ?>
-                    <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <div class="form-group">
+                    <label for="tingkat-kompetisi">Tingkat Kompetisi</label>
+                    <select name="tingkat-kompetisi" id="tingkat-kompetisi" required>
+                        <option value="">Pilih Tingkat Kompetisi</option>
+                        <?php foreach ($tingkatKompetisi as $tingkat) : ?>
+                            <option value="<?php echo $tingkat['id']; ?>"><?php echo $tingkat['tingkat_lomba']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-            <!-- Kompetisi -->
-            <label for="judul-kompetisi">Judul kompetisi</label>
-            <input type="text" name="judul-kompetisi" id="judul-kompetisi" required>
+                <div class="form-group">
+                    <label for="kategori-kompetisi">Kategori Kompetisi</label>
+                    <select name="kategori-kompetisi" id="kategori-kompetisi" required>
+                        <option value="">Pilih Kategori Kompetisi</option>
+                        <?php foreach ($kategoriKompetisi as $kategori) : ?>
+                            <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-            <!-- Kompetisi -->
-            <label for="judul-kompetisi">Judul kompetisi (English) </label>
-            <input type="text" name="judul-kompetisi-en" id="judul-kompetisi" required>
+                <div class="form-group">
+                    <label for="peringkat">Peringkat</label>
+                    <select name="peringkat" id="peringkat" required>
+                        <option value="">Pilih Peringkat</option>
+                        <?php foreach ($urutanPeringkat as $peringkat) : ?>
+                            <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
 
-            <!-- Kategori Kompetisi -->
-            <label for="kategori-kompetisi">Kategori Kompetisi</label>
-            <select name="kategori-kompetisi" id="kategori-kompetisi" required>
-                <option value="">Pilih Kategori Kompetisi</option>
-                <?php foreach ($kategoriKompetisi as $kategori) : ?>
-                    <option value="<?php echo $kategori; ?>"><?php echo ucfirst($kategori); ?></option>
-                <?php endforeach; ?>
-            </select>
+            <!-- Tempat Kompetisi, URL Kompetisi, Tanggal Mulai, Tanggal Akhir -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tempat-kompetisi">Tempat Kompetisi</label>
+                    <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+                </div>
 
-            <!-- Peringkat -->
-            <label for="peringkat">Peringkat</label>
-            <select name="peringkat" id="peringkat" required>
-                <option value="">Pilih Peringkat</option>
-                <?php foreach ($urutanPeringkat as $peringkat) : ?>
-                    <option value="<?php echo $peringkat['id']; ?>"><?php echo $peringkat['peringkat']; ?></option>
-                <?php endforeach; ?>
-            </select>
+                <div class="form-group">
+                    <label for="url-kompetisi">URL Kompetisi</label>
+                    <input type="url" name="url-kompetisi" id="url-kompetisi" required>
+                </div>
 
-            <!-- Tempat Kompetisi -->
-            <label for="tempat-kompetisi">Tempat Kompetisi</label>
-            <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+                <div class="form-group">
+                    <label for="tanggal-mulai">Tanggal Mulai</label>
+                    <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
+                </div>
 
-            <!-- Tempat Kompetisi -->
-            <label for="tempat-kompetisi">Tempat Kompetisi (English)</label>
-            <input type="text" name="tempat-kompetisi-en" id="tempat-kompetisi" required>
+                <div class="form-group">
+                    <label for="tanggal-akhir">Tanggal Akhir</label>
+                    <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
+                </div>
+            </div>
 
-            <!-- URL Kompetisi -->
-            <label for="url-kompetisi">URL Kompetisi</label>
-            <input type="url" name="url-kompetisi" id="url-kompetisi" required>
+            <!-- Jumlah PT, Jumlah Peserta, No Surat Tugas, Tanggal Surat Tugas -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jumlah-pt">Jumlah PT (Berpartisipasi)</label>
+                    <input type="number" name="jumlah-pt" id="jumlah-pt" required>
+                </div>
 
-            <!-- Tanggal Mulai -->
-            <label for="tanggal-mulai">Tanggal Mulai</label>
-            <input type="date" name="tanggal-mulai" id="tanggal-mulai" required onchange="formatDate(this)">
+                <div class="form-group">
+                    <label for="jumlah-peserta">Jumlah Peserta</label>
+                    <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
+                </div>
 
-            <!-- Tanggal Akhir -->
-            <label for="tanggal-akhir">Tanggal Akhir</label>
-            <input type="date" name="tanggal-akhir" id="tanggal-akhir" required onchange="formatDate(this)">
+                <div class="form-group">
+                    <label for="no-surat-tugas">No Surat Tugas</label>
+                    <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
+                </div>
 
-            <!-- PT -->
-            <label for="jumlah-pt">Jumlah PT (Berpartisipasi) </label>
-            <input type="number" name="jumlah-pt" id="jumlah-pt" required>
-
-            <!-- Jumlah Peserta -->
-            <label for="jumlah-peserta">Jumlah Peserta</label>
-            <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
-
-            <!-- No Surat Tugas -->
-            <label for="no-surat-tugas">No Surat Tugas</label>
-            <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
-
-            <!-- Tanggal Surat Tugas -->
-            <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
-            <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+                <div class="form-group">
+                    <label for="tanggal-surat-tugas">Tanggal Surat Tugas</label>
+                    <input type="date" name="tanggal-surat-tugas" id="tanggal-surat-tugas" required onchange="formatDate(this)">
+                </div>
+            </div>
 
             <!-- Dosen Pembimbing -->
             <label for="dosen-pembimbing">Dosen Pembimbing</label>
@@ -305,30 +286,28 @@ $dosenList = $data["Dosen"];
             <!-- Container to hold the dosen input fields -->
             <div id="dosenFieldsContainer"></div>
 
-            <!-- File Surat Tugas -->
-            <label for="file-surat-tugas">File Surat Tugas</label>
+            <!-- File Surat Tugas, File Sertifikat, Foto Kegiatan, File Poster -->
+            <label for="file-surat-tugas">File Surat Tugas (.jpg,.jpeg,.png,.pdf,.docx)</label>
             <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- File Sertifikat -->
-            <label for="file-sertifikat">File Sertifikat</label>
+            <label for="file-sertifikat">File Sertifikat (.jpg,.jpeg,.png,.pdf,.docx)</label>
             <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <!-- Foto Kegiatan -->
-            <label for="file-foto-kegiatan">Foto Kegiatan</label>
+            <label for="file-foto-kegiatan">Foto Kegiatan (.jpg,.jpeg,.png,.pdf,.docx)</label>
             <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf" required>
 
-            <!-- File Poster -->
-            <label for="file-poster">File Poster</label>
+            <label for="file-poster">File Poster (.jpg,.jpeg,.png,.pdf,.docx)</label>
             <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf" required>
+
             <div class="text-danger mb-3" id="error-message">
                 <!-- PHP error message will be inserted here -->
                 <?php echo app\cores\View::getData()["error"] ?? "" ?>
             </div>
 
             <button type="submit" class="submit-btn">Kirim</button>
+			<button type="button" class="back-btn" onclick="history.back()">Kembali</button>
         </form>
     </div>
-</div>
 </div>
 
 <script>
