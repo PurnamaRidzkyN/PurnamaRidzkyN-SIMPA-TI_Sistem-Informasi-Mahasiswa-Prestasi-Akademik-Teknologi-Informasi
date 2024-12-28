@@ -21,28 +21,37 @@ class Mahasiswa extends BaseModel
     public const FOTO = "foto";
     public const EMAIL = "email";
     public const VIEW = "GetLeaderboard";
-    
-    
+
+
 
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID,self::ID_USER,self::NAMA,self::NIM,self:: PRODI,self::JURUSAN,
-        self::TAHUN_MASUK,self::TOTAL_SKOR,self::FOTO,self::EMAIL], $data);
-            
+            $table->insert([
+                self::ID,
+                self::ID_USER,
+                self::NAMA,
+                self::NIM,
+                self::PRODI,
+                self::JURUSAN,
+                self::TAHUN_MASUK,
+                self::TOTAL_SKOR,
+                self::FOTO,
+                self::EMAIL
+            ], $data);
         });
     }
-    public static function findEmail($email): array 
+    public static function findEmail($email): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($email) {
-            $table->selectWhere(["email" => $email], [self::ID_USER,self::NAMA,self::EMAIL]);
-        });   
+            $table->selectWhere(["email" => $email], [self::ID_USER, self::NAMA, self::EMAIL]);
+        });
     }
-    public static function findNim($nim): array 
+    public static function findNim($nim): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nim) {
-            $table->selectWhere(["nim" => $nim], [self::ID,self::EMAIL,self::ID_USER,self::NIM,self:: PRODI,self::NAMA,self::TOTAL_SKOR]);
-        });   
+            $table->selectWhere(["nim" => $nim], [self::ID, self::EMAIL, self::ID_USER, self::NIM, self::PRODI, self::NAMA, self::TOTAL_SKOR]);
+        });
     }
 
     public static function displayMahasiswa(): array
@@ -51,9 +60,9 @@ class Mahasiswa extends BaseModel
             $table->select();
         });
     }
-    public static function deleteData($id):array
+    public static function deleteData($id): array
     {
-        return Schema::query("DELETE FROM mahasiswa WHERE id =$id ;");   
+        return Schema::query("DELETE FROM mahasiswa WHERE id ='$id' ;");
     }
 
 
@@ -70,4 +79,28 @@ class Mahasiswa extends BaseModel
         });
     }
 
+    public static function updateData($body): array
+    {
+
+        $id = $body['id'];
+        $nama = $body["nama"];
+        $nim = $body["nim"];
+        $prodi = $body["prodi"];
+        $jurusan  = $body["jurusan"];
+        $tahun_masuk = $body["tahun_masuk"];
+        $email = $body["email"];
+        $foto = $body["foto"];
+        return Schema::query(
+            "UPDATE mahasiswa SET 
+        nama = '$nama',
+        nim = '$nim',
+        prodi = '$prodi',
+        jurusan = '$jurusan',
+        tahun_masuk = '$tahun_masuk',
+        foto = '$foto',
+        email = '$email'
+        WHERE id = '$id';
+        "
+        );
+    }
 }
