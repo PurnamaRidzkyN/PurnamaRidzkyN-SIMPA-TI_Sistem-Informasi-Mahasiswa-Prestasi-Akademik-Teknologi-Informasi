@@ -440,7 +440,6 @@ small {
     </form>
 <?php endif; ?>
 
-
 <?php
 function formatTitle($title) {
     return ucwords(str_replace('_', ' ', $title));
