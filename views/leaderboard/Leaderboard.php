@@ -49,41 +49,6 @@ $leaderboard = View::getData();
             color: white;
         }
 
-        .filter-section {
-            background-color: #0039C8;
-            padding: 30px;
-        }
-
-        .filter-title {
-            font-size: 50px;
-            font-family: 'Galatea', sans-serif;
-            font-weight: 700;
-            color: #AFFA08;
-            text-align: center;
-        }
-
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .filter-btn {
-            background-color: rgba(0, 0, 0, 0.50);
-            color: #AFFA08;
-            padding: 20px 70px;
-            font-size: 2rem;
-            font-weight: 800;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .filter-btn:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
         .leaderboard-table {
             display: flex;
             justify-content: space-evenly;
@@ -160,17 +125,6 @@ $leaderboard = View::getData();
     <section class="big-banner">
         <h1 class="leaderboard-title">LEADERBOARD</h1>
         <p class="banner-caption">AYO CEK RANKMU SEKARANG!</p>
-    </section>
-
-    <!-- Filter Section -->
-    <section class="filter-section">
-        <h2 class="filter-title">FILTER</h2>
-        <div class="filters">
-            <button class="filter-btn">TINGKAT 1</button>
-            <button class="filter-btn">TINGKAT 2</button>
-            <button class="filter-btn">TINGKAT 3</button>
-            <button class="filter-btn">TINGKAT 4</button>
-        </div>
     </section>
 
     <!-- Table Section (JTI, TI, SIB) -->
