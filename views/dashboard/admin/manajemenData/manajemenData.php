@@ -8,7 +8,7 @@ $user = Session::get('user');
 $data = View::getData();
 $adminData = $data["data"];
 $mahasiswaData = $data["mahasiswa"];
-$logData = $data["log_data"];
+$logData = $data["log data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
@@ -121,29 +121,6 @@ th {
     box-shadow: 0 0 0 3px rgba(0, 57, 200, 0.1);
 }
 
-<<<<<<< HEAD
-            <!-- Menu untuk pilih jenis data -->
-            <div class="management-section">
-                <!-- Menu untuk pilih jenis data -->
-                <div class="management-section">
-                    <!-- Form for Data Admin -->
-                    <form action=<?php echo "/dashboard/admin/manajemenData/adminData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="admin">
-                        <button data="submit" class="management-option" value="admin">Data Admin</button>
-                    </form>
-
-                    <!-- Form for Data Mahasiswa -->
-                    <form action=<?php echo "/dashboard/admin/manajemenData/mahasiswaData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="mahasiswa">
-                        <button data="submit" class="management-option">Data Mahasiswa</button>
-                    </form>
-
-                    <!-- Form for Data Dosen -->
-                    <form action=<?php echo "/dashboard/admin/manajemenData/dosenData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="dosen">
-                        <button data="submit" class="management-option">Data Dosen</button>
-                    </form>
-=======
 .form-container small {
     display: block;
     margin-top: -10px;
@@ -183,25 +160,15 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #002c9d;
 }
->>>>>>> 0e03f35613f1392e43e5bcbd8e353e3a522350c2
 
 button[name="cancel"] {
     background-color: #e5e7eb;
     color: #4b5563;
 }
 
-<<<<<<< HEAD
-                    <!-- Form for Log Data -->
-                    <form action=<?php echo "/dashboard/admin/manajemenData/logData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="log_data">
-                        <button data="submit" class="management-option">Log Data</button>
-                    </form>
-                </div>
-=======
 button[name="cancel"]:hover {
     background-color: #d1d5db;
 }
->>>>>>> 0e03f35613f1392e43e5bcbd8e353e3a522350c2
 
 button[name="edit"] {
     background-color: #0039C8;
@@ -326,6 +293,21 @@ small {
                     <input type="hidden" name="data" value="log data">
                     <button data="submit" class="management-option">Log Data</button>
                 </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="jenis lomba">
+                    <button data="submit" class="management-option">Jenis Lomba</button>
+                </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="tingkat lomba">
+                    <button data="submit" class="management-option">Tingkat Lomba</button>
+                </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="prestasi">
+                    <button data="submit" class="management-option">Prestasi</button>
+                </form>
             </div>
 
             <div id="data-container"></div>
@@ -422,7 +404,6 @@ small {
                                     <button type="submit" name="edit" value="add">Tambah data</button>
                                 </form>
 <?php endif; ?>
-
 <?php if (!empty($manipulate)): ?>
     <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
     <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data/manipulate-data" enctype="multipart/form-data">
@@ -443,22 +424,28 @@ small {
                 $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
             }
 
-            foreach (array_keys($currentData) as $keyField): ?>
+            foreach (array_keys($currentData) as $keyField):
+                // Melewatkan kolom 'id_user' atau kolom lain yang tidak perlu ada inputannya
+                if ($keyField === 'id') continue;
+                if ($keyField === 'id_user') continue; // Jika field adalah 'id_user', lewati
+                if ($keyField === 'total_skor') continue;
+
+?>
             <tr>
-  <td><strong><?= formatTitle($keyField) ?></strong></td>
-                    <td>
-                        <?php if ($keyField === 'foto'): ?>
-                            <input type="file" name="<?= $keyField ?>"accept="image/*">
-                            <small>Format: JPG, PNG. Maksimal 2MB.</small>
-                            <?php if ($manipulate !== 'add'): ?>
-                                <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
-                            <?php endif; ?>
-                        <?php else: ?>
-                            <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                <td><strong><?= formatTitle($keyField) ?></strong></td>
+                <td>
+                    <?php if ($keyField === 'foto'): ?>
+                        <input type="file" name="<?= $keyField ?>" accept=" accept="image/jpeg, image/png">
+                        <small>Format: JPG, PNG. Maksimal 2MB.</small>
+                        <?php if ($manipulate !== 'add'): ?>
+                            <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
                         <?php endif; ?>
-                        <input type="hidden" name="data" value="<?= $selectedData ?>">
-                    </td>
-                </tr>
+                    <?php else: ?>
+                        <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                    <?php endif; ?>
+                    <input type="hidden" name="data" value="<?= $selectedData ?>">
+                </td>
+            </tr>
             <?php endforeach; ?>
             <tr>
                 <td colspan="2" style="text-align: center;">
@@ -472,7 +459,6 @@ small {
         </table>
     </form>
 <?php endif; ?>
-
 
 <?php
 function formatTitle($title) {
