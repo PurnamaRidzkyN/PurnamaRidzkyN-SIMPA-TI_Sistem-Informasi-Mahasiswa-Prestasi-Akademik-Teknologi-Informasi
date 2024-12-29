@@ -25,6 +25,13 @@ class JenisLomba extends BaseModel
             $table->select();
         });
     }
+
+    public static function updateJenisLomba(string $column, $value, string $columnWhere, string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ($column, $value, $columnWhere, $where) {
+            $table->update($column, $value, $columnWhere, $where);
+        });
+    }
     
 
     public static function deleteAll(): array

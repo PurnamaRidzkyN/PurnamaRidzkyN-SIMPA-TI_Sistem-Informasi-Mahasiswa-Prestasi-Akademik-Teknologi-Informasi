@@ -37,11 +37,18 @@ class InfoLomba extends BaseModel
     }
 
     public static function displayInfoLomba(): array
-{
+    {
     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
         $table->select();
     });
-}
+    }
+
+    public static function updateInfoLomba(string $column, $value, string $columnWhere, string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ($column, $value, $columnWhere, $where) {
+            $table->update($column, $value, $columnWhere, $where);
+        });
+    }
 
 }
 

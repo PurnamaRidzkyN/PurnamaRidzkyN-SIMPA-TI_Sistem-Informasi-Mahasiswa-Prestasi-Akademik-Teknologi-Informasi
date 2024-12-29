@@ -26,6 +26,15 @@ class Peringkat extends BaseModel
         });
     }
 
+    public static function updatePeringkat($value, string $columnWhere, string $where): array
+    {
+    return Schema::update(self::TABLE, function (Blueprint $table) use ($value, $columnWhere, $where) {
+        $table->update(self::SKOR, $value, $columnWhere, $where);
+    });
+    }
+
+
+
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);
