@@ -381,10 +381,10 @@ use app\models\database\users\Mahasiswa; ?>
                 // Dump::out($events);
 
                 // Loop untuk menampilkan setiap event
-                foreach ($eventData as $event) {
+                foreach ($events as $event) {
                     echo '<div class="event-box">';
                     echo '<div class="event-img">';
-                    echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
+                    echo '<img src="../../../' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
                     echo '<div class="event-info">';
 
