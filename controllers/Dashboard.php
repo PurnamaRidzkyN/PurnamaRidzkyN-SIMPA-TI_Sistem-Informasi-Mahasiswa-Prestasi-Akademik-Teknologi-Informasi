@@ -41,7 +41,8 @@ class Dashboard extends BaseController
 
     public function renderNotifikasiAdmin()
     {
-        $this->view("dashboard/notif","Notifikasi");
+        $data = Notifikasi::displayNotif();
+        $this->view("dashboard/notif","Notifikasi",$data);
     }
     
     public function renderNotifikasiMahasiswa()
