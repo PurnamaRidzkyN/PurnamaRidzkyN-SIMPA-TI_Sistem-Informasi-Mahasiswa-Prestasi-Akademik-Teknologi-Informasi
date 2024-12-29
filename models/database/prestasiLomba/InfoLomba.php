@@ -36,12 +36,33 @@ class InfoLomba extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
+    public static function deleteData($id): array
+    {
+    return Schema::query("DELETE FROM " . self::TABLE . " WHERE " . self::ID . " = '$id';");
+    }
+
+
     public static function displayInfoLomba(): array
-{
+    {
     return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
         $table->select();
     });
-}
+    }
+
+    public static function updateInfoLomba(string $column, $value, string $columnWhere, string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ($column, $value, $columnWhere, $where) {
+            $table->update($column, $value, $columnWhere, $where);
+        });
+    }
+
+    public static function findInfoLomba(string $column, $value): array 
+    {
+    return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($column, $value) {
+        $table->selectWhere(["$column" => $value], [self::ID, self::JUDUL, self::DESKRIPSI_LOMBA, self::TANGGAL_AKHIR_PENDAFTARAN, self::LINK_PERLOMBAAN, self::FILE_POSTER]);
+    });
+    }
+
 
 }
 
