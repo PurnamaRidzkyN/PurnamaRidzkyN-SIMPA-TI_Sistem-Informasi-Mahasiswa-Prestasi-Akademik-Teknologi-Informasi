@@ -348,7 +348,7 @@
                     $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
                     $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
 
-                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; // Menampilkan tanggal yang diformat
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; 
                     echo '<div class="event-name">' . $event['judul'] . '</div>';
                     echo '<div class="categories">';
                     echo '<ul>';
@@ -370,7 +370,7 @@
         </div>
         <div class="rank-list">
             <?php
-            // Data leaderboard dalam array 
+            
             // Loop untuk menampilkan data leaderboard
             foreach ($leaderboardData as $item) {
                 echo '<div class="rank-item">';
@@ -385,7 +385,6 @@
             }
             ?>
         </div>
-
 
     </div>
 </div>
