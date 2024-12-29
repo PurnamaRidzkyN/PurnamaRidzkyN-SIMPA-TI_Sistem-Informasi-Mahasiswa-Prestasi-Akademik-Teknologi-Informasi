@@ -293,6 +293,21 @@ small {
                     <input type="hidden" name="data" value="log data">
                     <button data="submit" class="management-option">Log Data</button>
                 </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="jenis lomba">
+                    <button data="submit" class="management-option">Jenis Lomba</button>
+                </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="tingkat lomba">
+                    <button data="submit" class="management-option">Tingkat Lomba</button>
+                </form>
+
+                <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <input type="hidden" name="data" value="prestasi">
+                    <button data="submit" class="management-option">Prestasi</button>
+                </form>
             </div>
 
             <div id="data-container"></div>
