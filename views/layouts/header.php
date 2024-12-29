@@ -9,6 +9,10 @@
   <title><?php
 
           use app\cores\Session;
+use app\cores\View;
+use app\helpers\Dump;
+use app\models\database\users\Admin;
+use app\models\database\users\Mahasiswa;
 
           echo \app\cores\View::getTitle() ?></title>
   <link rel="stylesheet" href="/public/css/login.css">
@@ -129,6 +133,15 @@
 </head>
 
 <body>
+  <?php 
+  if (!is_null(Session::get("user"))){
+    if (Session::get("role")=="1"){
+$user = Admin::findNip(Session::get("user"))["result"][0];
+    }elseif (Session::get("role")=="2"){
+$user = Mahasiswa::findNim(Session::get("user"))["result"][0];
+    }
+    }
+  ?>
   <nav class="navbar">
     <div class="logo">
       <img src="../../../public/component/logoHijau.png" alt="Logo">
@@ -156,7 +169,7 @@
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil'; ?>">
-          <img src="../../../public/component/profilpic.png" alt="Profile">
+          <img src="<?php echo '../../../'.$user['foto']?>" alt="Profile">
         </a>
       <?php elseif (Session::get("role") === "2"): ?>
         <!-- Jika role Mahasiswa -->
@@ -164,7 +177,7 @@
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/profil'; ?>">
-          <img src="../../../public/component/profilpic.png" alt="Profile">
+          <img src="<?php echo '../../../'.$user['foto']?>" alt="Profile">
         </a>
       <?php else: ?>
         <div class="login-text">

@@ -86,7 +86,7 @@ $profil = $profil[0];
     <!-- Logout Button -->
     <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
 
-    <img src="https://via.placeholder.com/200" alt="Foto Profil" class="profile-pic">
+    <img src=" <?php echo '../../../'.$profil['foto'] ?>" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
         <h2 class="name"><?php echo $profil['nama'] ?></h2>
         <p>Prodi : <?php echo $profil['prodi'] ?></p>

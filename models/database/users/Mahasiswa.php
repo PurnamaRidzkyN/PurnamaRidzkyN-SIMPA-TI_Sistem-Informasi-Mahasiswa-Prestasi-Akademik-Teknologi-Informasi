@@ -56,7 +56,7 @@ class Mahasiswa extends BaseModel
     public static function findNim($nim): array
     {
         return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($nim) {
-            $table->selectWhere(["nim" => $nim], [self::ID, self::EMAIL, self::ID_USER, self::NIM, self::PRODI, self::NAMA, self::TOTAL_SKOR]);
+            $table->selectWhere(["nim" => $nim], [self::ID, self::EMAIL, self::ID_USER, self::NIM, self::PRODI, self::NAMA, self::TOTAL_SKOR,self::FOTO]);
         });
     }
 
