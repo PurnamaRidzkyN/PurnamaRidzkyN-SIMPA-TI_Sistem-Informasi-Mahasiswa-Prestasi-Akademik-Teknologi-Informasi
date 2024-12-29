@@ -8,9 +8,6 @@ $data = View::getData();
 $user = Session::get("user");
 $dosen = $data["dosen"];
 $prestasi = $data["prestasi"];
-// Periksa apakah array mengandung 'success'
-$hasSuccess = in_array('benernjir', $data);
-
 ?>
 
 
@@ -161,21 +158,25 @@ $hasSuccess = in_array('benernjir', $data);
                 <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
 
 
-            <!-- Tombol Validasi -->
-            <div class="mb-3 d-flex justify-content-start align-items-center">
-            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline me-2">
-                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
-                <button type="submit" class="btn btn-validasi" name="action_validasi" value="validasi">Validasi</button>
-            </form>
 
-            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline">
-                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
-                <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_mahasiswa']; ?>">
-                <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>">
-                <button type="submit" class="btn btn-tolak" name="action_tolak" value="tolak">Tolak Validasi</button>
-            </form>
-            </div>
+                    <!-- Tombol Validasi -->
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
+                    </form>
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
+                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <button type="submit" class="btn btn-success" name="action_validasi" value="validasi">Validasi</button>
+                    </form>
 
+
+                    <!-- Tombol Tolak Validasi -->
+                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
+                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <button type="submit" class="btn btn-danger" name="action_tolak" value="tolak">Tolak Validasi</button>
+                    </form>
 
 
                 <?php elseif ($prestasi["validasi"] == 1): ?>

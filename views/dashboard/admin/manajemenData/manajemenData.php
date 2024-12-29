@@ -389,7 +389,6 @@ small {
                                     <button type="submit" name="edit" value="add">Tambah data</button>
                                 </form>
 <?php endif; ?>
-
 <?php if (!empty($manipulate)): ?>
     <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>
     <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data/manipulate-data" enctype="multipart/form-data">
@@ -410,22 +409,28 @@ small {
                 $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
             }
 
-            foreach (array_keys($currentData) as $keyField): ?>
+            foreach (array_keys($currentData) as $keyField):
+                // Melewatkan kolom 'id_user' atau kolom lain yang tidak perlu ada inputannya
+                if ($keyField === 'id') continue;
+                if ($keyField === 'id_user') continue; // Jika field adalah 'id_user', lewati
+                if ($keyField === 'total_skor') continue;
+
+?>
             <tr>
-  <td><strong><?= formatTitle($keyField) ?></strong></td>
-                    <td>
-                        <?php if ($keyField === 'foto'): ?>
-                            <input type="file" name="<?= $keyField ?>"accept="image/*">
-                            <small>Format: JPG, PNG. Maksimal 2MB.</small>
-                            <?php if ($manipulate !== 'add'): ?>
-                                <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
-                            <?php endif; ?>
-                        <?php else: ?>
-                            <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                <td><strong><?= formatTitle($keyField) ?></strong></td>
+                <td>
+                    <?php if ($keyField === 'foto'): ?>
+                        <input type="file" name="<?= $keyField ?>" accept=" accept="image/jpeg, image/png">
+                        <small>Format: JPG, PNG. Maksimal 2MB.</small>
+                        <?php if ($manipulate !== 'add'): ?>
+                            <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
                         <?php endif; ?>
-                        <input type="hidden" name="data" value="<?= $selectedData ?>">
-                    </td>
-                </tr>
+                    <?php else: ?>
+                        <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                    <?php endif; ?>
+                    <input type="hidden" name="data" value="<?= $selectedData ?>">
+                </td>
+            </tr>
             <?php endforeach; ?>
             <tr>
                 <td colspan="2" style="text-align: center;">
@@ -439,7 +444,6 @@ small {
         </table>
     </form>
 <?php endif; ?>
-
 
 <?php
 function formatTitle($title) {

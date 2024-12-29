@@ -11,12 +11,11 @@ class m_022HitungSkorTrigger implements BaseMigration
         return Schema::createTriggerIfNotExist("prestasi", "hitung_skor", "
          IF EXISTS (SELECT 1 FROM inserted WHERE validasi = 1)
     BEGIN
-        UPDATE mahasiswa
-        SET total_skor = total_skor + tl.skor + p.skor
+        UPDATE m
+        SET m.total_skor = m.total_skor + vp.skor
         FROM mahasiswa m
         INNER JOIN inserted i ON m.id = i.id_mahasiswa
-        INNER JOIN tingkat_lomba tl ON tl.id = i.id_tingkat_kompetisi
-        INNER JOIN peringkat p ON p.id = i.id_peringkat
+        INNER JOIN view_prestasi vp ON vp.id = i.id_mahasiswa
         WHERE i.validasi = 1;
     END", "UPDATE");
     }

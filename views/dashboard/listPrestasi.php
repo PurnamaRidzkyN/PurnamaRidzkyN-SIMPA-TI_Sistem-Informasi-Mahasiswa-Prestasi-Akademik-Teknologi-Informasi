@@ -80,18 +80,22 @@
         }
 
         .btn-success:hover {
-            background-color: white;
-            color: #0039C8;
+            background-color: #0039C8;
         }
 
-        /* Gaya khusus untuk form section dengan ukuran lebih pendek */
-        .section-short {
-            padding: 10px;
-            margin: 10px;
-        }
-        .section-short .section-title {
-            font-size: 1.5rem; /* Ukuran judul sedikit lebih kecil */
-            margin-bottom: 10px;
+        .upload-btn {
+            font-family: 'Robot Crush', sans-serif;
+            font-size: 40px;
+            font-weight: 300;
+            background-color: #0039C8;
+            color: #AFFA08;
+            border: none;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            max width: 100%;
         }
 
         /* Container Responsif */

@@ -5,10 +5,11 @@ namespace app\controllers;
 use app\cores\Request;
 use app\cores\Response;
 use app\cores\Session;
+use app\helpers\Dump;
 use app\models\database\prestasiLomba\InfoLomba;
 use app\models\database\users\Admin;
 use app\models\database\users\Mahasiswa;
-use app\models\database\users\Notifikasi;
+use app\models\database\notifikasi\Notifikasi;
 
 class Dashboard extends BaseController
 {
@@ -41,12 +42,45 @@ class Dashboard extends BaseController
 
     public function renderNotifikasiAdmin()
     {
-        $data = Notifikasi::displayNotif();
-        $this->view("dashboard/notif","Notifikasi",$data);
+        $data = Notifikasi::displayNotif()['result'];
+        if (is_null($data)){
+            $this->view("dashboard/notif","Notifikasi");
+
+        }
+        $notif = array_filter($data, function($item) {
+            return ($item['id_user'] === null) && $item['role'] === '1';
+        });    
+        usort($notif, function($a, $b) {
+            // Mengonversi tanggal ke format timestamp untuk perbandingan
+            $dateA = strtotime($a['dibuat']);
+            $dateB = strtotime($b['dibuat']);
+            
+            // Mengurutkan dari yang terbaru (descending)
+            return $dateB - $dateA;
+        });
+          
+        $this->view("dashboard/notif","Notifikasi",$notif);
     }
     
     public function renderNotifikasiMahasiswa()
     {
-        $this->view("dashboard/notif","Notifikasi",);
+        $data = Notifikasi::displayNotif()['result'];
+        if (is_null($data)){
+            $this->view("dashboard/notif","Notifikasi");
+
+        }
+        $notif = array_filter($data, function($item) {
+            return ($item['id_user'] === null)||($item['id_user'] === Mahasiswa::findNim(Session::get("user"))['result'][0]['id_user']) && $item['role'] === '2';
+        }); 
+        usort($notif, function($a, $b) {
+            // Mengonversi tanggal ke format timestamp untuk perbandingan
+            $dateA = strtotime($a['dibuat']);
+            $dateB = strtotime($b['dibuat']);
+            
+            // Mengurutkan dari yang terbaru (descending)
+            return $dateB - $dateA;
+        });
+        
+        $this->view("dashboard/notif","Notifikasi",$notif);
     }
 }
