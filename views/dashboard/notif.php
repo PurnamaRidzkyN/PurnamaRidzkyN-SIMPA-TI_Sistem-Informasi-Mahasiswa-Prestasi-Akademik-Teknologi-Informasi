@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,44 +89,75 @@
             height: 25px;
             margin-right: 15px;
         }
+
+        .info {
+            font-size: 14px;
+            color: #D3D3D3;
+            margin-top: 10px;
+        }
     </style>
 </head>
+
 <body>
 
+    <!-- Konten Header -->
+    <div class="header">
+        <div class="home">HOME</div>
+        <div class="date">
+            <?php
+            date_default_timezone_set('Asia/Jakarta');
+            echo date('d F Y');
+            ?>
+        </div>
+    </div>
 
-<!-- Konten Header -->
-<div class="header">
-    <div class="home">HOME</div>
-    <div class="date">
+    <!-- Main Content -->
+    <div class="container">
         <?php
-        date_default_timezone_set('Asia/Jakarta');
-        echo date('d F Y');
+        // Simulasi array notifikasi
+        $notifikasi = [
+            [
+                'pesan' => 'Data Kompetisi INTERCOMP UI/UX Competition Anda telah divalidasi oleh admin.',
+                'tipe' => 'Validasi',
+                'status' => 'Belum dilihat',
+                'dibuat' => '2024-12-28 14:30:00',
+            ],
+            [
+                'pesan' => 'Pemberitahuan lainnya tentang kompetisi UI/UX tersedia di dashboard Anda.',
+                'tipe' => 'Informasi',
+                'status' => ' dilihat',
+                'dibuat' => '2024-12-27 10:00:00',
+            ],
+        ];
+
+        // Loop untuk menampilkan notifikasi
+        foreach ($notifikasi as $notif) {
+
+            echo "
+       <div class='bubble-notification $statusClass'>
+        <a href='$linkDetail' style='text-decoration: none; color: inherit;'> <!-- Link Detail -->
+            <div style='display: flex; align-items: center;'>
+                <img src='../../../public/component/notifikasi-03.png' alt='Icon Notifikasi'>
+                <span>{$notif['pesan']}</span>
+            </div>
+            <div class='info'>
+                <strong>Tipe:</strong> {$notif['tipe']} | 
+                <strong>Status:</strong> {$notif['status']} | 
+                <strong>Dibuat:</strong> {$notif['dibuat']}
+            </div>
+        </a>
+        
+        <!-- Tombol Hapus -->
+        <form method='POST' action='delete_notification.php' style='margin-top: 10px;'>
+            <input type='hidden' name='id' value='{$notif['dibuat']}'> <!-- Kirim ID notifikasi untuk dihapus -->
+            <button type='submit' class='delete-notification'>Hapus</button>
+        </form>
+    </div>
+        ";
+        }
         ?>
     </div>
-</div>
-<?php ?>
-<!-- Main Content -->
-<div class="container">
-    <div class="bubble-notification unread" onclick="markAsRead(this)">
-        <div style="display: flex; align-items: center;">
-            <img src="notifikasi-03.png" alt="Icon Notifikasi">
-            <span>
-                Data Kompetisi INTERCOMP UI/UX Competition Anda telah di validasi oleh admin.
-            </span>
-        </div>
-        <div class="delete-notification" onclick="deleteNotification(event, this)">Hapus</div>
-    </div>
-
-    <div class="bubble-notification unread" onclick="markAsRead(this)">
-        <div style="display: flex; align-items: center;">
-            <img src="notifikasi-03.png" alt="Icon Notifikasi">
-            <span>
-                Pemberitahuan lainnya tentang kompetisi UI/UX tersedia di dashboard Anda.
-            </span>
-        </div>
-        <div class="delete-notification" onclick="deleteNotification(event, this)">Hapus</div>
-    </div>
-</div>
 
 </body>
+
 </html>

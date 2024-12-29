@@ -192,23 +192,27 @@
         }
 
         .event-info .link {
-    font-size: 12px;
-    text-decoration: none;
-    color: #AFFA08; /* Warna lebih cerah */
-    cursor: pointer;
-    margin-top: -15px;
-    text-align: left;
-    grid-column: 2;
-}
+            font-size: 12px;
+            text-decoration: none;
+            color: #AFFA08;
+            /* Warna lebih cerah */
+            cursor: pointer;
+            margin-top: -15px;
+            text-align: left;
+            grid-column: 2;
+        }
 
-.event-info .link a {
-    color: #AFFA08; /* Warna untuk teks link */
-}
+        .event-info .link a {
+            color: #AFFA08;
+            /* Warna untuk teks link */
+        }
 
-.event-info .link a:hover {
-    color: #FFD700; /* Warna lebih cerah saat hover */
-    text-decoration: underline; /* Menambahkan garis bawah saat hover */
-}
+        .event-info .link a:hover {
+            color: #FFD700;
+            /* Warna lebih cerah saat hover */
+            text-decoration: underline;
+            /* Menambahkan garis bawah saat hover */
+        }
 
 
         .leaderboard {
@@ -345,7 +349,7 @@
                     $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
                     $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
 
-                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; 
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>';
                     echo '<div class="event-name">' . $event['judul'] . '</div>';
                     echo '<div class="categories">';
                     echo '<ul>';
@@ -367,16 +371,17 @@
         </div>
         <div class="rank-list">
             <?php
-            
-            // Loop untuk menampilkan data leaderboard
-            foreach ($leaderboardData as $item) {
+
+            $topFive = array_slice($leaderboardData, 0, 5);
+
+            foreach ($topFive as $item) {
                 echo '<div class="rank-item">';
                 echo '<div class="rank-number">' . $item['rank'] . '</div>';
-                echo '<img src="./' . $item['Foto'] . '" alt="User Image">';
+                echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';
                 echo '<div class="rank-info">';
                 echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
                 echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-                echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+                echo '<div class="points">' . $item['Total_Skor'] . ' pts</div>';
                 echo '</div>'; // rank-info
                 echo '</div>'; // rank-item
             }

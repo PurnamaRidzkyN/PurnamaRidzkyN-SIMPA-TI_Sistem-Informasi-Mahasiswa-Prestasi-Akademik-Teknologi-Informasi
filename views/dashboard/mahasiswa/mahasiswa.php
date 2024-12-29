@@ -428,8 +428,9 @@ use app\models\database\users\Mahasiswa; ?>
         $data = View::getData();
         $leaderboardData = $data["leaderboard"]["result"];
         // Dump::out($data);
-        // Render leaderboard
-        foreach ($leaderboardData as $item) {
+        $topFive = array_slice($leaderboardData, 0, 5);
+
+        foreach ($topFive as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
             echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';

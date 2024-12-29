@@ -378,7 +378,7 @@ $user = Session::get('user');
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"]?></div>
+                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"] ?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>
@@ -398,7 +398,7 @@ $user = Session::get('user');
                 foreach ($events as $event) {
                     echo '<div class="event-box">';
                     echo '    <div class="event-img">';
-                    echo '        <img src="../../../' .$event["file_poster"] . ' " alt="Event Image">';
+                    echo '        <img src="../../../' . $event["file_poster"] . ' " alt="Event Image">';
                     echo '    </div>';
                     echo '    <div class="event-info">';
                     echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
@@ -433,8 +433,9 @@ $user = Session::get('user');
         $leaderboardData = $data["leaderboard"]["result"];
         // Dump::out($leaderboardData);
 
-        // Render leaderboard
-        foreach ($leaderboardData as $item) {
+        $topFive = array_slice($leaderboardData, 0, 5);
+
+        foreach ($topFive as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
             echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';

@@ -242,7 +242,7 @@ class PrestasiController extends BaseController
                     Notifikasi::PESAN => "Prestasi ".$body['judul_kompetisi']." telah di validasi oleh ".$admin['result'][0]['nama'],
                     Notifikasi::TIPE => "Validasi",
                     Notifikasi::STATUS => "Belum dilihat",
-                    Notifikasi::DIBUAT => date("Y-m-d H:i:s")
+                    Notifikasi::DIBUAT => date("d-m-Y H:i:s")
                     ]
                 );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
