@@ -183,7 +183,7 @@ $dosenList = $data["Dosen"];
 <!-- Main Content -->
 <div class="container">
     <div class="form-container">
-        <h3>Form Prestasi Mahasiswa</h3>
+        <h3>Upload Prestasi Mahasiswa</h3>
 
         <!-- Alert Placeholder -->
         <div id="alert-placeholder"></div>
@@ -232,17 +232,24 @@ $dosenList = $data["Dosen"];
                     </select>
                 </div>
             </div>
+							
+			<div class="form-group">
+				<label for="judul-kompetisi">Judul Kompetisi</label>
+				<input type="text" name="judul-kompetisi" id="judul-kompetisi" placeholder="Masukkan Judul Kompetisi" required>
+			</div>
+
 
             <!-- Tempat Kompetisi, URL Kompetisi, Tanggal Mulai, Tanggal Akhir -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="tempat-kompetisi">Tempat Kompetisi</label>
-                    <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" required>
+                    <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" placeholder="Masukkan Tempat Kompetisi" required>
+					
                 </div>
 
                 <div class="form-group">
                     <label for="url-kompetisi">URL Kompetisi</label>
-                    <input type="url" name="url-kompetisi" id="url-kompetisi" required>
+                    <input type="url" name="url-kompetisi" id="url-kompetisi" placeholder="Masukkan URL Kompetisi" required>
                 </div>
 
                 <div class="form-group">
@@ -260,17 +267,17 @@ $dosenList = $data["Dosen"];
             <div class="form-row">
                 <div class="form-group">
                     <label for="jumlah-pt">Jumlah PT (Berpartisipasi)</label>
-                    <input type="number" name="jumlah-pt" id="jumlah-pt" required>
+                    <input type="number" name="jumlah-pt" id="jumlah-pt" placeholder="Masukkan Jumlah PT" required>
                 </div>
 
                 <div class="form-group">
                     <label for="jumlah-peserta">Jumlah Peserta</label>
-                    <input type="number" name="jumlah-peserta" id="jumlah-peserta" required>
+                    <input type="number" name="jumlah-peserta" id="jumlah-peserta" placeholder="Masukkan Jumlah Peserta" required>
                 </div>
 
                 <div class="form-group">
                     <label for="no-surat-tugas">No Surat Tugas</label>
-                    <input type="text" name="no-surat-tugas" id="no-surat-tugas" required>
+                    <input type="text" name="no-surat-tugas" id="no-surat-tugas" placeholder="Masukkan No Surat Tugas" required>
                 </div>
 
                 <div class="form-group">
@@ -287,16 +294,16 @@ $dosenList = $data["Dosen"];
             <div id="dosenFieldsContainer"></div>
 
             <!-- File Surat Tugas, File Sertifikat, Foto Kegiatan, File Poster -->
-            <label for="file-surat-tugas">File Surat Tugas (.jpg,.jpeg,.png,.pdf,.docx)</label>
+            <label for="file-surat-tugas">File Surat Tugas (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
             <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <label for="file-sertifikat">File Sertifikat (.jpg,.jpeg,.png,.pdf,.docx)</label>
+            <label for="file-sertifikat">File Sertifikat (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
             <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
 
-            <label for="file-foto-kegiatan">Foto Kegiatan (.jpg,.jpeg,.png,.pdf,.docx)</label>
+            <label for="file-foto-kegiatan">Foto Kegiatan (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
             <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf" required>
 
-            <label for="file-poster">File Poster (.jpg,.jpeg,.png,.pdf,.docx)</label>
+            <label for="file-poster">File Poster (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
             <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf" required>
 
             <div class="text-danger mb-3" id="error-message">
