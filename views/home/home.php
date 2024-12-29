@@ -20,10 +20,6 @@
         }
 
 
-        
-
-       
-
         .header {
             margin-top: 2px;
             padding: 10px;
@@ -100,6 +96,7 @@
             color: #ffffff;
             padding: 20px;
         }
+
         .upcoming-events {
             background-color: #0039C8;
             border-radius: 30px;
@@ -193,15 +190,26 @@
             color: #333333;
             font-family: 'Galatea', sans-serif;
         }
+
         .event-info .link {
-            font-size: 12px;
-            text-decoration: none;
-            color: #0039C8;
-            cursor: pointer;
-            margin-top: -15px;
-            text-align: left;
-            grid-column: 2;
-        }
+    font-size: 12px;
+    text-decoration: none;
+    color: #AFFA08; /* Warna lebih cerah */
+    cursor: pointer;
+    margin-top: -15px;
+    text-align: left;
+    grid-column: 2;
+}
+
+.event-info .link a {
+    color: #AFFA08; /* Warna untuk teks link */
+}
+
+.event-info .link a:hover {
+    color: #FFD700; /* Warna lebih cerah saat hover */
+    text-decoration: underline; /* Menambahkan garis bawah saat hover */
+}
+
 
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
@@ -328,7 +336,6 @@
                 $eventData = $data["Info_Lomba"]["result"];
                 // Dump::out($eventData);
 
-
                 // Loop untuk menampilkan data event
                 foreach ($eventData as $event) {
                     echo '<div class="event-box">';
@@ -336,14 +343,19 @@
                     echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
                     echo '<div class="event-info">';
-                    echo '<div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
+
+                    // Mengubah format tanggal
+                    $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
+                    $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
+
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; // Menampilkan tanggal yang diformat
                     echo '<div class="event-name">' . $event['judul'] . '</div>';
                     echo '<div class="categories">';
                     echo '<ul>';
                     echo ($event['deskripsi_lomba']);
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Lihat Detail</a></div>';
                     echo '</div>'; // event-info
                     echo '</div>'; // event-box
                 }
