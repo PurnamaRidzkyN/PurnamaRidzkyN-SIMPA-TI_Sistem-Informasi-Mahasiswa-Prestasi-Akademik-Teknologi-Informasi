@@ -27,71 +27,6 @@ $user = Session::get('user');
             background-color: #f5f5f5;
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-            /* Warna hijau saat hover */
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
         .header {
             margin-top: 2px;
             padding: 10px;
@@ -254,17 +189,11 @@ $user = Session::get('user');
 
         .event-img img {
             width: auto;
-            /* Mengatur lebar gambar secara otomatis */
             height: auto;
-            /* Mengatur tinggi gambar secara otomatis */
             max-height: 180px;
-            /* Mengatur tinggi maksimum gambar menjadi 150px */
             max-width: 250px;
-            /* Mengatur lebar maksimum gambar menjadi 200px */
             object-fit: cover;
-            /* Memastikan gambar terpotong dengan baik */
             border-radius: 10px;
-            /* Menambahkan sudut melengkung */
         }
 
         .event-info {
@@ -280,15 +209,11 @@ $user = Session::get('user');
         .event-info .date {
             font-size: 16px;
             font-weight: 600;
-            color: blac;
-            /* Teks menjadi putih */
+            color: black;
             font-family: 'Galatea', sans-serif;
             text-align: center;
-            /* Centering teks dalam date */
             background-color: #AFFA08;
-            /* Background hijau */
             padding: 5px 10px;
-            /* Menambahkan padding agar bentuk bulat */
             border-radius: 80%;
             /* Membuat background menjadi bulat */
         }
@@ -313,28 +238,30 @@ $user = Session::get('user');
         .event-info .link {
             font-size: 12px;
             text-decoration: none;
-            color: #0039C8;
+            color: #AFFA08;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
 
+        .event-info .link a {
+    color: #AFFA08; 
+}
 
-        /* Leaderboard Styling */
+.event-info .link a:hover {
+    color: #FFD700; 
+    text-decoration: underline;
+}
+       
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
             border-radius: 20px;
             padding: 10px;
             width: 25%;
-            /* Menentukan lebar untuk leaderboard */
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             height: 850px;
             margin-left: 20px;
-            /* Menambahkan margin kiri untuk menggeser ke kiri */
         }
 
         .header-container {
@@ -348,7 +275,6 @@ $user = Session::get('user');
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
@@ -427,31 +353,6 @@ $user = Session::get('user');
     </style>
 </head>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
-        <a href="#">Leaderboard</a>
-        <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
-    </div>
-    <div class="user-info">
-        <!-- Notification Bubble -->
-        <div class="notification-bubble" onclick="window.location.href='notifikasi.html'">
-            <img src="./../../public/component/notifikasi-03.png" alt="Notifikasi">
-        </div>
-
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user").'/profil'?>>
-            <img src="../../../public/component/profilpic.png" alt="Profile">
-        </a>
-
-    </div>
-</div>
-
 <!-- Konten Header -->
 <div class="header">
     <div class="home">HOME</div>
@@ -468,7 +369,7 @@ $user = Session::get('user');
         <div class="blue-box">
             <img class="image" src="../../../public/component/masti.png" alt="Image">
             <div class="text-container">
-                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"]?></div>
+                <div class="welcome-text">Selamat Datang,<?php echo Admin::findNip($user)["result"][0]["nama"] ?></div>
                 <div class="ready-text">Sudah Siap Menjadi Juara?</div>
             </div>
         </div>
@@ -488,7 +389,7 @@ $user = Session::get('user');
                 foreach ($events as $event) {
                     echo '<div class="event-box">';
                     echo '    <div class="event-img">';
-                    echo '        <img src="../../../' .$event["file_poster"] . ' " alt="Event Image">';
+                    echo '        <img src="../../' .$event["file_poster"] . ' " alt="Event Image">';
                     echo '    </div>';
                     echo '    <div class="event-info">';
                     echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
@@ -496,14 +397,13 @@ $user = Session::get('user');
                     echo '        <div class="categories">';
                     echo '            <ul>';
                     echo ($event['deskripsi_lomba']);
-                    echo '            </ul>';
-                    echo '        </div>';
-                    echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                    echo '    </div>';
+                    echo '</ul>';
                     echo '</div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Lihat Detail</a></div>';
+                    echo '</div>'; // event-info
+                    echo '</div>'; // event-box
                 }
                 ?>
-
             </div>
         </div>
     </div>
@@ -523,8 +423,9 @@ $user = Session::get('user');
         $leaderboardData = $data["leaderboard"]["result"];
         // Dump::out($leaderboardData);
 
-        // Render leaderboard
-        foreach ($leaderboardData as $item) {
+        $topFive = array_slice($leaderboardData, 0, 5);
+
+        foreach ($topFive as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
             echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';

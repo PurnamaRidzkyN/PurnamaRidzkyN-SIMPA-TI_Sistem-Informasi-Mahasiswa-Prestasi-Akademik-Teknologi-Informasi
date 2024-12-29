@@ -19,71 +19,6 @@
             background-color: #f5f5f5;
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
 
         .header {
             margin-top: 2px;
@@ -161,6 +96,7 @@
             color: #ffffff;
             padding: 20px;
         }
+
         .upcoming-events {
             background-color: #0039C8;
             border-radius: 30px;
@@ -254,15 +190,30 @@
             color: #333333;
             font-family: 'Galatea', sans-serif;
         }
+
         .event-info .link {
             font-size: 12px;
             text-decoration: none;
-            color: #0039C8;
+            color: #AFFA08;
+            /* Warna lebih cerah */
             cursor: pointer;
             margin-top: -15px;
             text-align: left;
             grid-column: 2;
         }
+
+        .event-info .link a {
+            color: #AFFA08;
+            /* Warna untuk teks link */
+        }
+
+        .event-info .link a:hover {
+            color: #FFD700;
+            /* Warna lebih cerah saat hover */
+            text-decoration: underline;
+            /* Menambahkan garis bawah saat hover */
+        }
+
 
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
@@ -360,25 +311,6 @@
     </style>
 </head>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href="/">Home</a>
-        <a href="/login">Prestasi</a>
-        <a href="/dashboard/leaderboard">Leaderboard</a>
-    </div>
-    <div class="user-info">
-        <div class="login-text"><a href="/login">Login</a></div>
-
-    </div>
-</div>
-
-<!-- Konten Header -->
 <div class="header">
     <div class="home">Sistem Informasi Mahasiswa Berprestasi Teknologi Informasi</div>
 </div>
@@ -396,7 +328,6 @@
             <div class="header">Upcoming Events</div>
             <div class="event-container">
                 <?php
-                // Data event dalam array
 
                 use app\cores\View;
                 use app\helpers\Dump;
@@ -406,7 +337,6 @@
                 $eventData = $data["Info_Lomba"]["result"];
                 // Dump::out($eventData);
 
-
                 // Loop untuk menampilkan data event
                 foreach ($eventData as $event) {
                     echo '<div class="event-box">';
@@ -414,14 +344,19 @@
                     echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
                     echo '<div class="event-info">';
-                    echo '<div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
+
+                    // Mengubah format tanggal
+                    $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
+                    $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
+
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>';
                     echo '<div class="event-name">' . $event['judul'] . '</div>';
                     echo '<div class="categories">';
                     echo '<ul>';
                     echo ($event['deskripsi_lomba']);
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Lihat Detail</a></div>';
                     echo '</div>'; // event-info
                     echo '</div>'; // event-box
                 }
@@ -436,22 +371,22 @@
         </div>
         <div class="rank-list">
             <?php
-            // Data leaderboard dalam array 
-            // Loop untuk menampilkan data leaderboard
-            foreach ($leaderboardData as $item) {
+
+            $topFive = array_slice($leaderboardData, 0, 5);
+
+            foreach ($topFive as $item) {
                 echo '<div class="rank-item">';
                 echo '<div class="rank-number">' . $item['rank'] . '</div>';
-                echo '<img src="./' . $item['Foto'] . '" alt="User Image">';
+                echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';
                 echo '<div class="rank-info">';
                 echo '<div class="name">' . $item['Nama_Mahasiswa'] . '</div>';
                 echo '<div class="details">' . $item['Program_Studi'] . '</div>';
-                echo '<div class="points">' . $item['Total_SKor'] . ' pts</div>';
+                echo '<div class="points">' . $item['Total_Skor'] . ' pts</div>';
                 echo '</div>'; // rank-info
                 echo '</div>'; // rank-item
             }
             ?>
         </div>
-
 
     </div>
 </div>
