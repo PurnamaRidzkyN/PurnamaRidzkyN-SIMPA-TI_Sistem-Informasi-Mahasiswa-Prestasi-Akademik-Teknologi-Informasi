@@ -110,7 +110,7 @@ $leaderboard = View::getData();
     <?php foreach ($leaderboard as $rankItem): ?>
         <div class="rank-item">
             <div class="rank-number"><?php echo $rankItem['Rank']; ?></div>
-            <img src=".<?php echo '../../'.$rankItem['Foto']; ?>" alt="User Image">
+            <img src=".<?php echo '../../../'.$rankItem['Foto']; ?>" alt="User Image">
             <div class="rank-info">
                 <div class="name"><?php echo $rankItem['Nama_Mahasiswa']; ?></div>
                 <div class="details"><?php echo $rankItem['Program_Studi']; ?></div>

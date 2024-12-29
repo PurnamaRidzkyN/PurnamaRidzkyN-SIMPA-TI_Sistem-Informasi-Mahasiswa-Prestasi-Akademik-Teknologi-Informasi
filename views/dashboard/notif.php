@@ -103,7 +103,7 @@
         ?>
     </div>
 </div>
-
+<?php ?>
 <!-- Main Content -->
 <div class="container">
     <div class="bubble-notification unread" onclick="markAsRead(this)">
