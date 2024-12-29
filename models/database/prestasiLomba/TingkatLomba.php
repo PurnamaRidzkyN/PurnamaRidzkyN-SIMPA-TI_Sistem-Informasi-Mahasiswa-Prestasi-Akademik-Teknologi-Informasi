@@ -34,6 +34,18 @@ class TingkatLomba extends BaseModel
         });
     }
 
+    public static function find(string $column, $value): array
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($column, $value) {
+            $table->selectWhere([$column => $value], [self::ID, self::TINGKAT_LOMBA, self::SKOR]);
+        });
+    }
+
+    public static function deleteData($id): array
+    {
+        return Schema::query("DELETE FROM " . self::TABLE . " WHERE " . self::ID . " = '$id';");
+    }
+
     public static function deleteAll(): array
     {
         return Schema::deleteFrom(self::TABLE);

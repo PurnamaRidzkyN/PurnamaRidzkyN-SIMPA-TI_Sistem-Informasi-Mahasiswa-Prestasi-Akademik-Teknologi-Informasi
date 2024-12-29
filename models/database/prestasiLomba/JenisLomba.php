@@ -39,6 +39,18 @@ class JenisLomba extends BaseModel
         return Schema::deleteFrom(self::TABLE);
     }
 
+    public static function find(string $column, $value): array
+    {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) use ($column, $value) {
+            $table->selectWhere(["$column" => $value], [self::ID, self::JENIS_LOMBA]);
+        });
+    }
+
+    // Fungsi deleteData untuk menghapus data berdasarkan ID
+    public static function deleteData($id): array
+    {
+        return Schema::query("DELETE FROM " . self::TABLE . " WHERE " . self::ID . " = '$id';");
+    }
 }
 
 ?>
