@@ -48,6 +48,7 @@ $namaList = array_map(function($dosen) {
         color: #AFFA08;
         font-size: 35px;
         font-weight: 700;
+		text-align: center;
     }
 
     .form-container label {
@@ -314,18 +315,29 @@ $namaList = array_map(function($dosen) {
                     </select>
                 </div>
             </div>
-							
+
+
+            <!-- Tempat Kompetisi, URL Kompetisi, Tanggal Mulai, Tanggal Akhir -->
 			<div class="form-group">
 				<label for="judul-kompetisi">Judul Kompetisi</label>
 				<input type="text" name="judul-kompetisi" id="judul-kompetisi" placeholder="Masukkan Judul Kompetisi" required>
 			</div>
-
-
-            <!-- Tempat Kompetisi, URL Kompetisi, Tanggal Mulai, Tanggal Akhir -->
-            <div class="form-row">
+			
+            <div class="form-group">
+				<label for="judul-kompetisi">Judul Kompetisi EN</label>
+				<input type="text" name="judul-kompetisi-en" id="judul-kompetisi-en" placeholder="Masukkan Judul Kompetisi EN" required>
+			</div>
+			
+			<div class="form-row">
                 <div class="form-group">
                     <label for="tempat-kompetisi">Tempat Kompetisi</label>
                     <input type="text" name="tempat-kompetisi" id="tempat-kompetisi" placeholder="Masukkan Tempat Kompetisi" required>
+					
+                </div>
+				
+				<div class="form-group">
+                    <label for="tempat-kompetisi">Tempat Kompetisi EN</label>
+                    <input type="text" name="tempat-kompetisi-en" id="tempat-kompetisi-en" placeholder="Masukkan Tempat Kompetisi EN" required>
 					
                 </div>
 
@@ -333,6 +345,7 @@ $namaList = array_map(function($dosen) {
                     <label for="url-kompetisi">URL Kompetisi</label>
                     <input type="url" name="url-kompetisi" id="url-kompetisi" placeholder="Masukkan URL Kompetisi" required>
                 </div>
+				
 
                 <div class="form-group">
                     <label for="tanggal-mulai">Tanggal Mulai</label>

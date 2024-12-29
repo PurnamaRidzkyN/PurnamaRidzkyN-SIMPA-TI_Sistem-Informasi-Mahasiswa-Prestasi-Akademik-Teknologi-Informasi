@@ -130,7 +130,7 @@ $prestasi = $data["prestasi"];
                 </ul>
             </div>
 
-            <!-- Lampiran File -->
+           <!-- Lampiran File -->
             <div class="mb-3">
                 <label for="file-surat-tugas" class="form-label">File Surat Tugas</label>
                 <a href="<?php echo '../../../' . $prestasi['file_surat_tugas']; ?>" class="btn btn-primary" target="_blank">Lihat Surat Tugas</a>
@@ -147,14 +147,16 @@ $prestasi = $data["prestasi"];
             </div>
 
             <div class="mb-3">
+                <div class="btn-container d-flex justify-content-start align-items-center">
                 <label for="file-poster" class="form-label">File Poster</label>
                 <a href="<?php echo '../../../' . $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
-
             </div>
+
 
             <!-- Tombol Validasi dan Tolak Validasi -->
             <div class="mb-3">
                 <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
+
 
 
                     <!-- Tombol Validasi -->
@@ -175,6 +177,7 @@ $prestasi = $data["prestasi"];
                         <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
                         <button type="submit" class="btn btn-danger" name="action_tolak" value="tolak">Tolak Validasi</button>
                     </form>
+
 
                 <?php elseif ($prestasi["validasi"] == 1): ?>
                     <!-- Pesan jika sudah divalidasi -->
@@ -199,7 +202,16 @@ $prestasi = $data["prestasi"];
         color: white;
     }
 
-    
+    .btn-primary {
+    color: #AFFA08; /* Mengubah warna teks menjadi putih */
+    text-decoration: none; /* Menghilangkan underline */
+    }
+
+    .btn-primary:hover {
+        color: white; /* Mengubah warna teks menjadi hijau saat hover */
+        text-decoration: none; /* Menghilangkan underline */
+    }
+
 
     .container {
         max-width: 1000px;
@@ -223,6 +235,7 @@ $prestasi = $data["prestasi"];
         color: #AFFA08;
         font-size: 35px;
         font-weight: 700;
+		text-align: center;
     }
 
     .form-container label {
@@ -289,6 +302,59 @@ $prestasi = $data["prestasi"];
     .form-container input[type="file"] {
         padding: 0;
         font-size: 16px;
+    }
+	
+	.d-flex {
+    display: flex;
+    gap: 10px; /* Jarak antara tombol */
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    /* Tombol Validasi */
+    .btn-validasi {
+        width: 100px; /* Lebar konsisten */
+        height: 30px;
+        padding: 5px 10px; /* Padding yang sama */
+        text-align: center; /* Teks di tengah */
+        font-weight: bold; /* Membuat teks lebih menonjol */
+        font-size: 16px; /* Ukuran font seragam */
+        border-radius: 25px; /* Sudut membulat */
+        background-color: #28a745; /* Warna hijau untuk Validasi */
+        border: 2px solid #28a745; /* Border dengan warna hijau */
+        color: white; /* Warna teks putih */
+        cursor: pointer;
+    }
+
+    .btn-validasi:hover {
+        background-color: #218838; /* Hijau lebih gelap saat hover */
+        border-color: #218838;
+    }
+
+    /* Tombol Tolak */
+    .btn-tolak {
+        width: 130px; /* Lebar konsisten */
+        height: 30px;
+        padding: 5px 10px; /* Padding yang sama */
+        text-align: center; /* Teks di tengah */
+        font-weight: bold; /* Membuat teks lebih menonjol */
+        font-size: 16px; /* Ukuran font seragam */
+        border-radius: 25px; /* Sudut membulat */
+        background-color: #dc3545; /* Warna merah untuk Tolak */
+        border: 2px solid #dc3545; /* Border dengan warna merah */
+        color: white; /* Warna teks putih */
+        cursor: pointer;
+    }
+
+    .btn-tolak:hover {
+        background-color: #c82333; /* Merah lebih gelap saat hover */
+        border-color: #c82333;
+    }
+
+    .btn-container {
+        margin-bottom: 20px; /* Atur jarak di bawah tombol */
     }
 
     #addDosenBtn {
