@@ -19,71 +19,6 @@
             background-color: #f5f5f5;
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 60px;
-            height: 60px;
-            margin-right: 8px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.32px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 16px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-            /* Warna hijau saat hover */
-        }
-
-        .navbar .user-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .navbar .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
-
-        .navbar .user-info .notifications {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
         .header {
             margin-top: 2px;
             padding: 10px;
@@ -199,17 +134,13 @@
             color: #AFFA08;
             margin-bottom: 20px;
             position: relative;
-            /* Menjaga header tetap di atas */
         }
 
         .event-container {
             display: flex;
             flex-wrap: wrap;
-            /* Memungkinkan kotak untuk membungkus ke baris berikutnya */
             gap: 10px;
-            /* Jarak antar kartu */
             justify-content: space-between;
-            /* Menyebar ruang antar item */
         }
 
         .event-box {
@@ -222,16 +153,13 @@
             padding: 10px;
             width: calc(23% - 10px);
             min-height: 200px;
-            /* Menjaga tinggi minimum */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.5s ease;
         }
 
         .event-box:hover {
             transform: scale(1.3);
-            /* Membesarkan kotak saat hover */
             z-index: 1;
-            /* Mengangkat kotak di atas yang lain saat hover */
         }
 
         .event-img {
@@ -239,24 +167,16 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            /* Memastikan gambar mengambil lebar penuh */
             margin-bottom: 5px;
-            /* Jarak antara gambar dan informasi */
         }
 
         .event-img img {
             width: auto;
-            /* Mengatur lebar gambar secara otomatis */
             height: auto;
-            /* Mengatur tinggi gambar secara otomatis */
             max-height: 180px;
-            /* Mengatur tinggi maksimum gambar menjadi 150px */
             max-width: 250px;
-            /* Mengatur lebar maksimum gambar menjadi 200px */
             object-fit: cover;
-            /* Memastikan gambar terpotong dengan baik */
             border-radius: 10px;
-            /* Menambahkan sudut melengkung */
         }
 
         .event-info {
@@ -265,24 +185,19 @@
             align-items: center;
             width: 100%;
             margin-top: 10px;
-            /* Jarak atas untuk informasi */
         }
 
         /* Tanggal event */
         .event-info .date {
             font-size: 16px;
             font-weight: 600;
-            color: blac;
-            /* Teks menjadi putih */
+            color: black;
             font-family: 'Galatea', sans-serif;
             text-align: center;
-            /* Centering teks dalam date */
             background-color: #AFFA08;
-            /* Background hijau */
             padding: 5px 10px;
-            /* Menambahkan padding agar bentuk bulat */
             border-radius: 80%;
-            /* Membuat background menjadi bulat */
+
         }
 
         /* Nama event */
@@ -312,22 +227,18 @@
             grid-column: 2;
         }
 
-
-        /* Leaderboard Styling */
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
             border-radius: 20px;
             padding: 10px;
             width: 25%;
-            /* Menentukan lebar untuk leaderboard */
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             height: 850px;
             margin-left: 20px;
-            /* Menambahkan margin kiri untuk menggeser ke kiri */
         }
 
         .header-container {
-            background-color: #0039C8;
+            background-color: none;
             padding: 12px;
             border-radius: 10px;
             width: 90%;
@@ -337,13 +248,11 @@
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
             font-family: 'Robot Crush', sans-serif;
             margin-bottom: 15px;
-            /* Memberikan jarak lebih sedikit antara header dan isi */
         }
 
 
@@ -416,21 +325,6 @@
     </style>
 </head>
 
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href="#">Home</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Mahasiswa Bimbingan</a>
-    </div>
-    <div class="user-info">
-        <img src="profilpic.png" alt="Profile">
-    </div>
-</div>
 
 <!-- Konten Header -->
 <div class="header">

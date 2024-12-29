@@ -136,36 +136,6 @@ use app\cores\View;
             flex-direction: column;
         }
 
-        .navbar {
-            width: 100%;
-            padding: 10px 20px;
-            background-color: #001C62;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .navbar .logo h1 {
-            color: #AFFA08;
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .navbar .menu a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .navbar .menu a:hover {
-            color: #0039C8;
-        }
-
         .container {
             width: 90%;
             max-width: 900px;
