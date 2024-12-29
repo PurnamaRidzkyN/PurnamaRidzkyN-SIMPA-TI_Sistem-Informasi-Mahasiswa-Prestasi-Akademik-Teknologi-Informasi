@@ -87,29 +87,13 @@ $dosenList = $data["Dosen"];
         font-size: 16px;
         margin-top: 5px;
     }
-
-    .btn-tambah {
-        background-color: #AFFA08;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 25px;
-        color: black;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 16px;
-    }
-
-    .btn-tambah:hover {
-        background-color: #c5ff5f;
-    }
-
+	
    .form-container .submit-btn {
         background-color: #AFFA08;
         border-radius: 25px;
-        padding: 10px 20px;
+        padding: 5px 10px;
         color: black;
-        font-size: 20px;
+        font-size: 15px;
         font-weight: 500;
         text-align: center;
         cursor: pointer;
@@ -128,8 +112,8 @@ $dosenList = $data["Dosen"];
     color: white;
     border: none;
     border-radius: 25px;
-    padding: 10px 20px;
-    font-size: 20px;
+    padding: 5px 10px;
+    font-size: 15px;
     font-weight: 500;
     text-align: center;
     cursor: pointer;
@@ -147,43 +131,138 @@ $dosenList = $data["Dosen"];
         padding: 0;
         font-size: 16px;
     }
+	
+	/* Gaya untuk tombol tambah dosen */
+	.btn-tambah {
+	  background-color: #AFFA08;
+	  padding: 5px 10px;
+	  border: none;
+	  border-radius: 25px;
+	  color: black;
+	  font-size: 12px;
+	  font-weight: 500;
+	  cursor: pointer;
+	  margin-left: 16px; /* Tambahkan jarak dengan label */
+	}
 
-    #addDosenBtn {
-        background-color: #AFFA08;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 25px;
-        color: black;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-    }
+	.btn-tambah:hover {
+	  background-color: #c5ff5f;
+	}
 
-    #addDosenBtn:hover {
-        background-color: #218838;
-    }
+	/* Gaya untuk label */
+	label {
+	  font-size: 16px;
+	  font-weight: bold;
+	  display: inline-block;
+	  margin-right: 8px;
+	  color: white;
+	}
 
-    .dosen-container button {
-        background-color: #dc3545;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 25px;
-        color: white;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
+	/* Gaya untuk elemen autocomplete */
+	.autocomplete {
+	  position: relative;
+	  display: inline-block;
+	  margin-bottom: 5x;
+	}
 
-    .dosen-container button:hover {
-        background-color: #c82333;
-    }
+	input {
+	  border: 1px solid #d4d4d4;
+	  background-color: #f9f9f9;
+	  padding: 10px;
+	  font-size: 16px;
+	  border-radius: 5px;
+	  width: 100%;
+	}
+
+	.autocomplete-items {
+	  position: absolute;
+	  border: 1px solid #d4d4d4;
+	  z-index: 99;
+	  top: 100%;
+	  left: 0;
+	  right: 0;
+	  background-color: white;
+	}
+
+	.autocomplete-items div {
+	  padding: 10px;
+	  cursor: pointer;
+	  border-bottom: 1px solid #d4d4d4;
+	  color: black;
+	}
+
+	.autocomplete-items div:hover {
+	  background-color: #e9e9e9;
+	}
+
+	.autocomplete-active {
+	  background-color: DodgerBlue !important; 
+	  color: white; 
+	}
+
+	/* Gaya untuk daftar dosen yang dipilih */
+	.selected-items {
+	  display: flex;
+	  flex-wrap: wrap;
+	  gap: 5px;
+	  margin-bottom: 0px;
+	}
+
+	.selected-items .item {
+	  background-color: #f1f1f1;
+	  border: 1px solid #d4d4d4;
+	  padding: 5px 10px;
+	  border-radius: 25px;
+	  display: flex;
+	  align-items: center;
+	  color: black;
+	}
+
+	.selected-items .item span {
+	  margin-left: 10px;
+	  cursor: pointer;
+	  color: red;
+	  font-weight: bold;
+	}
+
+	/* Tambahkan jarak antara label dan input */
+	.label-container {
+	  margin-bottom: 10px; /* Jarak antara label dan input form */
+	}
+	
+
+        .upload-form-container label {
+            color: rgba(255, 255, 255, 0.90);
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .upload-form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 16px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: black;
+        }
+
+        .upload-file-name {
+            color: #fff;
+            margin-top: -10px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-style: italic;
+        }
+	
 </style>
 
 <!-- Main Content -->
 <div class="container">
     <div class="form-container">
-        <h3>Upload Prestasi Mahasiswa</h3>
+        <h3>Tambah Prestasi Mahasiswa</h3>
 
         <!-- Alert Placeholder -->
         <div id="alert-placeholder"></div>
@@ -286,27 +365,50 @@ $dosenList = $data["Dosen"];
                 </div>
             </div>
 
-            <!-- Dosen Pembimbing -->
-            <label for="dosen-pembimbing">Dosen Pembimbing</label>
-            <button id="addDosenBtn">Tambah Dosen</button>
+			
+			<!-- Label untuk dosen pembimbing -->
+			<div class="label-container" style="display: flex; align-items: center;">
+			  <label for="dosen-pembimbing">Dosen Pembimbing</label>
+			  <button id="addDosenBtn" class="btn-tambah">Tambah Dosen</button>
+			</div>
 
-            <!-- Container to hold the dosen input fields -->
-            <div id="dosenFieldsContainer"></div>
+			<!-- Form autocomplete -->
+			<form autocomplete="off" action="/tambah_dosen" method="POST" style="display: none;" id="autocompleteForm">
+			  <div class="autocomplete" style="width:300px;">
+				<input id="dosenInput" type="text" placeholder="Masukkan Nama Dosen">
+			  </div>
+			  <div id="selectedDosen" class="selected-items"></div>
+			  <input type="hidden" name="dosenList" id="dosenList">
+			</form>
 
-            <!-- File Surat Tugas, File Sertifikat, Foto Kegiatan, File Poster -->
-            <label for="file-surat-tugas">File Surat Tugas (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
-            <input type="file" name="file-surat-tugas" id="file-surat-tugas" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+           <!-- File Surat Tugas, File Sertifikat, Foto Kegiatan, File Poster -->
+            <div class="upload-container">
+        <div class="upload-form-container">
+            <form>
+                <!-- File Surat Tugas -->
+                <label for="fileSuratTugas">File Surat Tugas:</label>
+                <input type="file" id="fileSuratTugas" accept=".pdf,.doc,.docx">
+                <span class="upload-file-name" id="fileSuratTugasName"></span>
 
-            <label for="file-sertifikat">File Sertifikat (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
-            <input type="file" name="file-sertifikat" id="file-sertifikat" accept=".jpg,.jpeg,.png,.pdf,.docx" required>
+                <!-- File Sertifikat -->
+                <label for="fileSertifikat">File Sertifikat:</label>
+                <input type="file" id="fileSertifikat" accept=".pdf,.doc,.docx">
+                <span class="upload-file-name" id="fileSertifikatName"></span>
 
-            <label for="file-foto-kegiatan">Foto Kegiatan (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
-            <input type="file" name="file-foto-kegiatan" id="file-foto-kegiatan" accept=".jpg,.jpeg,.png,.pdf" required>
+                <!-- Foto Kegiatan -->
+                <label for="fotoKegiatan">Foto Kegiatan:</label>
+                <input type="file" id="fotoKegiatan" accept="image/*">
+                <span class="upload-file-name" id="fotoKegiatanName"></span>
 
-            <label for="file-poster">File Poster (.jpg,.jpeg,.png,.pdf,.docx Maksimal 5mb)</label>
-            <input type="file" name="file-poster" id="file-poster" accept=".jpg,.jpeg,.png,.pdf" required>
-
-            <div class="text-danger mb-3" id="error-message">
+                <!-- File Poster -->
+                <label for="filePoster">File Poster:</label>
+                <input type="file" id="filePoster" accept="image/*">
+                <span class="upload-file-name" id="filePosterName"></span>
+            </form>
+        </div>
+    </div>
+            
+			<div class="text-danger mb-3" id="error-message">
                 <!-- PHP error message will be inserted here -->
                 <?php echo app\cores\View::getData()["error"] ?? "" ?>
             </div>
@@ -316,138 +418,119 @@ $dosenList = $data["Dosen"];
         </form>
     </div>
 </div>
-
 <script>
-    var dosenCounter = 1;
-
-    // Data dosen yang sudah diambil dari PHP
-    var dosenList = <?php echo json_encode($dosenList); ?>;
-    var dosenNames = dosenList.map(function(dosen) {
-        return {
-            name: dosen.nama,
-            id: dosen.id
-        }; // Menyimpan nama dan ID dosen
-    });
-
-
-    // Menambahkan event listener untuk tombol tambah dosen
-    document.getElementById("addDosenBtn").addEventListener("click", function(event) {
-        event.preventDefault(); // Menghindari form dikirim saat tombol diklik
-
-        var container = document.getElementById("dosenFieldsContainer");
-
-        // Membuat div baru untuk input dosen
-        var newDiv = document.createElement("div");
-        newDiv.classList.add("dosen-container");
-
-        // Membuat input field untuk dosen
-        var inputField = document.createElement("input");
-        inputField.setAttribute("type", "text");
-        inputField.setAttribute("placeholder", "Dosen Pembimbing");
-        inputField.setAttribute("name", "dosen-" + dosenCounter); // Menambahkan nama unik untuk input
-        inputField.setAttribute("data-id", ""); // Menyimpan ID dosen di atribut data-id
-        newDiv.appendChild(inputField);
-
-        // Menginisialisasi autocomplete pada input baru
-        autocomplete(inputField, dosenNames);
-
-        // Membuat tombol hapus untuk input dosen ini
-        var deleteButton = document.createElement("button");
-        deleteButton.innerText = "Hapus";
-        deleteButton.addEventListener("click", function() {
-            container.removeChild(newDiv); // Menghapus input dosen dan tombol hapus
-        });
-        newDiv.appendChild(deleteButton);
-
-        // Menambahkan div baru ke container
-        container.appendChild(newDiv);
-
-        // Menambah counter dosen untuk input berikutnya
-        dosenCounter++;
-    });
-
-    // Fungsi autocomplete untuk input dosen
-    function autocomplete(inp, arr) {
-        var currentFocus;
-
-        inp.addEventListener("input", function(e) {
-            var a, b, i, val = this.value;
-            closeAllLists();
-
-            if (!val) {
-                return false;
-            }
-
-            currentFocus = -1;
-            a = document.createElement("DIV");
-            a.setAttribute("id", this.id + "autocomplete-list");
-            a.setAttribute("class", "autocomplete-items");
-            this.parentNode.appendChild(a);
-
-            for (i = 0; i < arr.length; i++) {
-                if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                    b = document.createElement("DIV");
-                    b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
-                    b.innerHTML += arr[i].name.substr(val.length);
-                    b.innerHTML += "<input type='hidden' value='" + arr[i].id + "'>"; // Menyimpan ID dosen
-
-                    b.addEventListener("click", function(e) {
-                        inp.value = this.innerText; // Menampilkan nama dosen di input
-                        inp.setAttribute("data-id", this.getElementsByTagName("input")[0].value); // Menyimpan ID dosen di atribut data-id
-                        closeAllLists();
-                    });
-
-                    a.appendChild(b);
-                }
-            }
-        });
-
-        inp.addEventListener("keydown", function(e) {
-            var x = document.getElementById(this.id + "autocomplete-list");
-            if (x) x = x.getElementsByTagName("div");
-            if (e.keyCode == 40) {
-                currentFocus++;
-                addActive(x);
-            } else if (e.keyCode == 38) {
-                currentFocus--;
-                addActive(x);
-            } else if (e.keyCode == 13) {
-                e.preventDefault();
-                if (currentFocus > -1) {
-                    if (x) x[currentFocus].click();
-                }
-            }
-        });
-
-        function addActive(x) {
-            if (!x) return false;
-            removeActive(x);
-            if (currentFocus >= x.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = (x.length - 1);
-            x[currentFocus].classList.add("autocomplete-active");
+// Skrip autocomplete seperti sebelumnya
+function autocomplete(inp, arr) {
+  let currentFocus;
+  inp.addEventListener("input", function() {
+      let a, b, i, val = this.value;
+      closeAllLists();
+      if (!val) return false;
+      currentFocus = -1;
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      this.parentNode.appendChild(a);
+      for (i = 0; i < arr.length; i++) {
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          b = document.createElement("DIV");
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          b.addEventListener("click", function() {
+              addSelectedItem(inp, this.getElementsByTagName("input")[0].value);
+              inp.value = "";
+              closeAllLists();
+          });
+          a.appendChild(b);
         }
-
-        function removeActive(x) {
-            for (var i = 0; i < x.length; i++) {
-                x[i].classList.remove("autocomplete-active");
-            }
-        }
-
-        function closeAllLists(elmnt) {
-            var x = document.getElementsByClassName("autocomplete-items");
-            for (var i = 0; i < x.length; i++) {
-                if (elmnt != x[i] && elmnt != inp) {
-                    x[i].parentNode.removeChild(x[i]);
-                }
-            }
-        }
-
-        document.addEventListener("click", function(e) {
-            closeAllLists(e.target);
-        });
+      }
+  });
+  inp.addEventListener("keydown", function(e) {
+      let x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        currentFocus++;
+        addActive(x);
+      } else if (e.keyCode == 38) {
+        currentFocus--;
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        e.preventDefault();
+        if (currentFocus > -1 && x) x[currentFocus].click();
+      }
+  });
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    for (let i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
     }
+  }
+  function closeAllLists(elmnt) {
+    let x = document.getElementsByClassName("autocomplete-items");
+    for (let i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  document.addEventListener("click", function(e) {
+      closeAllLists(e.target);
+  });
+}
 
-    document.getElementById("prestasiForm").addEventListener("submit", function(event) {
+// Skrip untuk menambah dan menghapus dosen terpilih
+function addSelectedItem(inputElement, value) {
+  const selectedContainer = document.getElementById("selectedDosen");
+  const hiddenInput = document.getElementById("dosenList");
+
+  const existingItems = Array.from(selectedContainer.children).map(item => item.dataset.value);
+  if (existingItems.includes(value)) return;
+
+  const item = document.createElement("div");
+  item.setAttribute("class", "item");
+  item.setAttribute("data-value", value);
+  item.innerHTML = `${value} <span onclick="removeSelectedItem(this)">\u00d7</span>`;
+  selectedContainer.appendChild(item);
+
+  const updatedList = [...existingItems, value];
+  hiddenInput.value = updatedList.join(",");
+}
+
+function removeSelectedItem(element) {
+  const item = element.parentNode;
+  const value = item.dataset.value;
+  const selectedContainer = document.getElementById("selectedDosen");
+  const hiddenInput = document.getElementById("dosenList");
+
+  selectedContainer.removeChild(item);
+
+  const remainingItems = Array.from(selectedContainer.children).map(item => item.dataset.value);
+  hiddenInput.value = remainingItems.join(",");
+}
+
+// Tampilkan form saat tombol "Tambah Dosen" diklik
+const addDosenBtn = document.getElementById("addDosenBtn");
+addDosenBtn.addEventListener("click", function(e) {
+  e.preventDefault();
+  document.getElementById("autocompleteForm").style.display = "block";
+  addDosenBtn.style.display = "none";
+});
+
+/* Daftar nama dosen */
+const dosenList = ["Budi Santoso", "Dewi Lestari", "Andi Wijaya", "Siti Aminah", "Rizky Pratama", "Fitriani Putri", "Ahmad Fauzan", "Linda Marwan", "Eko Wahyudi", "Ratna Saraswati"];
+
+/* Inisialisasi autocomplete pada input */
+autocomplete(document.getElementById("dosenInput"), dosenList);
+	
+
+	 document.getElementById("prestasiForm").addEventListener("submit", function(event) {
         var isValid = true; // Flag untuk mengecek validitas formulir
         var formFields = document.querySelectorAll("#prestasiForm input, #prestasiForm select");
         var errorMessage = document.getElementById("error-message");
