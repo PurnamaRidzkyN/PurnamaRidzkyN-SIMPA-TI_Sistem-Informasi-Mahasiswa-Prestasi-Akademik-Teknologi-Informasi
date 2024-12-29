@@ -9,10 +9,10 @@
   <title><?php
 
           use app\cores\Session;
-use app\cores\View;
-use app\helpers\Dump;
-use app\models\database\users\Admin;
-use app\models\database\users\Mahasiswa;
+          use app\cores\View;
+          use app\helpers\Dump;
+          use app\models\database\users\Admin;
+          use app\models\database\users\Mahasiswa;
 
           echo \app\cores\View::getTitle() ?></title>
   <link rel="stylesheet" href="/public/css/login.css">
@@ -102,45 +102,45 @@ use app\models\database\users\Mahasiswa;
       width: 100%;
       height: auto;
     }
+
     .login-text {
-            font-size: 18px;
-            color: white;
-            padding: 10px 15px;
-            border: 2px solid white;
-            border-radius: 20px;
-            background-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            transition: background-color 0.3s;
+      font-size: 18px;
+      color: white;
+      padding: 10px 15px;
+      border: 2px solid white;
+      border-radius: 20px;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      transition: background-color 0.3s;
 
-        }
+    }
 
-        .login-text a {
-            text-decoration: none;
-            /* Menghapus underline */
-            color: inherit;
-            /* Menggunakan warna teks induk */
-        }
+    .login-text a {
+      text-decoration: none;
+      /* Menghapus underline */
+      color: inherit;
+      /* Menggunakan warna teks induk */
+    }
 
 
-        .login-text:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
+    .login-text:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
 
 <body>
-  <?php 
-  if (!is_null(Session::get("user"))){
-    if (Session::get("role")=="1"){
-$user = Admin::findNip(Session::get("user"))["result"][0];
-    }elseif (Session::get("role")=="2"){
-$user = Mahasiswa::findNim(Session::get("user"))["result"][0];
+  <?php
+  if (!is_null(Session::get("user"))) {
+    if (Session::get("role") == "1") {
+      $user = Admin::findNip(Session::get("user"))["result"][0];
+    } elseif (Session::get("role") == "2") {
+      $user = Mahasiswa::findNim(Session::get("user"))["result"][0];
     }
-    }
+  }
   ?>
   <nav class="navbar">
     <div class="logo">
@@ -155,6 +155,10 @@ $user = Mahasiswa::findNim(Session::get("user"))["result"][0];
       <?php elseif (Session::get("role") === "2"): ?>
         <a href=<?php echo '/dashboard/mahasiswa/' . Session::get("user") ?>>Home</a>
         <a href=<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
+      <?php elseif (Session::get("role") === "3"): ?>
+        <a href=<?php echo '/dashboard/dosen/' . Session::get("user") ?>>Home</a>
+        <a href=<?php echo '/dashboard/dosen/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
+
       <?php else: ?>
         <a href="/">Home</a>
       <?php endif; ?>
@@ -169,7 +173,7 @@ $user = Mahasiswa::findNim(Session::get("user"))["result"][0];
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/profil'; ?>">
-          <img src="<?php echo '../../../'.$user['foto']?>" alt="Profile">
+          <img src="<?php echo '../../../' . $user['foto'] ?>" alt="Profile">
         </a>
       <?php elseif (Session::get("role") === "2"): ?>
         <!-- Jika role Mahasiswa -->
@@ -177,8 +181,13 @@ $user = Mahasiswa::findNim(Session::get("user"))["result"][0];
           <img src="../../../public/component/notifikasi-03.png" alt="Notifikasi">
         </div>
         <a href="<?php echo '/dashboard/mahasiswa/' . Session::get("user") . '/profil'; ?>">
-          <img src="<?php echo '../../../'.$user['foto']?>" alt="Profile">
+          <img src="<?php echo '../../../' . $user['foto'] ?>" alt="Profile">
         </a>
+      <?php elseif (Session::get("role") === "3"): ?>
+        <a href="<?php echo '/dashboard/dosen/' . Session::get("user") . '/profil'; ?>">
+          <img src="<?php echo '../../../' . $user['foto'] ?>" alt="Profile">
+        </a>
+      <?php elseif (Session::get("role") === "2"): ?>
       <?php else: ?>
         <div class="login-text">
           <a href="/login">Login</a>

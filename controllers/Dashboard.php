@@ -10,6 +10,7 @@ use app\models\database\prestasiLomba\InfoLomba;
 use app\models\database\users\Admin;
 use app\models\database\users\Mahasiswa;
 use app\models\database\notifikasi\Notifikasi;
+use app\models\database\users\Dosen;
 
 class Dashboard extends BaseController
 {
@@ -19,6 +20,13 @@ class Dashboard extends BaseController
         $leaderboard = Mahasiswa::getLeaderboard();
         $data = ["info_lomba" => $data, "leaderboard" => $leaderboard];
         $this->view("dashboard/mahasiswa/mahasiswa", "Dashboard Mahasiswa", $data);
+    }
+    public function DosenDashboard(): void
+    {
+        $data = InfoLomba::displayInfoLomba();
+        $leaderboard = Mahasiswa::getLeaderboard();
+        $data = ["info_lomba" => $data, "leaderboard" => $leaderboard];
+        $this->view("/dosen/homeDosen", "Dashboard Mahasiswa", $data);
     }
 
     public function adminDashboard(): void
@@ -38,6 +46,11 @@ class Dashboard extends BaseController
     {
         $data = Mahasiswa::findNim(Session::get("user"))["result"];
         $this->view("dashboard/mahasiswa/profil", "Dashboard Mahasiswa", $data);
+    }
+    public function renderProfilDosen()
+    {
+        $data = Dosen::findNidn(Session::get("user"))["result"];
+        $this->view("/dosen/profil", "Dashboard Dosen", $data);
     }
 
     public function renderNotifikasiAdmin()

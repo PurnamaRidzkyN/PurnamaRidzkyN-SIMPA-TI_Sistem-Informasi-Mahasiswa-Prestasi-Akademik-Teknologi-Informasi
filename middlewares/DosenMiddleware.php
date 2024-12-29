@@ -11,15 +11,15 @@ class DosenMiddleware implements Middleware
 {
     public function before(Request $req, Response $res): void
     {
-        if (Session::get("role") !== "1") {
+        if (Session::get("role") !== "3") {
             $res->redirect("/login");
             return;
         }
 
-        $admin = Dosen::findNidn(Session::get("user"));
-        $nip = $admin["result"][0]["nidn"];
+        $Dosen = Dosen::findNidn(Session::get("user"));
+        $nidn = $Dosen["result"][0]["nidn"];
 
-        if ($req->getParams("nip") !== $nip) {
+        if ($req->getParams("nidn") !== $nidn) {
             $res->redirect("/login");
         }
     }
