@@ -106,23 +106,9 @@ $profil = View::getData();
 $profil =$profil[0];
 
 ?>
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>>Home</a>
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/prestasi' ?>>Prestasi</a>
-        <a href="#">Leaderboard</a>
-        <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
-    </div>
-</div>
-
 <!-- Main Content -->
 <div class="container">
-    <img src="https://via.placeholder.com/200" alt="Foto Profil" class="profile-pic">
+    <img src="<?php echo '../../../'.$profil['foto'] ?>" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
         <h2 class="name"><?php echo $profil["nama"]; ?></h2>
         <p>Email : <?php echo $profil["email"] ?></p>
