@@ -307,8 +307,6 @@
     </style>
 </head>
 
-
-<!-- Konten Header -->
 <div class="header">
     <div class="home">Sistem Informasi Mahasiswa Berprestasi Teknologi Informasi</div>
 </div>
@@ -326,7 +324,6 @@
             <div class="header">Upcoming Events</div>
             <div class="event-container">
                 <?php
-                // Data event dalam array
 
                 use app\cores\View;
                 use app\helpers\Dump;
