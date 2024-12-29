@@ -8,7 +8,7 @@ $user = Session::get('user');
 $data = View::getData();
 $adminData = $data["data"];
 $mahasiswaData = $data["mahasiswa"];
-$logData = $data["log data"];
+$logData = $data["log_data"];
 $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
@@ -136,19 +136,19 @@ $manipulate = $data["data"]["edit"];
                 <!-- Menu untuk pilih jenis data -->
                 <div class="management-section">
                     <!-- Form for Data Admin -->
-                    <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="post" class="data-form">
+                    <form action=<?php echo "/dashboard/admin/manajemenData/adminData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
                         <input type="hidden" name="data" value="admin">
                         <button data="submit" class="management-option" value="admin">Data Admin</button>
                     </form>
 
                     <!-- Form for Data Mahasiswa -->
-                    <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <form action=<?php echo "/dashboard/admin/manajemenData/mahasiswaData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
                         <input type="hidden" name="data" value="mahasiswa">
                         <button data="submit" class="management-option">Data Mahasiswa</button>
                     </form>
 
                     <!-- Form for Data Dosen -->
-                    <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                    <form action=<?php echo "/dashboard/admin/manajemenData/dosenData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
                         <input type="hidden" name="data" value="dosen">
                         <button data="submit" class="management-option">Data Dosen</button>
                     </form>
@@ -160,8 +160,8 @@ $manipulate = $data["data"]["edit"];
                     </form>
 
                     <!-- Form for Log Data -->
-                    <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="log data">
+                    <form action=<?php echo "/dashboard/admin/manajemenData/logData" . $user . "/manajemen-data" ?> method="POST" class="data-form">
+                        <input type="hidden" name="data" value="log_data">
                         <button data="submit" class="management-option">Log Data</button>
                     </form>
                 </div>
