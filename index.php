@@ -10,6 +10,7 @@ use app\controllers\NewPassword;
 use app\controllers\Dashboard;
 use app\controllers\Leaderboard;
 use app\controllers\ManagementData;
+use app\controllers\NotifikasiController;
 use app\controllers\PrestasiController;
 use app\controllers\UserManagement;
 use app\middlewares\AdminMiddleware;
@@ -43,6 +44,9 @@ $app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "studentDashboard"],[S
 
 $app::get("/dashboard/mahasiswa/:nim/notifikasi", [Dashboard::class, "renderNotifikasiMahasiswa"],[StudentMiddleware::class]);
 $app::get("/dashboard/admin/:nip/notifikasi", [Dashboard::class, "renderNotifikasiAdmin"],[AdminMiddleware::class]);
+
+$app::post("/notifikasi/delete", [NotifikasiController::class, "deleteNotifikasi"]);
+$app::post("/notifikasi", [NotifikasiController::class, "changeStatusNotifikasi"]);
 
 $app::get("/dashboard/admin/:nip/profil", [Dashboard::class, "renderProfilAdmin"], [AdminMiddleware::class]);
 $app::get("/dashboard/mahasiswa/:nim/profil", [Dashboard::class, "renderProfilMahasiswa"], [StudentMiddleware::class]);

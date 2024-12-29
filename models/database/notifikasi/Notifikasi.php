@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\database\users;
+namespace app\models\database\notifikasi;
 
 use app\cores\Blueprint;
 use app\cores\Schema;
@@ -25,15 +25,22 @@ class Notifikasi extends BaseModel
     }
     public static function displayNotif(): array
     {
-        return Schema::selectFrom(self::TABLE, function (Blueprint $table) {
+        return Schema::selectWhereFrom(self::TABLE, function (Blueprint $table) {
             $table->select();
         });
     }
+    public static function updateNotif(  string $where): array
+    {
+        return Schema::update(self::TABLE, function (Blueprint $table) use ( $where) {
+            $table->update(self::STATUS, "dilihat", "id", $where);
+        });
+    }
+
 
     public static function deleteNotifikasi($id):array{
         return Schema::query("
         DELETE FROM notifikasi
-        WHERE id = $id ;");
+        WHERE id = '$id' ;");
     }
 
     public static function deleteAll(): array
