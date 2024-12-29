@@ -189,17 +189,11 @@ $user = Session::get('user');
 
         .event-img img {
             width: auto;
-            /* Mengatur lebar gambar secara otomatis */
             height: auto;
-            /* Mengatur tinggi gambar secara otomatis */
             max-height: 180px;
-            /* Mengatur tinggi maksimum gambar menjadi 150px */
             max-width: 250px;
-            /* Mengatur lebar maksimum gambar menjadi 200px */
             object-fit: cover;
-            /* Memastikan gambar terpotong dengan baik */
             border-radius: 10px;
-            /* Menambahkan sudut melengkung */
         }
 
         .event-info {
@@ -215,15 +209,11 @@ $user = Session::get('user');
         .event-info .date {
             font-size: 16px;
             font-weight: 600;
-            color: blac;
-            /* Teks menjadi putih */
+            color: black;
             font-family: 'Galatea', sans-serif;
             text-align: center;
-            /* Centering teks dalam date */
             background-color: #AFFA08;
-            /* Background hijau */
             padding: 5px 10px;
-            /* Menambahkan padding agar bentuk bulat */
             border-radius: 80%;
             /* Membuat background menjadi bulat */
         }
@@ -248,28 +238,30 @@ $user = Session::get('user');
         .event-info .link {
             font-size: 12px;
             text-decoration: none;
-            color: #0039C8;
+            color: #AFFA08;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
 
+        .event-info .link a {
+    color: #AFFA08; 
+}
 
-        /* Leaderboard Styling */
+.event-info .link a:hover {
+    color: #FFD700; 
+    text-decoration: underline;
+}
+       
         .leaderboard {
             background: linear-gradient(174deg, black 0%, #0039C8 26%, rgba(217, 217, 217, 0.50) 92%);
             border-radius: 20px;
             padding: 10px;
             width: 25%;
-            /* Menentukan lebar untuk leaderboard */
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             height: 850px;
             margin-left: 20px;
-            /* Menambahkan margin kiri untuk menggeser ke kiri */
         }
 
         .header-container {
@@ -283,7 +275,6 @@ $user = Session::get('user');
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
@@ -395,25 +386,29 @@ $user = Session::get('user');
                 $events = $data["info_lomba"]["result"];
                 // Dump::out($data);
                 // // Loop untuk menampilkan setiap event
-                foreach ($events as $event) {
+                foreach ($eventData as $event) {
                     echo '<div class="event-box">';
-                    echo '    <div class="event-img">';
-                    echo '        <img src="../../../' .$event["file_poster"] . ' " alt="Event Image">';
-                    echo '    </div>';
-                    echo '    <div class="event-info">';
-                    echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
-                    echo '        <div class="event-name">' . $event['judul'] . '</div>';
-                    echo '        <div class="categories">';
-                    echo '            <ul>';
-                    echo ($event['deskripsi_lomba']);
-                    echo '            </ul>';
-                    echo '        </div>';
-                    echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                    echo '    </div>';
+                    echo '<div class="event-img">';
+                    echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
+                    echo '<div class="event-info">';
+
+                    // Mengubah format tanggal
+                    $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
+                    $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
+
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; 
+                    echo '<div class="event-name">' . $event['judul'] . '</div>';
+                    echo '<div class="categories">';
+                    echo '<ul>';
+                    echo ($event['deskripsi_lomba']);
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Lihat Detail</a></div>';
+                    echo '</div>'; // event-info
+                    echo '</div>'; // event-box
                 }
                 ?>
-
             </div>
         </div>
     </div>
