@@ -18,6 +18,7 @@ use app\models\database\users\Mahasiswa;
 use app\helpers\ArrayFormatter;
 use app\helpers\FileUpload;
 use app\models\database\users\Admin;
+use app\models\database\users\Notifikasi;
 
 class PrestasiController extends BaseController
 {
@@ -136,6 +137,17 @@ class PrestasiController extends BaseController
             }
             $user = Session::get("user");
 
+            Notifikasi::insert([
+                Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                Notifikasi::ID_USER => "null",
+                Notifikasi::ROLE=>1,
+                Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
+                Notifikasi::TIPE => "Prestasi Baru",
+                Notifikasi::STATUS => "Belum dilihat",
+                Notifikasi::DIBUAT => date("Y-m-d H:i:s")
+                ]
+            );
+
             $res->redirect("/dashboard/mahasiswa/{$user}/prestasi");
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
@@ -199,6 +211,7 @@ class PrestasiController extends BaseController
         // Ambil data dari request
         $body = $request->Body();
         $user = Session::get("user");
+        $mahasiswa = Mahasiswa::findId($body["mahasiswa_id"])['result'][0];
 
         try {
             // Validasi input
@@ -210,6 +223,28 @@ class PrestasiController extends BaseController
             if ($validasiStatus == "1") {
                 $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
                 $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
+                $admin = Admin::findNip(Session::get("user"));
+                
+                LogData::insert(
+                    UUID::generate(LogData::TABLE, "LD"),
+                    $admin['result'][0]["id_user"],
+                    $idPrestasi,
+                    Prestasi::TABLE,
+                    "update",
+                    "validasi",
+                    "0",
+                    "1"
+                );
+                Notifikasi::insert([
+                    Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                    Notifikasi::ID_USER => $mahasiswa['id_user'],
+                    Notifikasi::ROLE=>2,
+                    Notifikasi::PESAN => "Prestasi ".$body['judul_kompetisi']." telah di validasi oleh ".$admin['result'][0]['nama'],
+                    Notifikasi::TIPE => "Validasi",
+                    Notifikasi::STATUS => "Belum dilihat",
+                    Notifikasi::DIBUAT => date("Y-m-d H:i:s")
+                    ]
+                );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
             } else {
                 $response->redirect("/dashboard/admin/{$user}/prestasi");

@@ -8,6 +8,7 @@ use app\cores\Session;
 use app\models\database\prestasiLomba\InfoLomba;
 use app\models\database\users\Admin;
 use app\models\database\users\Mahasiswa;
+use app\models\database\users\Notifikasi;
 
 class Dashboard extends BaseController
 {
@@ -32,8 +33,19 @@ class Dashboard extends BaseController
         $data = Admin::findNip(Session::get("user"))["result"];
         $this->view("dashboard/admin/profil", "Dashboard Admin", $data);
     }
-    public function renderProfilMahasiswa(){
-    $data = Mahasiswa::findNim(Session::get("user"))["result"];
-    $this->view("dashboard/mahasiswa/profil", "Dashboard Mahasiswa", $data);
-}
+    public function renderProfilMahasiswa()
+    {
+        $data = Mahasiswa::findNim(Session::get("user"))["result"];
+        $this->view("dashboard/mahasiswa/profil", "Dashboard Mahasiswa", $data);
+    }
+
+    public function renderNotifikasiAdmin()
+    {
+        $this->view("dashboard/notif","Notifikasi");
+    }
+    
+    public function renderNotifikasiMahasiswa()
+    {
+        $this->view("dashboard/notif","Notifikasi",);
+    }
 }

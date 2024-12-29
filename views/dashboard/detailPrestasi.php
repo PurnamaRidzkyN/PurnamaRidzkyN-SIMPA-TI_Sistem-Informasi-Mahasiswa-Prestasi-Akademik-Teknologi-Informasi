@@ -165,6 +165,7 @@ $hasSuccess = in_array('benernjir', $data);
                     </form>
                     <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
                         <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
                         <button type="submit" class="btn btn-success" name="action_validasi" value="validasi">Validasi</button>
                     </form>
 
@@ -172,6 +173,8 @@ $hasSuccess = in_array('benernjir', $data);
                     <!-- Tombol Tolak Validasi -->
                     <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
                         <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_mahasiswa']; ?>"> <!-- Menyertakan ID Prestasi -->
+                        <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
                         <button type="submit" class="btn btn-danger" name="action_tolak" value="tolak">Tolak Validasi</button>
                     </form>
 

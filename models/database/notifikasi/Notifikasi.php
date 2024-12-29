@@ -11,6 +11,7 @@ class Notifikasi extends BaseModel
     public const TABLE = "notifikasi";
     public const ID = "id";
     public const ID_USER = "id_user";
+    public const ROLE = "role";
     public const PESAN = "pesan";
     public const TIPE = "tipe";
     public const  STATUS = "status";
@@ -19,7 +20,7 @@ class Notifikasi extends BaseModel
     public static function insert(array $data): array
     {
         return Schema::insertInto(self::TABLE, function (Blueprint $table) use ($data) {
-            $table->insert([self::ID, self::ID_USER, self::PESAN, self::TIPE, self::STATUS, self::DIBUAT], $data);
+            $table->insert([self::ID, self::ID_USER,self::ROLE, self::PESAN, self::TIPE, self::STATUS, self::DIBUAT], $data);
         });
     }
     public static function displayNotif(): array
