@@ -1,16 +1,5 @@
-<?php
-
-use app\cores\Session;
-use app\cores\View;
-use app\helpers\Dump;
-
-$data = View::getData();
-$user = Session::get("user");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +13,37 @@ $user = Session::get("user");
             background-color: #f5f5f5;
         }
 
+        .big-banner {
+            height: 40vh;
+            background: linear-gradient(270deg, #0039C8 0%, #001C62 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            padding: 20px;
+        }
+
+        .leaderboard-title {
+            font-size: 6vw;
+            font-family: 'Robot Crush', sans-serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #AFFA08;
+            max-width: 100%;
+            word-wrap: break-word;  /* Ensure text wraps within the container */
+        }
+
+        .banner-caption {
+            font-size: 4vw;
+            font-family: 'Galatea', sans-serif;
+            font-weight: 700;
+            color: white;
+            max-width: 100%;
+            word-wrap: break-word;  /* Ensure text wraps within the container */
+        }
+
         /* Section Styles */
         .section {
             background-color: #0039C8;
@@ -31,9 +51,8 @@ $user = Session::get("user");
             border-radius: 15px;
             margin: 15px;
             max-width: 100%;
-            word-wrap: break-word;
+            word-wrap: break-word;  /* Ensure text wraps within the container */
         }
-        
 
         .section-title {
             font-size: 2rem;
@@ -44,14 +63,14 @@ $user = Session::get("user");
         }
 
         .btn-warning {
-            background-color: white;
+            background-color: #AFFA08;
             color: #0039C8;
             border: none;
         }
 
         .btn-warning:hover {
-            background-color: #0039C8;
-            color: white;
+            background-color: white;
+            color: #0039C8;
         }
 
         .btn-success {
@@ -61,22 +80,18 @@ $user = Session::get("user");
         }
 
         .btn-success:hover {
-            background-color: #0039C8;
+            background-color: white;
+            color: #0039C8;
         }
 
-        .upload-btn {
-            font-family: 'Robot Crush', sans-serif;
-            font-size: 40px;
-            font-weight: 300;
-            background-color: #0039C8;
-            color: #AFFA08;
-            border: none;
-            padding: 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            display: inline-block;
-            max width: 100%;
+        /* Gaya khusus untuk form section dengan ukuran lebih pendek */
+        .section-short {
+            padding: 10px;
+            margin: 10px;
+        }
+        .section-short .section-title {
+            font-size: 1.5rem; /* Ukuran judul sedikit lebih kecil */
+            margin-bottom: 10px;
         }
 
         /* Container Responsif */
@@ -90,30 +105,28 @@ $user = Session::get("user");
         .row {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            /* Mengurangi gap untuk tombol lebih rapat */
+            gap: 5px; /* Mengurangi gap untuk tombol lebih rapat */
         }
     </style>
 </head>
-
 <body>
 
-    <?php if (Session::get("role") == "2"): ?>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-5 text-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Big Banner -->
+    <div class="big-banner">
+        <h2 class="leaderboard-title">PRESTASI MAHASISWA</h2>
+        <p class="banner-caption">Data Kompetisi Mahasiswa</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="section section-short">
+        <div class="section-title">Form Prestasi Mahasiswa</div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="PrestasiForm.html" class="btn btn-warning">Isi Form Prestasi</a>
             </div>
         </div>
-    <?php endif; ?>
-
+    </div>
+    
     <!-- Filter Section -->
     <div class="section">
         <div class="section-title">Status Validasi</div>
@@ -129,80 +142,16 @@ $user = Session::get("user");
 
     <!-- Data Container -->
     <div class="container">
-        <!-- Data "Belum Divalidasi" akan ditampilkan di sini -->
         <div id="belum-div" class="row">
-            <?php
-            $prestasi = $data;
-            foreach ($prestasi as $item):
-                if ($item['validasi'] == 0): // Belum Divalidasi
-            ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $item['judul_kompetisi'] ?></h5>
-                                <p class="card-text">Status: Belum Divalidasi</p>
-                                <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                    <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-warning">Detail Prestasi</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-            <?php endif;
-            endforeach; ?>
+            <!-- Data "Belum Divalidasi" akan ditampilkan di sini -->
         </div>
-
-        <!-- Data "Sudah Divalidasi" akan ditampilkan di sini -->
         <div id="sudah-div" class="row">
-            <?php
-            // Looping through "prestasi" items
-            foreach ($prestasi as $item):
-                if ($item['validasi'] == 1): // Sudah Divalidasi
-            ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $item['judul_kompetisi'] ?></h5>
-                                <p class="card-text">Status: Sudah Divalidasi</p>
-                                <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
-                                <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                    <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-success">Detail Prestasi</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-            <?php endif;
-            endforeach; ?>
+            <!-- Data "Sudah Divalidasi" akan ditampilkan di sini -->
         </div>
     </div>
 
     <!-- JS and Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Script untuk Filter -->
-    <script>
-        $(document).ready(function() {
-            // Menyembunyikan kedua bagian (belum dan sudah divalidasi) saat halaman pertama dimuat
-            $("#belum-div").hide();
-            $("#sudah-div").hide();
-
-            // Saat tombol "Belum Divalidasi" ditekan
-            $("#filterBelum").click(function() {
-                $("#belum-div").show(); // Menampilkan data yang belum divalidasi
-                $("#sudah-div").hide(); // Menyembunyikan data yang sudah divalidasi
-            });
-
-            // Saat tombol "Sudah Divalidasi" ditekan
-            $("#filterSudah").click(function() {
-                $("#sudah-div").show(); // Menampilkan data yang sudah divalidasi
-                $("#belum-div").hide(); // Menyembunyikan data yang belum divalidasi
-            });
-        });
-    </script>
 </body>
-
 </html>
