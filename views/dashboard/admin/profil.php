@@ -96,6 +96,7 @@ $profil = $profil[0];
     <!-- Logout Button -->
     <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
 
+
     <img src=" <?php echo '../../../'.$profil['foto'] ?>" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
 		
