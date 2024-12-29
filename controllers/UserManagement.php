@@ -26,9 +26,6 @@ class UserManagement extends BaseController
         if ($body["action"] === "add") {
             if ($body["data"] === "admin") {
                 $this->insertAdminUsers($body);
-                Dump::out("j");
-                
-
             } else if ($body["data"] === "mahasiswa") {
                 $this->insertMahasiswaUsers($body);
             } else if ($body["data"] === "dosen") {
@@ -47,7 +44,8 @@ class UserManagement extends BaseController
                 $this->deleteDataAdmin($body);
             } else if ($body["data"] === "mahasiswa") {
                 $this->deleteDataMahasiswa($body);
-            } else if ($body["data" === "dosen"]) {
+            } else if ($body["data"] === "dosen") {
+                
                 $this->deleteDataDosen($body);
             }
         }
@@ -540,6 +538,7 @@ class UserManagement extends BaseController
     {
         $Admin = Admin::findNip(Session::get("user"));
         $id = $body['delete'];
+     
         try {
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),

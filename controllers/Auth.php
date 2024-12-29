@@ -28,10 +28,10 @@ class Auth extends BaseController
                 $this->view("login/login", "login", ["error" => "wrong password"]);
                 return;
             }
-          
+
             Session::set("user", $user["username"]);
             Session::set("role", $user["role"]);
-            
+
             // redirect each user to their page
             switch ($user["role"]) {
                 case "1":
@@ -41,6 +41,10 @@ class Auth extends BaseController
                 case "2":
                     $res->redirect("/dashboard/mahasiswa/{$user["username"]}");
                     break;
+                case "3":
+                    $res->redirect("/dashboard/dosen/{$user["username"]}");
+                    break;
+
                 default:
                     $res->redirect("/");
                     break;

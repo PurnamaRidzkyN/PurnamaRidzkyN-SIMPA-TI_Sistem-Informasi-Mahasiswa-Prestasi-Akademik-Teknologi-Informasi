@@ -137,14 +137,15 @@ class PrestasiController extends BaseController
             }
             $user = Session::get("user");
 
-            Notifikasi::insert([
-                Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
-                Notifikasi::ID_USER => "null",
-                Notifikasi::ROLE=>"1",
-                Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
-                Notifikasi::TIPE => "Prestasi Baru",
-                Notifikasi::STATUS => "Belum dilihat",
-                Notifikasi::DIBUAT => date("Y-m-d H:i:s")
+            Notifikasi::insert(
+                [
+                    Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                    Notifikasi::ID_USER => "null",
+                    Notifikasi::ROLE => "1",
+                    Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
+                    Notifikasi::TIPE => "Prestasi Baru",
+                    Notifikasi::STATUS => "Belum dilihat",
+                    Notifikasi::DIBUAT => date("Y-m-d H:i:s")
                 ]
             );
 
@@ -171,6 +172,7 @@ class PrestasiController extends BaseController
     }
     public function renderListPrestasi(Request $req, response $res)
     {
+
         $body = $req->body();
         $data = Prestasi::listPrestasiDisplay();
         $nim = $body["nim"];
@@ -180,16 +182,28 @@ class PrestasiController extends BaseController
                     return $item["nim"] === $nim;
                 });
             } elseif ((Session::get("role") == "2")) {
-                $nim= Mahasiswa::findNim(Session::get("user"))["result"][0]["nim"];
+                $nim = Mahasiswa::findNim(Session::get("user"))["result"][0]["nim"];
                 $filtered_data = array_filter($data["result"], function ($item) use ($nim) {
                     return $item["nim"] === $nim;
                 });
-            } 
+            }
             $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
     }
+    public function renderListPrestasiDosen()
+    {
+        $data = Prestasi::listPrestasiDisplay();
+        if ((Session::get("role") == "3")) {
+            $id = Dosen::findNidn(Session::get("user"))["result"][0]["id"];
+            $filtered_data = array_filter($data["result"], function ($item) use ($id) {
+                return $item["id_dosen"] === $id;
+            });
+            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
+        }
+    }
+
     public function renderDetailPrestasi(Request $req)
     {
         $body = $req->body();
@@ -212,7 +226,7 @@ class PrestasiController extends BaseController
         $body = $request->Body();
         $user = Session::get("user");
         $mahasiswa = $body["mahasiswa_id"];
-        
+
 
         try {
             // Validasi input
@@ -225,7 +239,7 @@ class PrestasiController extends BaseController
                 $updateValidasi = Prestasi::updatePrestasi($validasiStatus, Prestasi::ID, $idPrestasi);
                 $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
                 $admin = Admin::findNip(Session::get("user"));
-                
+
                 LogData::insert(
                     UUID::generate(LogData::TABLE, "LD"),
                     $admin['result'][0]["id_user"],
@@ -236,14 +250,15 @@ class PrestasiController extends BaseController
                     "0",
                     "1"
                 );
-                Notifikasi::insert([
-                    Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
-                    Notifikasi::ID_USER => $mahasiswa,
-                    Notifikasi::ROLE=>2,
-                    Notifikasi::PESAN => "Prestasi ".$body['judul_kompetisi']." telah di validasi oleh ".$admin['result'][0]['nama'],
-                    Notifikasi::TIPE => "Validasi",
-                    Notifikasi::STATUS => "Belum dilihat",
-                    Notifikasi::DIBUAT => date("d-m-Y H:i:s")
+                Notifikasi::insert(
+                    [
+                        Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                        Notifikasi::ID_USER => $mahasiswa,
+                        Notifikasi::ROLE => 2,
+                        Notifikasi::PESAN => "Prestasi " . $body['judul_kompetisi'] . " telah di validasi oleh " . $admin['result'][0]['nama'],
+                        Notifikasi::TIPE => "Validasi",
+                        Notifikasi::STATUS => "Belum dilihat",
+                        Notifikasi::DIBUAT => date("d-m-Y H:i:s")
                     ]
                 );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");

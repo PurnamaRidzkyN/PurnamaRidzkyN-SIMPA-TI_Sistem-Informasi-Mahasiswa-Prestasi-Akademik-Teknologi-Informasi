@@ -11,6 +11,9 @@ $tingkatKompetisi = $data["TingkatLomba"];
 $kategoriKompetisi = ["tim", "individu"];
 $urutanPeringkat = $data["Peringkat"];
 $dosenList = $data["Dosen"];
+$namaList = array_map(function($dosen) {
+  return $dosen['nama'];  // Mengambil 'nama' dari tiap elemen
+}, $dosenList);
 
 ?>
 
@@ -524,8 +527,7 @@ addDosenBtn.addEventListener("click", function(e) {
 });
 
 /* Daftar nama dosen */
-const dosenList = ["Budi Santoso", "Dewi Lestari", "Andi Wijaya", "Siti Aminah", "Rizky Pratama", "Fitriani Putri", "Ahmad Fauzan", "Linda Marwan", "Eko Wahyudi", "Ratna Saraswati"];
-
+const dosenList = <?php echo json_encode($namaList); ?>;
 /* Inisialisasi autocomplete pada input */
 autocomplete(document.getElementById("dosenInput"), dosenList);
 	

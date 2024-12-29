@@ -376,7 +376,7 @@ $user = Session::get('user');
                 foreach ($eventData as $event) {
                     echo '<div class="event-box">';
                     echo '<div class="event-img">';
-                    echo '<img src="' . $event['file_poster'] . '" alt="Event Image">';
+                    echo '<img src="../../../' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
                     echo '<div class="event-info">';
 

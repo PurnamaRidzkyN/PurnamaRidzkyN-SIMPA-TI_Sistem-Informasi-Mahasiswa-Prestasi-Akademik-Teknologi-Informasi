@@ -14,9 +14,9 @@ use app\controllers\NotifikasiController;
 use app\controllers\PrestasiController;
 use app\controllers\UserManagement;
 use app\middlewares\AdminMiddleware;
-
+use app\middlewares\DosenMiddleware;
 use app\middlewares\StudentMiddleware;
-
+use app\models\database\users\Dosen;
 
 require_once "helpers/env.php";
 require_once "vendor/autoload.php";
@@ -40,7 +40,8 @@ $app::get("/dashboard/admin/:nip", [Dashboard::class, "adminDashboard"], [AdminM
 $app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "studentDashboard"],[StudentMiddleware::class]);
 
 $app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "studentDashboard"],[StudentMiddleware::class]);
-$app::get("/dashboard/mahasiswa/:nim", [Dashboard::class, "studentDashboard"],[StudentMiddleware::class]);
+$app::get("/dashboard/dosen/:nidn", [Dashboard::class, "studentDashboard"],[DosenMiddleware::class]);
+
 
 $app::get("/dashboard/mahasiswa/:nim/notifikasi", [Dashboard::class, "renderNotifikasiMahasiswa"],[StudentMiddleware::class]);
 $app::get("/dashboard/admin/:nip/notifikasi", [Dashboard::class, "renderNotifikasiAdmin"],[AdminMiddleware::class]);
@@ -50,6 +51,7 @@ $app::post("/notifikasi", [NotifikasiController::class, "changeStatusNotifikasi"
 
 $app::get("/dashboard/admin/:nip/profil", [Dashboard::class, "renderProfilAdmin"], [AdminMiddleware::class]);
 $app::get("/dashboard/mahasiswa/:nim/profil", [Dashboard::class, "renderProfilMahasiswa"], [StudentMiddleware::class]);
+$app::get("/dashboard/dosen/:nidn/profil", [Dashboard::class, "renderProfilDosen"], [DosenMiddleware::class]);
 
 
 $app::get("/dashboard/admin/:nip/log-data",[AuditLog::class,"renderWeb"],[AdminMiddleware::class]);
@@ -57,14 +59,18 @@ $app::post("/dashboard/admin/:nip/log-data",[AuditLog::class,"getFilteredLog"],[
 
 $app::get("/dashboard/admin/:nip/daftar-mahasiswa",[PrestasiController::class,"renderDaftarMahasiswa"],[AdminMiddleware::class]);
 
+
 $app::get("/dashboard/mahasiswa/:nim/prestasi",[PrestasiController::class,"renderListPrestasi"],[StudentMiddleware::class]);
 $app::post("/dashboard/admin/:nip/prestasi",[PrestasiController::class,"renderListPrestasi"],[AdminMiddleware::class]);
+$app::get("/dashboard/dosen/:nidn/prestasi",[PrestasiController::class,"renderListPrestasiDosen"],[DosenMiddleware::class]);
 
 $app::get("/dashboard/mahasiswa/:nim/upload-prestasi",[PrestasiController::class,"renderWeb"],[StudentMiddleware::class]);
 $app::post("/dashboard/mahasiswa/:nim/submit-prestasi",[PrestasiController::class,"upload"],[StudentMiddleware::class]);
 
 $app::post("/dashboard/mahasiswa/:nim/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[StudentMiddleware::class]);
 $app::post("/dashboard/admin/:nip/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[AdminMiddleware::class]);
+$app::post("/dashboard/Dosen/:nidn/detail-prestasi",[PrestasiController::class,"renderDetailPrestasi"],[DosenMiddleware::class]);
+
 
 $app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController::class,"validatePrestasi"],[AdminMiddleware::class]);
 

@@ -96,15 +96,13 @@ $profil = $profil[0];
     <!-- Logout Button -->
     <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
 
+
     <img src=" <?php echo '../../../'.$profil['foto'] ?>" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
 		
         <h2 class="name"><?php echo $profil['nama'] ?></h2>
-        <p>Prodi : <?php echo $profil['prodi'] ?></p>
         <p>Email : <?php echo $profil['email'] ?></p>
-        <p>NIM : <?php echo $profil['nim'] ?></p>
-        <p>Total Skor : <?php echo $profil['total_skor']." pts" ?></p>
-
-        <button class="change-password-button" onclick="window.location.href='/ganti-password'">Ganti Password</button>
+        <p>NIP : <?php echo $profil['nidn'] ?></p>
+		<button class="change-password-button" onclick="window.location.href='/change-password'">Ganti Password</button>
     </div>
 </div>
