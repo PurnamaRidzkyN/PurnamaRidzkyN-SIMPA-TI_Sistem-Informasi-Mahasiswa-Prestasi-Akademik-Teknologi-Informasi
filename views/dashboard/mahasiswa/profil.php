@@ -66,6 +66,16 @@
         font-weight: bold;
         color: #AFFA08;
     }
+	
+	.change-password-button {
+        position: static;
+        margin-top: 15px;
+		border-radius: 8px;
+		cursor: pointer;
+		padding: 8px 14px;
+		font-weight: bold;
+		font-size: 11px;
+    }
 
     .profile-info p {
         font-size: 18px;
@@ -88,10 +98,11 @@ $profil = $profil[0];
 
     <img src=" <?php echo '../../../'.$profil['foto'] ?>" alt="Foto Profil" class="profile-pic">
     <div class="profile-info">
+		
         <h2 class="name"><?php echo $profil['nama'] ?></h2>
         <p>Prodi : <?php echo $profil['prodi'] ?></p>
         <p>Email : <?php echo $profil['Email'] ?></p>
         <p>NIM : <?php echo $profil['nim'] ?></p>
-        <p class="score">Score: <?php echo $profil['total_skor'] ?></p>
+		<button class="change-password-button" onclick="window.location.href='/ganti-password'">Ganti Password</button>
     </div>
 </div>
