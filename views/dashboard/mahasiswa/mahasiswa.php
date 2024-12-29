@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -175,24 +176,16 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            /* Memastikan gambar mengambil lebar penuh */
             margin-bottom: 5px;
-            /* Jarak antara gambar dan informasi */
         }
 
         .event-img img {
             width: auto;
-            /* Mengatur lebar gambar secara otomatis */
             height: auto;
-            /* Mengatur tinggi gambar secara otomatis */
             max-height: 180px;
-            /* Mengatur tinggi maksimum gambar menjadi 150px */
             max-width: 250px;
-            /* Mengatur lebar maksimum gambar menjadi 200px */
             object-fit: cover;
-            /* Memastikan gambar terpotong dengan baik */
             border-radius: 10px;
-            /* Menambahkan sudut melengkung */
         }
 
         .event-info {
@@ -201,24 +194,18 @@
             align-items: center;
             width: 100%;
             margin-top: 10px;
-            /* Jarak atas untuk informasi */
         }
 
         /* Tanggal event */
         .event-info .date {
             font-size: 16px;
             font-weight: 600;
-            color: blac;
-            /* Teks menjadi putih */
+            color: black;
             font-family: 'Galatea', sans-serif;
             text-align: center;
-            /* Centering teks dalam date */
             background-color: #AFFA08;
-            /* Background hijau */
             padding: 5px 10px;
-            /* Menambahkan padding agar bentuk bulat */
             border-radius: 80%;
-            /* Membuat background menjadi bulat */
         }
 
         /* Nama event */
@@ -237,20 +224,23 @@
             font-family: 'Galatea', sans-serif;
         }
 
-        /* Link */
         .event-info .link {
             font-size: 12px;
             text-decoration: none;
-            color: #0039C8;
+            color: #AFFA08;
             cursor: pointer;
             margin-top: -15px;
-            /* Memberikan jarak kecil antara kategori dan link */
             text-align: left;
-            /* Menyelaraskan dengan kategori */
             grid-column: 2;
-            /* Memastikan link berada di bawah kategori */
         }
+        .event-info .link a {
+    color: #AFFA08; 
+}
 
+.event-info .link a:hover {
+    color: #FFD700; 
+    text-decoration: underline;
+}
 
         /* Leaderboard Styling */
         .leaderboard {
@@ -276,13 +266,12 @@
 
         .header {
             font-size: 40px;
-            /* Ukuran font lebih kecil untuk header */
             font-style: italic;
             color: #AFFA08;
             font-weight: 400;
             font-family: 'Robot Crush', sans-serif;
             margin-bottom: 15px;
-            /* Memberikan jarak lebih sedikit antara header dan isi */
+            
         }
 
 
@@ -394,20 +383,25 @@ use app\models\database\users\Mahasiswa; ?>
                 // Loop untuk menampilkan setiap event
                 foreach ($events as $event) {
                     echo '<div class="event-box">';
-                    echo '    <div class="event-img">';
-                    echo '        <img src="../../../' . $event['file_poster'] . '" alt="Event Image">';
-                    echo '    </div>';
-                    echo '    <div class="event-info">';
-                    echo '        <div class="date">' . $event['tanggal_akhir_pendaftaran'] . '</div>';
-                    echo '        <div class="event-name">' . $event['judul'] . '</div>';
-                    echo '        <div class="categories">';
-                    echo '            <ul>';
-                    echo ($event['deskripsi_lomba']);
-                    echo '            </ul>';
-                    echo '        </div>';
-                    echo '        <div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Klik disini</a></div>';
-                    echo '    </div>';
+                    echo '<div class="event-img">';
+                    echo '<img src="../../../' . $event['file_poster'] . '" alt="Event Image">';
                     echo '</div>';
+                    echo '<div class="event-info">';
+
+                    // Mengubah format tanggal
+                    $tanggalDatabase = $event['tanggal_akhir_pendaftaran']; // Format asli dari database
+                    $tanggalFormatBaru = date("d-m-Y", strtotime($tanggalDatabase)); // Mengubah ke format DD-MM-YYYY
+
+                    echo '<div class="date">' . $tanggalFormatBaru . '</div>'; 
+                    echo '<div class="event-name">' . $event['judul'] . '</div>';
+                    echo '<div class="categories">';
+                    echo '<ul>';
+                    echo ($event['deskripsi_lomba']);
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="link"><a href="' . $event['link_perlombaan'] . '" target="_blank">Lihat Detail</a></div>';
+                    echo '</div>'; // event-info
+                    echo '</div>'; // event-box
                 }
                 ?>
             </div>
@@ -428,8 +422,9 @@ use app\models\database\users\Mahasiswa; ?>
         $data = View::getData();
         $leaderboardData = $data["leaderboard"]["result"];
         // Dump::out($data);
-        // Render leaderboard
-        foreach ($leaderboardData as $item) {
+        $topFive = array_slice($leaderboardData, 0, 5);
+
+        foreach ($topFive as $item) {
             echo '<div class="rank-item">';
             echo '<div class="rank-number">' . $item['rank'] . '</div>';
             echo '<img src="../../../' . $item['Foto'] . '" alt="User Image">';

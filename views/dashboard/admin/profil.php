@@ -101,8 +101,8 @@ $profil = $profil[0];
     <div class="profile-info">
 		
         <h2 class="name"><?php echo $profil['nama'] ?></h2>
-        <p>Email : <?php echo $profil['Email'] ?></p>
-        <p>NIP : <?php echo $profil['nim'] ?></p>
-		<button class="change-password-button" onclick="window.location.href='/ganti-password'">Ganti Password</button>
+        <p>Email : <?php echo $profil['email'] ?></p>
+        <p>NIP : <?php echo $profil['nip'] ?></p>
+		<button class="change-password-button" onclick="window.location.href='/change-password'">Ganti Password</button>
     </div>
 </div>
