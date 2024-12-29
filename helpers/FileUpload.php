@@ -15,22 +15,35 @@ class FileUpload
     public static function uploadFile($file, $target_dir)
     {
         try {
-            $max_size = 5 * 1024 * 1024;
-            if ($file && isset($file["tmp_name"]) ) {
+            $max_size = 5 * 1024 * 1024; // Maksimal 5MB
+            if ($file && isset($file["tmp_name"])) {
                 $file_size = $file["size"];
+                
+                // Memeriksa ukuran file
                 if ($file_size > $max_size) {
-                   return "0";
+                    return "File terlalu besar. Maksimal ukuran file adalah 5MB.";
+                }
+    
+                // Memeriksa apakah file adalah gambar
+                $image_info = getimagesize($file["tmp_name"]);
+                if ($image_info === false) {
+                    return "File yang diunggah bukan gambar. Harap unggah file gambar.";
+                }
+    
+                // Tentukan path tujuan
+                $target_file = $target_dir . basename($file["name"]);
+    
+                // Pindahkan file yang diunggah ke direktori tujuan
+                if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                    return $target_file;
                 } else {
-                    $target_file = $target_dir . basename($file["name"]);
-                    move_uploaded_file($file["tmp_name"], $target_file);
+                    return "Terjadi kesalahan saat mengunggah file.";
                 }
             } else {
-                return "0";
+                return "Tidak ada file yang diunggah.";
             }
-
-            return $target_file;
         } catch (\PDOException $e) {
-            return($e->getMessage());
+            return "Terjadi kesalahan: " . $e->getMessage();
         }
     }
-}
+}    

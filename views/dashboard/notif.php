@@ -105,6 +105,10 @@
         <div class="home">HOME</div>
         <div class="date">
             <?php
+
+use app\cores\View;
+use app\helpers\Dump;
+
             date_default_timezone_set('Asia/Jakarta');
             echo date('d F Y');
             ?>
@@ -115,27 +119,17 @@
     <div class="container">
         <?php
         // Simulasi array notifikasi
-        $notifikasi = [
-            [
-                'pesan' => 'Data Kompetisi INTERCOMP UI/UX Competition Anda telah divalidasi oleh admin.',
-                'tipe' => 'Validasi',
-                'status' => 'Belum dilihat',
-                'dibuat' => '2024-12-28 14:30:00',
-            ],
-            [
-                'pesan' => 'Pemberitahuan lainnya tentang kompetisi UI/UX tersedia di dashboard Anda.',
-                'tipe' => 'Informasi',
-                'status' => ' dilihat',
-                'dibuat' => '2024-12-27 10:00:00',
-            ],
-        ];
-
+        $notifikasi = View::getData();
+        if (empty($notifikasi)) {
+            echo "<p class='alert alert-info'>Tidak ada notifikasi saat ini.</p>";
+            // Tampilkan pesan jika tidak ada notifikasi
+        } else {
         // Loop untuk menampilkan notifikasi
         foreach ($notifikasi as $notif) {
 
             echo "
        <div class='bubble-notification $statusClass'>
-        <a href='$linkDetail' style='text-decoration: none; color: inherit;'> <!-- Link Detail -->
+        <a href='/notifikasi' style='text-decoration: none; color: inherit;'> <!-- Link Detail -->
             <div style='display: flex; align-items: center;'>
                 <img src='../../../public/component/notifikasi-03.png' alt='Icon Notifikasi'>
                 <span>{$notif['pesan']}</span>
@@ -147,14 +141,20 @@
             </div>
         </a>
         
-        <!-- Tombol Hapus -->
-        <form method='POST' action='delete_notification.php' style='margin-top: 10px;'>
-            <input type='hidden' name='id' value='{$notif['dibuat']}'> <!-- Kirim ID notifikasi untuk dihapus -->
-            <button type='submit' class='delete-notification'>Hapus</button>
+        <!-- Tombol Hapus (Bootstrap) -->
+        <form method='post' action='/notifikasi/delete' class='d-inline'>
+            <input type='hidden' name='id' value='{$notif['id']}'>
+            <button type='submit' class='btn btn-danger btn-delete-notification'>Hapus</button>
+        </form>
+
+        <!-- Tombol Tandai sebagai Dilihat (Bootstrap) -->
+        <form method='post' action='/notifikasi' class='d-inline'>
+            <input type='hidden' name='id' value='{$notif['id']}'>
+            <button type='submit' class='btn btn-success btn-update-status'>Tandai sebagai Dilihat</button>
         </form>
     </div>
         ";
-        }
+        }}
         ?>
     </div>
 

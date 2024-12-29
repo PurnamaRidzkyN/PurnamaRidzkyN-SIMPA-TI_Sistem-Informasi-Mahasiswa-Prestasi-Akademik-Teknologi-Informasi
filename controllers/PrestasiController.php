@@ -18,7 +18,7 @@ use app\models\database\users\Mahasiswa;
 use app\helpers\ArrayFormatter;
 use app\helpers\FileUpload;
 use app\models\database\users\Admin;
-use app\models\database\users\Notifikasi;
+use app\models\database\notifikasi\Notifikasi;
 
 class PrestasiController extends BaseController
 {
@@ -140,7 +140,7 @@ class PrestasiController extends BaseController
             Notifikasi::insert([
                 Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
                 Notifikasi::ID_USER => "null",
-                Notifikasi::ROLE=>1,
+                Notifikasi::ROLE=>"1",
                 Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
                 Notifikasi::TIPE => "Prestasi Baru",
                 Notifikasi::STATUS => "Belum dilihat",
@@ -211,7 +211,8 @@ class PrestasiController extends BaseController
         // Ambil data dari request
         $body = $request->Body();
         $user = Session::get("user");
-        $mahasiswa = Mahasiswa::findId($body["mahasiswa_id"])['result'][0];
+        $mahasiswa = $body["mahasiswa_id"];
+        
 
         try {
             // Validasi input
@@ -237,7 +238,7 @@ class PrestasiController extends BaseController
                 );
                 Notifikasi::insert([
                     Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
-                    Notifikasi::ID_USER => $mahasiswa['id_user'],
+                    Notifikasi::ID_USER => $mahasiswa,
                     Notifikasi::ROLE=>2,
                     Notifikasi::PESAN => "Prestasi ".$body['judul_kompetisi']." telah di validasi oleh ".$admin['result'][0]['nama'],
                     Notifikasi::TIPE => "Validasi",

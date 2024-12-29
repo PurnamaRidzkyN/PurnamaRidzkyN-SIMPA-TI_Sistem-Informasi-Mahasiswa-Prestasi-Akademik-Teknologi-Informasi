@@ -76,7 +76,6 @@ $user = Session::get("user");
             cursor: pointer;
             text-align: center;
             display: inline-block;
-            max width: 100%;
         }
 
         /* Container Responsif */
