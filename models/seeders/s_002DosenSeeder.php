@@ -26,9 +26,9 @@ class s_002DosenSeeder implements BaseSeeder
             "alan@gmail.com"
         ];
         $foto = [
-            "foto.jpeg",
-            "foto.jpeg",
-            "foto.jpeg"
+            'public\uploads\fotoProfiles\cloud.jpg',
+            'public\uploads\fotoProfiles\cloud.jpg',
+            'public\uploads\fotoProfiles\cloud.jpg'
         ];
 
         $res = [];

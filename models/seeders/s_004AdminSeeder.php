@@ -11,7 +11,7 @@ class s_004AdminSeeder implements BaseSeeder
         $id_user = ["U001", "U002", "U003"];
         $nip = ["100321104","100321105","100321106",];
         $name = ["Admin One", "Admin Two", "Admin Three"];
-        $foto = ["Admin1.jpg", "Admin2.jpg", "Admin3.jpg"];
+        $foto = ['public\uploads\fotoProfiles\aerithFoto.jpg', 'public\uploads\fotoProfiles\aerithFoto.jpg', 'public\uploads\fotoProfiles\aerithFoto.jpg'];
         $email = ["naotomori220405@gmail.com", "admin2@example.com", "admin3@example.com"];
 
         $res = [];
