@@ -8,8 +8,10 @@ $data = View::getData();
 $user = Session::get("user");
 $dosen = $data["dosen"];
 $prestasi = $data["prestasi"];
-?>
+// Periksa apakah array mengandung 'success'
+$hasSuccess = in_array('benernjir', $data);
 
+?>
 
 <!-- Main Content -->
 <div class="container mt-5">
@@ -21,98 +23,93 @@ $prestasi = $data["prestasi"];
 
         <form id="prestasiForm" class="needs-validation" novalidate>
 
-            <!-- Jenis Kompetisi -->
-            <div class="mb-3">
-                <label for="jenis-kompetisi" class="form-label">Jenis Kompetisi</label>
-                <input type="text" class="form-control" id="jenis-kompetisi" value="<?php echo $prestasi['jenis_lomba']; ?>" readonly>
+            <!-- Form Group: Two Columns -->
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="jenis-kompetisi" class="form-label">Jenis Kompetisi</label>
+                    <input type="text" class="form-control" id="jenis-kompetisi" value="<?php echo $prestasi['jenis_lomba']; ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="tingkat-kompetisi" class="form-label">Tingkat Kompetisi</label>
+                    <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['tingkat_lomba']; ?>" readonly>
+                </div>
             </div>
 
-            <!-- Tingkat Kompetisi -->
-            <div class="mb-3">
-                <label for="tingkat-kompetisi" class="form-label">Tingkat Kompetisi</label>
-                <input type="text" class="form-control" id="tingkat-kompetisi" value="<?php echo $prestasi['tingkat_lomba']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="judul-kompetisi" class="form-label">Judul Kompetisi</label>
+                    <input type="text" class="form-control" id="judul-kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="judul-kompetisi-en" class="form-label">Judul Kompetisi EN</label>
+                    <input type="text" class="form-control" id="judul-kompetisi-en" value="<?php echo $prestasi['judul_kompetisi_en']; ?>" readonly>
+                </div>
             </div>
 
-            <!-- Judul Kompetisi -->
-            <div class="mb-3">
-                <label for="judul-kompetisi" class="form-label">Judul Kompetisi</label>
-                <input type="text" class="form-control" id="judul-kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="kategori-kompetisi" class="form-label">Kategori Kompetisi</label>
+                    <input type="text" class="form-control" id="kategori-kompetisi" value="<?php echo ucfirst($jenis = $prestasi['tim'] == 0 ? 'Individu' : 'Tim'); ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="peringkat" class="form-label">Peringkat</label>
+                    <input type="text" class="form-control" id="peringkat" value="<?php echo $prestasi['peringkat']; ?>" readonly>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="judul-kompetisi-en" class="form-label">Judul Kompetisi EN</label>
-                <input type="text" class="form-control" id="judul-kompetisi-en" value="<?php echo $prestasi['judul_kompetisi_en']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi</label>
+                    <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi']; ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="tempat-kompetisi-en" class="form-label">Tempat Kompetisi EN</label>
+                    <input type="text" class="form-control" id="tempat-kompetisi-en" value="<?php echo $prestasi['tempat_kompetisi_en']; ?>" readonly>
+                </div>
             </div>
 
-            <!-- Kategori Kompetisi -->
-            <div class="mb-3">
-                <label for="kategori-kompetisi" class="form-label">Kategori Kompetisi</label>
-                <input type="text" class="form-control" id="kategori-kompetisi" value="<?php echo ucfirst($jenis = $prestasi['tim'] == 0 ? 'Individu' : 'Tim'); ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="url-kompetisi" class="form-label">URL Kompetisi</label>
+                    <input type="url" class="form-control" id="url-kompetisi" value="<?php echo $prestasi['url_kompetisi']; ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal-mulai" class="form-label">Tanggal Mulai</label>
+                    <input type="text" class="form-control" id="tanggal-mulai" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_mulai'])); ?>" readonly>
+                </div>
             </div>
 
-            <!-- Peringkat -->
-            <div class="mb-3">
-                <label for="peringkat" class="form-label">Peringkat</label>
-                <input type="text" class="form-control" id="peringkat" value="<?php echo $prestasi['peringkat']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal-akhir" class="form-label">Tanggal Akhir</label>
+                    <input type="text" class="form-control" id="tanggal-akhir" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_akhir'])); ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="jumlah-pt" class="form-label">Jumlah PT</label>
+                    <input type="text" class="form-control" id="jumlah-pt" value="<?php echo $prestasi['jumlah_pt']; ?>" readonly>
+                </div>
             </div>
 
-            <!-- Tempat Kompetisi -->
-            <div class="mb-3">
-                <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi</label>
-                <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi']; ?>" readonly>
-            </div>
-            <div class="mb-3">
-                <label for="tempat-kompetisi" class="form-label">Tempat Kompetisi En</label>
-                <input type="text" class="form-control" id="tempat-kompetisi" value="<?php echo $prestasi['tempat_kompetisi_en']; ?>" readonly>
-            </div>
-
-
-            <!-- URL Kompetisi -->
-            <div class="mb-3">
-                <label for="url-kompetisi" class="form-label">URL Kompetisi</label>
-                <input type="url" class="form-control" id="url-kompetisi" value="<?php echo $prestasi['url_kompetisi']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="jumlah-peserta" class="form-label">Jumlah Peserta</label>
+                    <input type="text" class="form-control" id="jumlah-peserta" value="<?php echo $prestasi['jumlah_peserta']; ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="no-surat-tugas" class="form-label">No Surat Tugas</label>
+                    <input type="text" class="form-control" id="no-surat-tugas" value="<?php echo $prestasi['no_surat_tugas']; ?>" readonly>
+                </div>
             </div>
 
-            <!-- Tanggal Mulai -->
-            <div class="mb-3">
-                <label for="tanggal-mulai" class="form-label">Tanggal Mulai</label>
-                <input type="text" class="form-control" id="tanggal-mulai" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_mulai'])); ?>" readonly>
-            </div>
-
-            <!-- Tanggal Akhir -->
-            <div class="mb-3">
-                <label for="tanggal-akhir" class="form-label">Tanggal Akhir</label>
-                <input type="text" class="form-control" id="tanggal-akhir" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_akhir'])); ?>" readonly>
-            </div>
-
-            <!-- Jumlah PT -->
-            <div class="mb-3">
-                <label for="jumlah-pt" class="form-label">Jumlah PT</label>
-                <input type="text" class="form-control" id="jumlah-pt" value="<?php echo $prestasi['jumlah_pt']; ?>" readonly>
-            </div>
-
-            <!-- Jumlah Peserta -->
-            <div class="mb-3">
-                <label for="jumlah-peserta" class="form-label">Jumlah Peserta</label>
-                <input type="text" class="form-control" id="jumlah-peserta" value="<?php echo $prestasi['jumlah_peserta']; ?>" readonly>
-            </div>
-
-            <!-- No Surat Tugas -->
-            <div class="mb-3">
-                <label for="no-surat-tugas" class="form-label">No Surat Tugas</label>
-                <input type="text" class="form-control" id="no-surat-tugas" value="<?php echo $prestasi['no_surat_tugas']; ?>" readonly>
-            </div>
-
-            <!-- Tanggal Surat Tugas -->
-            <div class="mb-3">
-                <label for="tanggal-surat-tugas" class="form-label">Tanggal Surat Tugas</label>
-                <input type="text" class="form-control" id="tanggal-surat-tugas" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_surat_tugas'])); ?>" readonly>
-            </div>
-
-            <!-- Kategori Partisipasi -->
-            <div class="mb-3">
-                <label for="kategori-partisipasi" class="form-label">Skor</label>
-                <input type="text" class="form-control" id="kategori-partisipasi" value="<?php echo $prestasi['skor']; ?>" readonly>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal-surat-tugas" class="form-label">Tanggal Surat Tugas</label>
+                    <input type="text" class="form-control" id="tanggal-surat-tugas" value="<?php echo date('Y/m/d', strtotime($prestasi['tanggal_surat_tugas'])); ?>" readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="kategori-partisipasi" class="form-label">Skor</label>
+                    <input type="text" class="form-control" id="kategori-partisipasi" value="<?php echo $prestasi['skor']; ?>" readonly>
+                </div>
             </div>
 
             <!-- Dosen Pembimbing (Dynamic) -->
@@ -158,31 +155,28 @@ $prestasi = $data["prestasi"];
                 <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
 
 
+            <!-- Tombol Validasi -->
+            <div class="mb-3 d-flex justify-content-start align-items-center">
+            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline me-2">
+                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
+                <button type="submit" class="btn btn-validasi" name="action_validasi" value="validasi">Validasi</button>
+            </form>
 
-                    <!-- Tombol Validasi -->
-                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
-                    </form>
-                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
-                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <button type="submit" class="btn btn-success" name="action_validasi" value="validasi">Validasi</button>
-                    </form>
-
-
-                    <!-- Tombol Tolak Validasi -->
-                    <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate">
-                        <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>"> <!-- Menyertakan ID Prestasi -->
-                        <button type="submit" class="btn btn-danger" name="action_tolak" value="tolak">Tolak Validasi</button>
-                    </form>
+            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline">
+                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
+                <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_mahasiswa']; ?>">
+                <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>">
+                <button type="submit" class="btn btn-tolak" name="action_tolak" value="tolak">Tolak Validasi</button>
+            </form>
+            </div>
 
 
-                <?php elseif ($prestasi["validasi"] == 1): ?>
-                    <!-- Pesan jika sudah divalidasi -->
-                    <p>Sudah divalidasi oleh <?= htmlspecialchars($prestasi["admin_nama"], ENT_QUOTES, 'UTF-8'); ?></p>
-                <?php endif; ?>
+
+             <?php elseif ($prestasi["validasi"] == 1): ?>
+   			 <!-- Pesan jika sudah divalidasi -->
+  			  <p class="validasi-message">Sudah divalidasi oleh <?= htmlspecialchars($prestasi["admin_nama"], ENT_QUOTES, 'UTF-8'); ?></p>
+			  <?php endif; ?>
+
             </div>
             <div class="container mt-5">
 
@@ -356,6 +350,25 @@ $prestasi = $data["prestasi"];
     .btn-container {
         margin-bottom: 20px; /* Atur jarak di bawah tombol */
     }
+	
+	.form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .form-row .col-md-6 {
+        flex: 1 1 calc(50% - 20px);
+    }
+	
+	.validasi-message {
+    text-align: left; /* Membuat teks rata kiri */
+    font-size: 18px; /* Ukuran font lebih proporsional */
+    font-weight: bold; /* Membuat teks lebih menonjol */
+    color: rgba(255, 255, 255, 0.90); /* Warna teks */
+    margin-top: 10px; /* Jarak atas */
+}
+
 
     #addDosenBtn {
         background-color: #AFFA08;
