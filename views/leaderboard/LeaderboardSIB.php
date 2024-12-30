@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard JTI</title>
+    <title>Leaderboard SIB</title>
     <style>
         /* Importing Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Robot+Crush&family=Galatea&display=swap');
@@ -92,69 +92,35 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- Leaderboard Content -->
-    <div class="leaderboard-container">
-        <!-- Header Container with gradient blue to black -->
-        <div class="header-container">
-            <div class="header">LEADERBOARD SIB</div>
-        </div>
-        
-        <!-- Rank 1 -->
-        <div class="rank-item">
-            <div class="rank-number">1</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">100 pts</div>
-            </div>
-        </div>
 
-        <!-- Rank 2 -->
-        <div class="rank-item">
-            <div class="rank-number">2</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">90 pts</div>
-            </div>
-        </div>
+<?php
 
-        <!-- Rank 3 -->
-        <div class="rank-item">
-            <div class="rank-number">3</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">85 pts</div>
-            </div>
-        </div>
+use app\cores\View;
+use app\helpers\Dump;
 
-        <!-- Rank 4 -->
-        <div class="rank-item">
-            <div class="rank-number">4</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">80 pts</div>
-            </div>
-        </div>
+$leaderboardSIB = View::getData();
+Dump::out($leaderboardSIB);
+?>
 
-        <!-- Rank 5 -->
-        <div class="rank-item">
-            <div class="rank-number">5</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">75 pts</div>
-            </div>
-        </div>
-
+<div class="leaderboard-container">
+    <div class="header-container">
+        <div class="header">LEADERBOARD SIB</div>
     </div>
+
+    <?php foreach ($leaderboardSIB as $rankItem): ?>
+        <div class="rank-item">
+            <div class="rank-number"><?php echo $rankItem['Rank']; ?></div>
+            <img src=".<?php echo '../../../'.$rankItem['Foto']; ?>" alt="User Image">
+            <div class="rank-info">
+                <div class="name"><?php echo $rankItem['Nama_Mahasiswa']; ?></div>
+                <div class="details"><?php echo $rankItem['Program_Studi']; ?></div>
+                <div class="points"><?php echo $rankItem['Total_Skor']; ?> pts</div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
 </body>
 </html>

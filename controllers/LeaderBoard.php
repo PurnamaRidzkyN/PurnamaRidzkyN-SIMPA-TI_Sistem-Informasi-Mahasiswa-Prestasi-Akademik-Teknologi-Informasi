@@ -22,7 +22,15 @@ class Leaderboard extends BaseController
         $mahasiswa = Mahasiswa::getLeaderboard();
 
         $mahasiswa = $mahasiswa['result'];
-        $this->view("leaderboard/LeaderboardJti", "Leaderboard", $mahasiswa);
+        $this->view("leaderboard/LeaderboardJTI", "Leaderboard", $mahasiswa);
+        
+    }
+
+    public function renderLeaderboardSIB() : void {
+        $mahasiswa = Mahasiswa::getLeaderboardSIB();
+
+        $mahasiswa = $mahasiswa['result'];
+        $this->view("leaderboard/LeaderboardSIB", "Leaderboard", $mahasiswa);
         
     }
 }

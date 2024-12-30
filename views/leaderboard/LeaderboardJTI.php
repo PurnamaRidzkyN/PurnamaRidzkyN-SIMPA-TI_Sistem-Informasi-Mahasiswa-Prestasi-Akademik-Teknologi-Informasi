@@ -100,6 +100,7 @@ use app\cores\View;
 use app\helpers\Dump;
 
 $leaderboard = View::getData();
+Dump::out($leaderboard);
 ?>
 
 <div class="leaderboard-container">
