@@ -20,7 +20,7 @@ use app\models\database\prestasiLomba\TingkatLomba;
 use app\helpers\ArrayFormatter;
 use app\helpers\FileUpload;
 
-class UserManagement extends BaseController
+class ManagementDataController extends BaseController
 {
 
     public function manageData(Request $req, Response $res)

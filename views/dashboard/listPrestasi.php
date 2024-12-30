@@ -141,13 +141,14 @@ $user = Session::get("user");
             padding-right: 10px;
         }
 
+
         /* Flexbox for data container */
         .row {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
         }
-        
+
         /* Responsivitas untuk kolom data */
         .card {
             overflow: hidden;
@@ -172,7 +173,6 @@ $user = Session::get("user");
             max-width: 100%;
             padding: 15px;
         }
-
     </style>
 </head>
 
@@ -186,9 +186,9 @@ $user = Session::get("user");
 
     <?php if (Session::get("role") == "2"): ?>
         <div class="container mt-4">
-                    <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
-                </div>
-            </div>
+            <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
+        </div>
+        </div>
         </div>
     <?php endif; ?>
 
@@ -215,12 +215,12 @@ $user = Session::get("user");
                 <div class="col-12">
                     <p class="text-center text-danger">Maaf, data kosong.</p>
                 </div>
-            <?php
+                <?php
             else:
                 foreach ($prestasi as $item):
                     if ($item['validasi'] == 0): // Belum Divalidasi
-            ?>
-                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                ?>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4" style="flex: 1 1 calc(33.333% - 10px); max-width: calc(33.333% - 10px);">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
@@ -233,7 +233,7 @@ $user = Session::get("user");
                                 </div>
                             </div>
                         </div>
-                    <?php endif;
+            <?php endif;
                 endforeach;
             endif;
             ?>
@@ -247,11 +247,11 @@ $user = Session::get("user");
                 <div class="col-12">
                     <p class="text-center text-danger">Maaf, data kosong.</p>
                 </div>
-            <?php
+                <?php
             else:
                 foreach ($prestasi as $item):
                     if ($item['validasi'] == 1): // Sudah Divalidasi
-            ?>
+                ?>
                         <div class="col-12 col-sm-6 col-md-4 mb-4">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -266,7 +266,7 @@ $user = Session::get("user");
                                 </div>
                             </div>
                         </div>
-                    <?php endif;
+            <?php endif;
                 endforeach;
             endif;
             ?>

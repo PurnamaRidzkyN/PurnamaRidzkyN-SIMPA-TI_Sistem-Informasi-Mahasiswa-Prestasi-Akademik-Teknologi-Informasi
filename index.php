@@ -10,6 +10,7 @@ use app\controllers\NewPassword;
 use app\controllers\Dashboard;
 use app\controllers\Leaderboard;
 use app\controllers\ManagementData;
+use app\controllers\ManagementDataController;
 use app\controllers\NotifikasiController;
 use app\controllers\PrestasiController;
 use app\controllers\UserManagement;
@@ -77,7 +78,7 @@ $app::post("/dashboard/admin/:nip/detail-prestasi/validate",[PrestasiController:
 
 $app::get("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
 $app::post("/dashboard/admin/:nip/manajemen-data",[ManagementData::class,"renderManagementData"],[AdminMiddleware::class]);
-$app::post("/dashboard/admin/:nip/manajemen-data/manipulate-data", [UserManagement::class, "manageData"], [AdminMiddleware::class]);
+$app::post("/dashboard/admin/:nip/manajemen-data/manipulate-data", [ManagementDataController::class, "manageData"], [AdminMiddleware::class]);
 
 $app::get("/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
 $app::get("/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);

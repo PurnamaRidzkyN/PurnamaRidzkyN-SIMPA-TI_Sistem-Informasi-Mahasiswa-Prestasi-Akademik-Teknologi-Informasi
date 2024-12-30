@@ -27,7 +27,7 @@ class PrestasiController extends BaseController
     {
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
-
+        
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
@@ -85,16 +85,20 @@ class PrestasiController extends BaseController
                 "file_poster" => $file_poster,
                 "validasi" => $validasi
             ];
+            $dosenlist = $body['dosenList'];
+            $dosenlist =explode(",", $dosenlist);
+
             $dosen = [];
 
             // Loop melalui data POST untuk mendapatkan setiap dosen
-            foreach ($body as $key => $value) {
+            foreach ($dosenlist as $key ) {
                 // Menyaring hanya yang dimulai dengan 'dosen-pembimbing-'
-                if (strpos($key, 'dosen-') === 0) {
-                    $value = Dosen::findName($value);
+                 
+                    $value = Dosen::findName($key);
                     $dosen[] = $value["result"][0]["id"];
-                }
+                
             }
+           
 
             $prestasiData = ArrayFormatter::formatKeyValue($data);
 
@@ -140,7 +144,7 @@ class PrestasiController extends BaseController
             Notifikasi::insert(
                 [
                     Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
-                    Notifikasi::ID_USER => "null",
+                    Notifikasi::ID_USER => null,
                     Notifikasi::ROLE => "1",
                     Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
                     Notifikasi::TIPE => "Prestasi Baru",

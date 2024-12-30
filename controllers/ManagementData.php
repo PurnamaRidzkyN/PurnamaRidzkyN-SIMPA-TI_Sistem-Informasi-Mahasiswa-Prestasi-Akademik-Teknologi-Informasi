@@ -21,14 +21,17 @@ class ManagementData extends BaseController
     {
         $body = $req->body();
         $log = LogData::logDataDisplay()["result"];
-        usort($log, function($a, $b) {
-            // Mengonversi tanggal ke format timestamp untuk perbandingan
-            $dateA = strtotime($a['tanggal']);
-            $dateB = strtotime($b['tanggal']);
-            
-            // Mengurutkan dari yang terbaru (descending)
-            return $dateB - $dateA;
-        });
+        if (!is_null($log)){
+            usort($log, function($a, $b) {
+                // Mengonversi tanggal ke format timestamp untuk perbandingan
+                $dateA = strtotime($a['tanggal']);
+                $dateB = strtotime($b['tanggal']);
+                
+                // Mengurutkan dari yang terbaru (descending)
+                return $dateB - $dateA;
+            });
+    
+        }
         $admin = Admin::displayAdmin()["result"];
         $mahasiswa = Mahasiswa::displayMahasiswa()["result"];
         $dosen = Dosen::displayDosen()["result"];
@@ -44,7 +47,6 @@ class ManagementData extends BaseController
         $tingkatLomba = TingkatLomba::displayTingkatLomba()["result"];
         $jenisLomba = JenisLomba::displayJenisLomba()["result"];
 
-        Dump::out(($lomba));
 
         $data = ["data"=>$body,"admin"=> $admin,"mahasiswa"=>$mahasiswa,"dosen"=>$dosen,"log data"=>$log,"lomba" => $lomba, "peringkat" => $peringkat, "tingkat lomba" => $tingkatLomba, "jenis lomba" => $jenisLomba];
         $this->view("Dashboard/admin/manajemenData/manajemenData", "Manajemen Data", $data);

@@ -40,13 +40,12 @@ SELECT
     jl.jenis_lomba,
     tl.tingkat_lomba,
     tl.skor + p.skor  AS skor,
-    dp.id_dosen
+
 FROM prestasi j
 LEFT JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 LEFT JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
 LEFT JOIN mahasiswa m ON m.id = j.id_mahasiswa
 LEFT JOIN peringkat p ON p.id = j.id_peringkat
-LEFT JOIN dosen_pembimbing dp ON j.id =dp.id_prestasi
 LEFT JOIN admin a ON a.id = j.id_admin;
 ");
 

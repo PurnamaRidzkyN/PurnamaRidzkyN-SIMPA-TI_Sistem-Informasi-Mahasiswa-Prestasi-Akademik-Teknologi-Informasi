@@ -429,23 +429,19 @@ $manipulate = $data["data"]["edit"];
                 <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data/manipulate-data" enctype="multipart/form-data">
                     <table border="0" cellpadding="5" cellspacing="0">
                         <?php
-                        // Jika manipulate adalah 'add', buat array kosong sesuai dengan kolom yang ada
                         $currentData = ($manipulate === 'add')
-                            ? array_fill_keys(array_keys($data[$selectedData][0]), '') // Data kosong untuk tambah
+                            ? array_fill_keys(array_keys($data[$selectedData][0]), '')
                             : array_filter($data[$selectedData], function ($row) use ($manipulate) {
-                                return $row['id'] === $manipulate; // Cari data berdasarkan ID yang ada di variabel manipulate
+                                return $row['id'] === $manipulate;
                             });
 
-                        // Ambil data pertama dari array yang sudah difilter (hanya ada satu data yang cocok)
-                        $currentData = reset($currentData); // Mengambil data pertama dari hasil filter, bisa kosong jika tambah data
+                        $currentData = reset($currentData);
 
-                        // Pastikan $currentData bukan kosong untuk menghindari error
                         if (!$currentData) {
-                            $currentData = array_fill_keys(array_keys($data[$selectedData][0]), ''); // Jika data kosong, buat array kosong
+                            $currentData = array_fill_keys(array_keys($data[$selectedData][0]), '');
                         }
 
                         foreach (array_keys($currentData) as $keyField):
-                            // Melewatkan kolom 'id_user' atau kolom lain yang tidak perlu ada inputannya
                             if (in_array($keyField, ['id', 'id_user', 'total_skor'])): ?>
                                 <input type="hidden" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
                                 <?php continue; ?>
@@ -454,13 +450,13 @@ $manipulate = $data["data"]["edit"];
                                 <td><strong><?= formatTitle($keyField) ?></strong></td>
                                 <td>
                                     <?php if ($keyField === 'foto'): ?>
-                                        <input type="file" name="<?= $keyField ?>" accept=" accept=" image/jpeg, image/png">
+                                        <input type="file" name="<?= $keyField ?>" accept="image/jpeg, image/png" <?= $manipulate === 'add' ? 'required' : '' ?>>
                                         <small>Format: JPG, PNG. Maksimal 2MB.</small>
                                         <?php if ($manipulate !== 'add'): ?>
                                             <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
                                         <?php endif; ?>
                                     <?php else: ?>
-                                        <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>">
+                                        <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>" required>
                                     <?php endif; ?>
                                     <input type="hidden" name="data" value="<?= $selectedData ?>">
                                 </td>
@@ -478,6 +474,7 @@ $manipulate = $data["data"]["edit"];
                     </table>
                 </form>
             <?php endif; ?>
+
 
             <?php
             function formatTitle($title)
