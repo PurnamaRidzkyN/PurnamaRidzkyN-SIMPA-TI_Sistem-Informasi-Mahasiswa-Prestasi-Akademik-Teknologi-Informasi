@@ -24,6 +24,37 @@ $user = Session::get("user");
             background-color: #f5f5f5;
         }
 
+        .big-banner {
+            height: 40vh;
+            background: linear-gradient(270deg, #0039C8 0%, #001C62 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+            padding: 20px;
+        }
+
+        .leaderboard-title {
+            font-size: 6vw;
+            font-family: 'Robot Crush', sans-serif;
+            font-style: italic;
+            font-weight: 400;
+            color: #AFFA08;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .banner-caption {
+            font-size: 4vw;
+            font-family: 'Galatea', sans-serif;
+            font-weight: 700;
+            color: white;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
         /* Section Styles */
         .section {
             background-color: #0039C8;
@@ -33,7 +64,6 @@ $user = Session::get("user");
             max-width: 100%;
             word-wrap: break-word;
         }
-        
 
         .section-title {
             font-size: 2rem;
@@ -44,14 +74,14 @@ $user = Session::get("user");
         }
 
         .btn-warning {
-            background-color: white;
+            background-color: #AFFA08;
             color: #0039C8;
             border: none;
         }
 
         .btn-warning:hover {
-            background-color: #0039C8;
-            color: white;
+            background-color: white;
+            color: #0039C8;
         }
 
         .btn-success {
@@ -61,53 +91,102 @@ $user = Session::get("user");
         }
 
         .btn-success:hover {
+            background-color: white;
+            color: #0039C8;
+        }
+
+        /* Gaya khusus untuk form section dengan ukuran lebih pendek */
+        .section-short {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .section-short .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Upload Form Section */
+        .upload-form-container {
             background-color: #0039C8;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .upload-btn {
             font-family: 'Robot Crush', sans-serif;
-            font-size: 40px;
+            font-size: 30px;
             font-weight: 300;
             background-color: #0039C8;
             color: #AFFA08;
             border: none;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 30px;
+            border-radius: 15px;
             cursor: pointer;
             text-align: center;
             display: inline-block;
+            width: 100%;
         }
 
-        /* Container Responsif */
+        .upload-btn:hover {
+            background-color: #001C62;
+            color: #fff;
+        }
+
         .container {
             max-width: 100%;
             padding-left: 10px;
             padding-right: 10px;
         }
 
-        /* Flexbox untuk data container */
+        /* Flexbox for data container */
         .row {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            /* Mengurangi gap untuk tombol lebih rapat */
         }
+        
+        /* Responsivitas untuk kolom data */
+        .card {
+            overflow: hidden;
+            word-wrap: break-word;
+            max-height: 100%;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+        }
+
+        /* Pengaturan margin dan padding */
+        .container {
+            max-width: 100%;
+            padding: 15px;
+        }
+
     </style>
 </head>
 
 <body>
 
+    <!-- Big Banner -->
+    <div class="big-banner">
+        <h2 class="leaderboard-title">PRESTASI MAHASISWA</h2>
+        <p class="banner-caption">Data Kompetisi Mahasiswa</p>
+    </div>
+
     <?php if (Session::get("role") == "2"): ?>
         <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-5 text-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
                 </div>
             </div>
         </div>
@@ -128,55 +207,72 @@ $user = Session::get("user");
 
     <!-- Data Container -->
     <div class="container">
-        <!-- Data "Belum Divalidasi" akan ditampilkan di sini -->
         <div id="belum-div" class="row">
             <?php
             $prestasi = $data;
-            foreach ($prestasi as $item):
-                if ($item['validasi'] == 0): // Belum Divalidasi
+            if (empty($prestasi)): // Cek apakah data kosong
             ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $item['judul_kompetisi'] ?></h5>
-                                <p class="card-text">Status: Belum Divalidasi</p>
-                                <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                    <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-warning">Detail Prestasi</button>
-                                </form>
+                <div class="col-12">
+                    <p class="text-center text-danger">Maaf, data kosong.</p>
+                </div>
+            <?php
+            else:
+                foreach ($prestasi as $item):
+                    if ($item['validasi'] == 0): // Belum Divalidasi
+            ?>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
+                                    <p class="card-text">Status: Belum Divalidasi</p>
+                                    <p class="card-text">Skor: <?= $item['skor'] ?></p>
+                                    <form action="../<?= $user ?>/detail-prestasi" method="POST">
+                                        <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
+                                        <button type="submit" class="btn btn-warning w-100">Detail Prestasi</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-            <?php endif;
-            endforeach; ?>
+                    <?php endif;
+                endforeach;
+            endif;
+            ?>
         </div>
 
         <!-- Data "Sudah Divalidasi" akan ditampilkan di sini -->
         <div id="sudah-div" class="row">
             <?php
-            // Looping through "prestasi" items
-            foreach ($prestasi as $item):
-                if ($item['validasi'] == 1): // Sudah Divalidasi
+            if (empty($prestasi)): // Cek apakah data kosong
             ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $item['judul_kompetisi'] ?></h5>
-                                <p class="card-text">Status: Sudah Divalidasi</p>
-                                <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
-                                <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                    <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-success">Detail Prestasi</button>
-                                </form>
+                <div class="col-12">
+                    <p class="text-center text-danger">Maaf, data kosong.</p>
+                </div>
+            <?php
+            else:
+                foreach ($prestasi as $item):
+                    if ($item['validasi'] == 1): // Sudah Divalidasi
+            ?>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
+                                    <p class="card-text">Status: Sudah Divalidasi</p>
+                                    <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
+                                    <p class="card-text">Skor: <?= $item['skor'] ?></p>
+                                    <form action="../<?= $user ?>/detail-prestasi" method="POST">
+                                        <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
+                                        <button type="submit" class="btn btn-success w-100">Detail Prestasi</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-            <?php endif;
-            endforeach; ?>
+                    <?php endif;
+                endforeach;
+            endif;
+            ?>
         </div>
     </div>
+
 
     <!-- JS and Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -185,23 +281,21 @@ $user = Session::get("user");
     <!-- Script untuk Filter -->
     <script>
         $(document).ready(function() {
-            // Menyembunyikan kedua bagian (belum dan sudah divalidasi) saat halaman pertama dimuat
             $("#belum-div").hide();
             $("#sudah-div").hide();
 
-            // Saat tombol "Belum Divalidasi" ditekan
             $("#filterBelum").click(function() {
-                $("#belum-div").show(); // Menampilkan data yang belum divalidasi
-                $("#sudah-div").hide(); // Menyembunyikan data yang sudah divalidasi
+                $("#belum-div").show();
+                $("#sudah-div").hide();
             });
 
-            // Saat tombol "Sudah Divalidasi" ditekan
             $("#filterSudah").click(function() {
-                $("#sudah-div").show(); // Menampilkan data yang sudah divalidasi
-                $("#belum-div").hide(); // Menyembunyikan data yang belum divalidasi
+                $("#sudah-div").show();
+                $("#belum-div").hide();
             });
         });
     </script>
+
 </body>
 
 </html>
