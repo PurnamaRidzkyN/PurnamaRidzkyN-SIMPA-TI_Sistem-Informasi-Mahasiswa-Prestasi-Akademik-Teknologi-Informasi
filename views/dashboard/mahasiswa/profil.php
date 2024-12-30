@@ -105,6 +105,6 @@ $profil = $profil[0];
         <p>NIM : <?php echo $profil['nim'] ?></p>
         <p>Total Skor : <?php echo $profil['total_skor']." pts" ?></p>
 
-        <button class="change-password-button" onclick="window.location.href='/ganti-password'">Ganti Password</button>
+        <button class="change-password-button" onclick="window.location.href='/change-password'">Ganti Password</button>
     </div>
 </div>
