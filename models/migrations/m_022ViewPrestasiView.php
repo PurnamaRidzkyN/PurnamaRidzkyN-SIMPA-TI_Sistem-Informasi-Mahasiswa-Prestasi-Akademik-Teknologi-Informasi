@@ -39,7 +39,7 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    tl.skor + p.skor  AS skor,
+    tl.skor + p.skor  AS skor
 
 FROM prestasi j
 LEFT JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
