@@ -4,7 +4,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_022HitungSkorTrigger implements BaseMigration
+class m_026HitungSkorTrigger implements BaseMigration
 {
     public function up(): array
     {
