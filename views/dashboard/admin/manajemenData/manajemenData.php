@@ -13,6 +13,7 @@ $dosenData = $data["dosen"];
 $selectedData = $data["data"]["data"];
 $manipulate = $data["data"]["edit"];
 
+
 ?>
 <!data html>
     <html lang="id">
@@ -314,8 +315,8 @@ $manipulate = $data["data"]["edit"];
                     </form>
 
                     <form action=<?php echo "/dashboard/admin/" . $user . "/manajemen-data" ?> method="POST" class="data-form">
-                        <input type="hidden" name="data" value="prestasi">
-                        <button data="submit" class="management-option">Prestasi</button>
+                        <input type="hidden" name="data" value="peringkat">
+                        <button data="submit" class="management-option">Peringkat</button>
                     </form>
                 </div>
 
@@ -416,10 +417,12 @@ $manipulate = $data["data"]["edit"];
                     </tbody>
 
                 </table>
-                <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
-                    <input type="hidden" name="data" value="<?= $selectedData ?>">
-                    <button type="submit" name="edit" value="add">Tambah data</button>
-                </form>
+                <?php if ($selectedData !== 'log data'): ?>
+                    <form method="post" action="/dashboard/admin/<?= htmlspecialchars($user) ?>/manajemen-data">
+                        <input type="hidden" name="data" value="<?= $selectedData ?>">
+                        <button type="submit" name="edit" value="add">Tambah data</button>
+                    </form>
+                <?php endif; ?>
             <?php endif; ?>
             <?php if (!empty($manipulate)): ?>
                 <h3><?= $manipulate === 'add' ? 'Tambah Data' : 'Edit Data' ?> <?= formatTitle($selectedData) ?></h3>

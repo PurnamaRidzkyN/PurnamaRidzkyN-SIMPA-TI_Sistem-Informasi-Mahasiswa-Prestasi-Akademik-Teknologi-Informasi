@@ -4,7 +4,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_026ViewDosenPembimbingView implements BaseMigration
+class m_021ViewDosenPembimbingView implements BaseMigration
 {
     public function up(): array
     {

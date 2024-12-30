@@ -4,7 +4,7 @@ use app\cores\Blueprint;
 use app\cores\Schema;
 use app\models\BaseMigration;
 
-class m_021ViewPrestasiView implements BaseMigration
+class m_022ViewPrestasiView implements BaseMigration
 {
     public function up(): array
     {
@@ -13,7 +13,7 @@ CREATE VIEW view_prestasi AS
 SELECT 
     j.id,    
     m.nama,
-    m.id_user
+    m.id_user,
     m.nim,
     m.jurusan,
     m.prodi,
@@ -39,12 +39,14 @@ SELECT
     j.validasi,
     jl.jenis_lomba,
     tl.tingkat_lomba,
-    tl.skor + p.skor  AS skor
+    tl.skor + p.skor  AS skor,
+    dp.id_dosen
 FROM prestasi j
 LEFT JOIN jenis_lomba jl ON jl.id = j.id_jenis_kompetisi
 LEFT JOIN tingkat_lomba tl ON tl.id = j.id_tingkat_kompetisi
 LEFT JOIN mahasiswa m ON m.id = j.id_mahasiswa
 LEFT JOIN peringkat p ON p.id = j.id_peringkat
+LEFT JOIN dosen_pembimbing dp ON j.id =dp.id_prestasi
 LEFT JOIN admin a ON a.id = j.id_admin;
 ");
 

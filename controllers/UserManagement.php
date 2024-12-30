@@ -34,14 +34,30 @@ class UserManagement extends BaseController
                 $this->insertMahasiswaUsers($body);
             } else if ($body["data"] === "dosen") {
                 $this->insertDosenUsers($body);
+            } else if ($body["data"] === "lomba") {
+                $this->insertInfoLomba($body);
+            } else if ($body["data"] === "peringkat") {
+                $this->insertPeringkat($body);
+            } else if ($body["data"] === "tingkat lomba") {
+                $this->insertTingkatLomba($body);
+            } else if ($body["data"] === "jenis lomba") {
+                $this->insertJenisLomba($body);
             }
         } else if ($body["action"] === "update") {
             if ($body["data"] === "admin") {
                 $this->updateDataAdmin($body);
             } else if ($body["data"] === "mahasiswa") {
                 $this->updateDataMahasiswa($body);
-            } else if ($body["data" === "dosen"]) {
+            } else if ($body["data"] === "dosen") {
                 $this->updateDataDosen($body);
+            } else if ($body["data"] === "lomba") {
+                $this->updateinfoLomba($body);
+            } else if ($body["data"] === "peringkat") {
+                $this->updatePeringkat($body);
+            } else if ($body["data"] === "tingkat lomba") {
+                $this->updateTingkatLomba($body);
+            } else if ($body["data"] === "jenis lomba") {
+                $this->updateJenisLomba($body);
             }
         } else if (!is_null($body["delete"])) {
             if ($body["data"] === "admin") {
@@ -49,8 +65,15 @@ class UserManagement extends BaseController
             } else if ($body["data"] === "mahasiswa") {
                 $this->deleteDataMahasiswa($body);
             } else if ($body["data"] === "dosen") {
-                
                 $this->deleteDataDosen($body);
+            } else if ($body["data"] === "lomba") {
+                $this->deleteInfoLomba($body);
+            } else if ($body["data"] === "peringkat") {
+                $this->deletePeringkat($body);
+            } else if ($body["data"] === "tingkat lomba") {
+                $this->deleteTingkatLomba($body);
+            } else if ($body["data"] === "jenis lomba") {
+                $this->deleteJenisLomba($body);
             }
         }
         $res->redirect("/dashboard/admin/{$user['result'][0]["nip"]}/manajemen-data");
