@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Robot+Crush&family=Galatea&display=swap');
 
         body {
-            background-color: white; /* Set the background to white */
+            background-color: white;
+            /* Set the background to white */
             font-family: 'Galatea', sans-serif;
             color: white;
             margin: 0;
@@ -45,7 +47,8 @@
         .rank-item {
             display: flex;
             align-items: center;
-            background:#0039C8; /* Gradient blue to black */
+            background: #0039C8;
+            /* Gradient blue to black */
             border-radius: 20px;
             margin: 15px 0;
             padding: 15px;
@@ -70,28 +73,40 @@
         .rank-number {
             font-size: 60px;
             font-weight: 900;
-            color: #AFFA08; /* Green color for rank number */
+            color: #AFFA08;
+            /* Green color for rank number */
             margin-right: 15px;
         }
 
         .name {
             font-size: 30px;
             font-weight: 700;
-            color: #AFFA08; /* Green color for name */
+            color: #AFFA08;
+            /* Green color for name */
         }
 
         .details {
             font-size: 16px;
-            color: #AFFA08; /* Green color for details */
+            color: #AFFA08;
+            /* Green color for details */
         }
 
         .points {
             font-size: 30px;
-            color: #AFFA08; /* Green color for points */
+            color: #AFFA08;
+            /* Green color for points */
             font-weight: 700;
         }
     </style>
 </head>
+<?php
+
+use app\cores\View;
+use app\helpers\Dump;
+
+$leaderboardSIB = View::getData();
+?>
+
 <body>
     <!-- Leaderboard Content -->
     <div class="leaderboard-container">
@@ -99,61 +114,19 @@
         <div class="header-container">
             <div class="header">LEADERBOARD TI</div>
         </div>
-        
-        <!-- Rank 1 -->
-        <div class="rank-item">
-            <div class="rank-number">1</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">100 pts</div>
+        <?php foreach ($leaderboardSIB as $rankItem): ?>
+            <div class="rank-item">
+                <div class="rank-number"><?php echo $rankItem['Rank']; ?></div>
+                <img src=".<?php echo '../../../' . $rankItem['Foto']; ?>" alt="User Image">
+                <div class="rank-info">
+                    <div class="name"><?php echo $rankItem['Nama_Mahasiswa']; ?></div>
+                    <div class="details"><?php echo $rankItem['Program_Studi']; ?></div>
+                    <div class="points"><?php echo $rankItem['Total_Skor']; ?> pts</div>
+                </div>
             </div>
-        </div>
+        <?php endforeach; ?>
 
-        <!-- Rank 2 -->
-        <div class="rank-item">
-            <div class="rank-number">2</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">90 pts</div>
-            </div>
-        </div>
-
-        <!-- Rank 3 -->
-        <div class="rank-item">
-            <div class="rank-number">3</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">85 pts</div>
-            </div>
-        </div>
-
-        <!-- Rank 4 -->
-        <div class="rank-item">
-            <div class="rank-number">4</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">80 pts</div>
-            </div>
-        </div>
-
-        <!-- Rank 5 -->
-        <div class="rank-item">
-            <div class="rank-number">5</div>
-            <img src="https://via.placeholder.com/100" alt="User Image">
-            <div class="rank-info">
-                <div class="name">M. Ulil Fahmi</div>
-                <div class="details">D-IV SIB</div>
-                <div class="points">75 pts</div>
-            </div>
-        </div>
     </div>
 </body>
+
 </html>

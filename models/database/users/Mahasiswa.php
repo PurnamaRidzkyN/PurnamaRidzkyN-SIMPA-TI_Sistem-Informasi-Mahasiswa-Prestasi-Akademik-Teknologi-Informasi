@@ -89,7 +89,7 @@ class Mahasiswa extends BaseModel
     {
         return Schema::selectWhereFrom(self::VIEW, function (Blueprint $table) use ($filter){
             $table->selectWhere(
-                ["prodi" => $filter], // Kondisi where
+                ["Program_Studi" => $filter], // Kondisi where
                 [self::ID, self::NIM, self::PRODI, self::NAMA, self::TOTAL_SKOR] // Kolom yang akan diambil
             );
         });

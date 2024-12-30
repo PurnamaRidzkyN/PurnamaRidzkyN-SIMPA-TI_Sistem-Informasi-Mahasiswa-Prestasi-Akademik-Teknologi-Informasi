@@ -101,7 +101,7 @@ use app\cores\View;
 use app\helpers\Dump;
 
 $leaderboardSIB = View::getData();
-Dump::out($leaderboardSIB);
+
 ?>
 
 <div class="leaderboard-container">
