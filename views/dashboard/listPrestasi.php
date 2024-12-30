@@ -186,7 +186,7 @@ $user = Session::get("user");
 
     <?php if (Session::get("role") == "2"): ?>
         <div class="container mt-4">
-            <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Upload Prestasi</a>
+            <a href="../<?= $user ?>/upload-prestasi" class="upload-btn" role="button">Tambah Prestasi</a>
         </div>
         </div>
         </div>
@@ -205,73 +205,79 @@ $user = Session::get("user");
         </div>
     </div>
 
-    <!-- Data Container -->
-    <div class="container">
-        <div id="belum-div" class="row">
-            <?php
-            $prestasi = $data;
-            if (empty($prestasi)): // Cek apakah data kosong
-            ?>
-                <div class="col-12">
-                    <p class="text-center text-danger">Maaf, data kosong.</p>
+   <!-- Data Container -->
+<div class="container">
+    <!-- Data Belum Divalidasi -->
+    <div id="belum-div" class="row">
+        <?php
+        $prestasi = $data;
+        $hasBelumValidasi = false; // Flag untuk mengecek apakah ada data belum divalidasi
+        foreach ($prestasi as $item):
+            if ($item['validasi'] == 0): // Belum Divalidasi
+                $hasBelumValidasi = true; // Menandakan ada data yang belum divalidasi
+        ?>
+            <div class="col-12 col-sm-6 col-md-4 mb-4" style="flex: 1 1 calc(33.333% - 10px); max-width: calc(33.333% - 10px);">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
+                        <p class="card-text">Status: Belum Divalidasi</p>
+                        <p class="card-text">Skor: <?= $item['skor'] ?></p>
+                        <form action="../<?= $user ?>/detail-prestasi" method="POST">
+                            <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
+                            <button type="submit" class="btn btn-warning w-100">Detail Prestasi</button>
+                        </form>
+                    </div>
                 </div>
-                <?php
-            else:
-                foreach ($prestasi as $item):
-                    if ($item['validasi'] == 0): // Belum Divalidasi
-                ?>
-                        <div class="col-12 col-sm-6 col-md-4 mb-4" style="flex: 1 1 calc(33.333% - 10px); max-width: calc(33.333% - 10px);">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
-                                    <p class="card-text">Status: Belum Divalidasi</p>
-                                    <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                    <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                        <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                        <button type="submit" class="btn btn-warning w-100">Detail Prestasi</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-            <?php endif;
-                endforeach;
+            </div>
+        <?php 
             endif;
-            ?>
-        </div>
+        endforeach;
 
-        <!-- Data "Sudah Divalidasi" akan ditampilkan di sini -->
-        <div id="sudah-div" class="row">
-            <?php
-            if (empty($prestasi)): // Cek apakah data kosong
-            ?>
-                <div class="col-12">
-                    <p class="text-center text-danger">Maaf, data kosong.</p>
-                </div>
-                <?php
-            else:
-                foreach ($prestasi as $item):
-                    if ($item['validasi'] == 1): // Sudah Divalidasi
-                ?>
-                        <div class="col-12 col-sm-6 col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
-                                    <p class="card-text">Status: Sudah Divalidasi</p>
-                                    <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
-                                    <p class="card-text">Skor: <?= $item['skor'] ?></p>
-                                    <form action="../<?= $user ?>/detail-prestasi" method="POST">
-                                        <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
-                                        <button type="submit" class="btn btn-success w-100">Detail Prestasi</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-            <?php endif;
-                endforeach;
-            endif;
-            ?>
-        </div>
+        // Jika tidak ada data yang belum divalidasi
+        if (!$hasBelumValidasi): 
+        ?>
+            <div class="col-12">
+                <p class="text-center text-danger">Belum ada data yang belum divalidasi.</p>
+            </div>
+        <?php endif; ?>
     </div>
+
+    <!-- Data Sudah Divalidasi -->
+    <div id="sudah-div" class="row">
+        <?php
+        $hasSudahValidasi = false; // Flag untuk mengecek apakah ada data sudah divalidasi
+        foreach ($prestasi as $item):
+            if ($item['validasi'] == 1): // Sudah Divalidasi
+                $hasSudahValidasi = true; // Menandakan ada data yang sudah divalidasi
+        ?>
+            <div class="col-12 col-sm-6 col-md-4 mb-4" style="flex: 1 1 calc(33.333% - 10px); max-width: calc(33.333% - 10px);">
+            <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate"><?= $item['judul_kompetisi'] ?></h5>
+                        <p class="card-text">Status: Sudah Divalidasi</p>
+                        <p class="card-text">Divalidasi oleh Admin: <?= $item['admin_nama'] ?></p>
+                        <p class="card-text">Skor: <?= $item['skor'] ?></p>
+                        <form action="../<?= $user ?>/detail-prestasi" method="POST">
+                            <input type="hidden" name="prestasi_id" value="<?= $item['id'] ?>">
+                            <button type="submit" class="btn btn-success w-100">Detail Prestasi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php 
+            endif;
+        endforeach;
+
+        // Jika tidak ada data yang sudah divalidasi
+        if (!$hasSudahValidasi): 
+        ?>
+            <div class="col-12">
+                <p class="text-center text-danger">Belum ada data yang sudah divalidasi.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
 
 
     <!-- JS and Bootstrap Bundle -->

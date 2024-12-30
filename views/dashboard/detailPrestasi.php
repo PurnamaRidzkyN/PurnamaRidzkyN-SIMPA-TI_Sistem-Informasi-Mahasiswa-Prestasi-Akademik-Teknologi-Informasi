@@ -8,6 +8,7 @@ $data = View::getData();
 $user = Session::get("user");
 $dosen = $data["dosen"];
 $prestasi = $data["prestasi"];
+
 // Periksa apakah array mengandung 'success'
 $hasSuccess = in_array('benernjir', $data);
 
@@ -117,9 +118,8 @@ $hasSuccess = in_array('benernjir', $data);
                 <label for="dosen-pembimbing" class="form-label">Dosen Pembimbing</label>
                 <ul class="list-group">
                     <?php
-                    $id_target = "P001"; // ID yang ingin ditampilkan
                     foreach ($dosen as $dosen_item) {
-                        if ($dosen_item['id'] === $prestasi["id"]) { // Cek apakah ID sesuai dengan target
+                        if ($dosen_item['id'] == $prestasi['id']) { // Cek apakah ID sesuai dengan target
                             echo '<li class="list-group-item">' . $dosen_item['nama'] . '</li>';
                         }
                     }
@@ -127,7 +127,7 @@ $hasSuccess = in_array('benernjir', $data);
                 </ul>
             </div>
 
-           <!-- Lampiran File -->
+            <!-- Lampiran File -->
             <div class="mb-3">
                 <label for="file-surat-tugas" class="form-label">File Surat Tugas</label>
                 <a href="<?php echo '../../../' . $prestasi['file_surat_tugas']; ?>" class="btn btn-primary" target="_blank">Lihat Surat Tugas</a>
@@ -135,53 +135,62 @@ $hasSuccess = in_array('benernjir', $data);
 
             <div class="mb-3">
                 <label for="file-sertifikat" class="form-label">File Sertifikat</label>
-                <a href="<?php echo '../../../'.$prestasi['file_sertifikat']; ?>" class="btn btn-primary" target="_blank">Lihat Sertifikat</a>
+                <a href="<?php echo '../../../' . $prestasi['file_sertifikat']; ?>" class="btn btn-primary" target="_blank">Lihat Sertifikat</a>
             </div>
 
             <div class="mb-3">
                 <label for="foto-kegiatan" class="form-label">Foto Kegiatan</label>
-                <a href="<?php echo'../../../'.$prestasi['foto_kegiatan']; ?>" class="btn btn-primary" target="_blank">Lihat Foto</a>
+                <a href="<?php echo '../../../' . $prestasi['foto_kegiatan']; ?>" class="btn btn-primary" target="_blank">Lihat Foto</a>
             </div>
 
             <div class="mb-3">
                 <div class="btn-container d-flex justify-content-start align-items-center">
-                <label for="file-poster" class="form-label">File Poster</label>
-                <a href="<?php echo '../../../' . $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
-            </div>
+                    <label for="file-poster" class="form-label">File Poster</label>
+                    <a href="<?php echo '../../../' . $prestasi['file_poster']; ?>" class="btn btn-primary" target="_blank">Lihat Poster</a>
+                </div>
 
 
-            <!-- Tombol Validasi dan Tolak Validasi -->
-            <div class="mb-3">
-                <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
+                <!-- Tombol Validasi dan Tolak Validasi -->
+                <div class="mb-3">
+                    <?php if ($prestasi["validasi"] == 0 && Session::get("role") == "1"): ?>
 
 
-            <!-- Tombol Validasi -->
-            <div class="mb-3 d-flex justify-content-start align-items-center">
-            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline me-2">
-                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
-                <button type="submit" class="btn btn-validasi" name="action_validasi" value="validasi">Validasi</button>
-            </form>
-
-            <form method="POST" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline">
-                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
-                <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_mahasiswa']; ?>">
-                <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>">
-                <button type="submit" class="btn btn-tolak" name="action_tolak" value="tolak">Tolak Validasi</button>
-            </form>
-            </div>
-
-
-
-             <?php elseif ($prestasi["validasi"] == 1): ?>
-   			 <!-- Pesan jika sudah divalidasi -->
-  			  <p class="validasi-message">Sudah divalidasi oleh <?= htmlspecialchars($prestasi["admin_nama"], ENT_QUOTES, 'UTF-8'); ?></p>
-			  <?php endif; ?>
-
-            </div>
-            <div class="container mt-5">
+                        <!-- Tombol Validasi -->
+                        <div class="mb-3 d-flex justify-content-start align-items-center">
+                            <form method="post" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline me-2">
+                            </form>
+                            <form method="post" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline me-2">
+                                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
+                                <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>">
+                                <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>">
+                                <button type="submit" class="btn btn-validasi" name="action_validasi" value="validasi">Validasi</button>
+                            </form>
+                            <form method="post" action="/dashboard/admin/<?= $user ?>/detail-prestasi/validate" class="d-inline">
+                                <input type="hidden" name="prestasi_id" value="<?php echo $prestasi['id']; ?>">
+                                <input type="hidden" name="mahasiswa_id" value="<?php echo $prestasi['id_user']; ?>">
+                                <input type="hidden" name="judul_kompetisi" value="<?php echo $prestasi['judul_kompetisi']; ?>">
+                                <button type="submit" class="btn btn-tolak" name="action_tolak" value="tolak">Tolak Validasi</button>
+                            </form>
+                        </div>
 
 
-            </div>
+
+                    <?php elseif ($prestasi["validasi"] == 0): ?>
+                        <!-- Pesan jika belum divalidasi -->
+                        <p class="alert alert-warning validasi-message" style="background-color: #ffeb3b; color: #000; font-size: 14px; padding: 8px 12px; margin-bottom: 10px;">
+                            <strong>Belum divalidasi!</strong> Status ini masih menunggu validasi oleh admin.
+                        </p>
+                    <?php elseif ($prestasi["validasi"] == 1): ?>
+                        <!-- Pesan jika sudah divalidasi -->
+                        <p class="alert alert-success validasi-message" style="background-color: #4caf50; color: #fff; font-size: 14px; padding: 8px 12px; margin-bottom: 10px;">
+                            <strong>Sudah divalidasi!</strong> Validasi dilakukan oleh <?= htmlspecialchars($prestasi["admin_nama"], ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+                <div class="container mt-5">
+
+
+                </div>
 
 
         </form>
@@ -196,14 +205,33 @@ $hasSuccess = in_array('benernjir', $data);
         color: white;
     }
 
+    .validasi-message {
+        padding: 8px 12px;
+        /* Mengurangi padding */
+        font-size: 14px;
+        /* Ukuran font lebih kecil */
+        border-radius: 5px;
+        /* Sudut kotak membulat */
+        margin-bottom: 10px;
+        /* Jarak bawah yang lebih kecil */
+        text-align: center;
+        /* Meratakan teks ke tengah */
+        font-weight: bold;
+        /* Menebalkan teks */
+    }
+
     .btn-primary {
-    color: #AFFA08; /* Mengubah warna teks menjadi putih */
-    text-decoration: none; /* Menghilangkan underline */
+        color: #AFFA08;
+        /* Mengubah warna teks menjadi putih */
+        text-decoration: none;
+        /* Menghilangkan underline */
     }
 
     .btn-primary:hover {
-        color: white; /* Mengubah warna teks menjadi hijau saat hover */
-        text-decoration: none; /* Menghilangkan underline */
+        color: white;
+        /* Mengubah warna teks menjadi hijau saat hover */
+        text-decoration: none;
+        /* Menghilangkan underline */
     }
 
 
@@ -229,7 +257,7 @@ $hasSuccess = in_array('benernjir', $data);
         color: #AFFA08;
         font-size: 35px;
         font-weight: 700;
-		text-align: center;
+        text-align: center;
     }
 
     .form-container label {
@@ -297,10 +325,11 @@ $hasSuccess = in_array('benernjir', $data);
         padding: 0;
         font-size: 16px;
     }
-	
-	.d-flex {
-    display: flex;
-    gap: 10px; /* Jarak antara tombol */
+
+    .d-flex {
+        display: flex;
+        gap: 10px;
+        /* Jarak antara tombol */
     }
 
     .justify-content-between {
@@ -309,49 +338,70 @@ $hasSuccess = in_array('benernjir', $data);
 
     /* Tombol Validasi */
     .btn-validasi {
-        width: 100px; /* Lebar konsisten */
+        width: 100px;
+        /* Lebar konsisten */
         height: 30px;
-        padding: 5px 10px; /* Padding yang sama */
-        text-align: center; /* Teks di tengah */
-        font-weight: bold; /* Membuat teks lebih menonjol */
-        font-size: 16px; /* Ukuran font seragam */
-        border-radius: 25px; /* Sudut membulat */
-        background-color: #28a745; /* Warna hijau untuk Validasi */
-        border: 2px solid #28a745; /* Border dengan warna hijau */
-        color: white; /* Warna teks putih */
+        padding: 5px 10px;
+        /* Padding yang sama */
+        text-align: center;
+        /* Teks di tengah */
+        font-weight: bold;
+        /* Membuat teks lebih menonjol */
+        font-size: 16px;
+        /* Ukuran font seragam */
+        border-radius: 25px;
+        /* Sudut membulat */
+        background-color: #28a745;
+        /* Warna hijau untuk Validasi */
+        border: 2px solid #28a745;
+        /* Border dengan warna hijau */
+        color: white;
+        /* Warna teks putih */
         cursor: pointer;
     }
 
     .btn-validasi:hover {
-        background-color: #218838; /* Hijau lebih gelap saat hover */
+        background-color: #218838;
+        /* Hijau lebih gelap saat hover */
         border-color: #218838;
     }
 
     /* Tombol Tolak */
     .btn-tolak {
-        width: 130px; /* Lebar konsisten */
+        width: 130px;
+        /* Lebar konsisten */
         height: 30px;
-        padding: 5px 10px; /* Padding yang sama */
-        text-align: center; /* Teks di tengah */
-        font-weight: bold; /* Membuat teks lebih menonjol */
-        font-size: 16px; /* Ukuran font seragam */
-        border-radius: 25px; /* Sudut membulat */
-        background-color: #dc3545; /* Warna merah untuk Tolak */
-        border: 2px solid #dc3545; /* Border dengan warna merah */
-        color: white; /* Warna teks putih */
+        padding: 5px 10px;
+        /* Padding yang sama */
+        text-align: center;
+        /* Teks di tengah */
+        font-weight: bold;
+        /* Membuat teks lebih menonjol */
+        font-size: 16px;
+        /* Ukuran font seragam */
+        border-radius: 25px;
+        /* Sudut membulat */
+        background-color: #dc3545;
+        /* Warna merah untuk Tolak */
+        border: 2px solid #dc3545;
+        /* Border dengan warna merah */
+        color: white;
+        /* Warna teks putih */
         cursor: pointer;
     }
 
     .btn-tolak:hover {
-        background-color: #c82333; /* Merah lebih gelap saat hover */
+        background-color: #c82333;
+        /* Merah lebih gelap saat hover */
         border-color: #c82333;
     }
 
     .btn-container {
-        margin-bottom: 20px; /* Atur jarak di bawah tombol */
+        margin-bottom: 20px;
+        /* Atur jarak di bawah tombol */
     }
-	
-	.form-row {
+
+    .form-row {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
@@ -360,14 +410,19 @@ $hasSuccess = in_array('benernjir', $data);
     .form-row .col-md-6 {
         flex: 1 1 calc(50% - 20px);
     }
-	
-	.validasi-message {
-    text-align: left; /* Membuat teks rata kiri */
-    font-size: 18px; /* Ukuran font lebih proporsional */
-    font-weight: bold; /* Membuat teks lebih menonjol */
-    color: rgba(255, 255, 255, 0.90); /* Warna teks */
-    margin-top: 10px; /* Jarak atas */
-}
+
+    .validasi-message {
+        text-align: left;
+        /* Membuat teks rata kiri */
+        font-size: 18px;
+        /* Ukuran font lebih proporsional */
+        font-weight: bold;
+        /* Membuat teks lebih menonjol */
+        color: rgba(255, 255, 255, 0.90);
+        /* Warna teks */
+        margin-top: 10px;
+        /* Jarak atas */
+    }
 
 
     #addDosenBtn {

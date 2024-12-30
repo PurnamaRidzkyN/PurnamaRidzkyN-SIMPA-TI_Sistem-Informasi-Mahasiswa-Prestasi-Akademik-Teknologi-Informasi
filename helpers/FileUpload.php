@@ -24,15 +24,30 @@ class FileUpload
                     return "File terlalu besar. Maksimal ukuran file adalah 5MB.";
                 }
     
-                // Memeriksa apakah file adalah gambar
-                $image_info = getimagesize($file["tmp_name"]);
-                if ($image_info === false) {
-                    return "File yang diunggah bukan gambar. Harap unggah file gambar.";
-                }
+                // Memeriksa tipe file menggunakan finfo_file()
+                $finfo = finfo_open(FILEINFO_MIME_TYPE); // Mendapatkan tipe MIME file
+                $file_info = finfo_file($finfo, $file["tmp_name"]);
+                finfo_close($finfo); // Tutup resource finfo
     
+                // Memeriksa apakah file adalah gambar
+                if (strpos($file_info, "image") === 0) {
+                    // Jika file adalah gambar, periksa jika formatnya valid (JPG, PNG, dll)
+                    $image_info = getimagesize($file["tmp_name"]);
+                    if ($image_info === false) {
+                        return "File bukan gambar yang valid.";
+                    }
+                } 
+                // Memeriksa jika file adalah dokumen
+                elseif (strpos($file_info, "application/pdf") === 0 || strpos($file_info, "application/msword") === 0 || strpos($file_info, "application/vnd.openxmlformats-officedocument.wordprocessingml.document") === 0) {
+                    // Jika file adalah PDF atau DOC/DOCX
+                    // Tidak perlu cek khusus untuk format file seperti gambar
+                } else {
+                    return "001";
+                }
+        
                 // Tentukan path tujuan
                 $target_file = $target_dir . basename($file["name"]);
-    
+        
                 // Pindahkan file yang diunggah ke direktori tujuan
                 if (move_uploaded_file($file["tmp_name"], $target_file)) {
                     return $target_file;
@@ -46,4 +61,5 @@ class FileUpload
             return "Terjadi kesalahan: " . $e->getMessage();
         }
     }
+    
 }    

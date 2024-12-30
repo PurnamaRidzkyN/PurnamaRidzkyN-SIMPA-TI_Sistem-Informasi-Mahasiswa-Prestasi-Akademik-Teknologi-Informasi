@@ -19,6 +19,7 @@ use app\models\database\prestasiLomba\Peringkat;
 use app\models\database\prestasiLomba\TingkatLomba;
 use app\helpers\ArrayFormatter;
 use app\helpers\FileUpload;
+use app\models\database\notifikasi\Notifikasi;
 
 class ManagementDataController extends BaseController
 {
@@ -26,6 +27,7 @@ class ManagementDataController extends BaseController
     public function manageData(Request $req, Response $res)
     {
         $body = $req->body();
+
         $user = Admin::findNip(Session::get("user"));
         if ($body["action"] === "add") {
             if ($body["data"] === "admin") {
@@ -77,7 +79,6 @@ class ManagementDataController extends BaseController
             }
         }
         $res->redirect("/dashboard/admin/{$user['result'][0]["nip"]}/manajemen-data");
-
     }
     public function insertAdminUsers(array $body)
     {
@@ -271,12 +272,13 @@ class ManagementDataController extends BaseController
 
     public function insertInfoLomba(array $body)
     {
+
         $Admin = Admin::findNip(Session::get("user"));
         $judul = $body['judul'];
         $deskripsi = $body['deskripsi_lomba'];
         $tanggalAkhirPendaftaran = $body['tanggal_akhir_pendaftaran'];
         $linkPerlombaan = $body['link_perlombaan'];
-        $filePoster = $body['file_poster'];
+        $filePoster = $body['foto'];
 
         try {
             // Upload file poster
@@ -284,13 +286,14 @@ class ManagementDataController extends BaseController
 
             // Data untuk tabel info_lomba
             $infoLombaData = [
-                "id" => UUID::generate(InfoLomba::TABLE, "IL"),
+                InfoLomba::ID => UUID::generate(InfoLomba::TABLE, "L"),
                 InfoLomba::JUDUL => $judul,
                 InfoLomba::DESKRIPSI_LOMBA => $deskripsi,
                 InfoLomba::TANGGAL_AKHIR_PENDAFTARAN => $tanggalAkhirPendaftaran,
                 InfoLomba::LINK_PERLOMBAAN => $linkPerlombaan,
                 InfoLomba::FILE_POSTER => $filePosterPath,
             ];
+
             InfoLomba::insert($infoLombaData);
 
             // Format data untuk logging
@@ -306,6 +309,17 @@ class ManagementDataController extends BaseController
                 "null",
                 "null",
                 $data
+            );
+            Notifikasi::insert(
+                [
+                    Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                    Notifikasi::ID_USER => null,
+                    Notifikasi::ROLE => 2,
+                    Notifikasi::PESAN => "Ayo, jangan lewatkan kesempatan untuk berpartisipasi dalam perlombaan! Dengan judul ".$body['judul'],
+                    Notifikasi::TIPE => "Perlombaan",
+                    Notifikasi::STATUS => "Belum dilihat",
+                    Notifikasi::DIBUAT => date("d-m-Y H:i:s")
+                ]
             );
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
@@ -648,7 +662,6 @@ class ManagementDataController extends BaseController
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
-
     }
 
     public function updateInfoLomba(array $body)
@@ -804,7 +817,7 @@ class ManagementDataController extends BaseController
 
         try {
             // Validasi data lama
-            $oldData = Peringkat::findPeringkat(Peringkat::ID, $id)['result'][0]; 
+            $oldData = Peringkat::findPeringkat(Peringkat::ID, $id)['result'][0];
 
             // Data baru
             $newData = [
@@ -995,7 +1008,7 @@ class ManagementDataController extends BaseController
     {
         $Admin = Admin::findNip(Session::get("user"));
         $id = $body['delete'];
-     
+
         try {
             LogData::insert(
                 UUID::generate(LogData::TABLE, "LD"),
@@ -1071,7 +1084,6 @@ class ManagementDataController extends BaseController
 
             // Hapus data jenis lomba berdasarkan ID
             JenisLomba::deleteData($id);
-
         } catch (\PDOException $e) {
             var_dump($e->getMessage());
         }
@@ -1117,7 +1129,7 @@ class ManagementDataController extends BaseController
     {
         $Admin = Admin::findNip(Session::get("user"));
         $id = $body['delete'];
-        
+
         try {
             // Insert a log entry before deletion
             LogData::insert(
@@ -1149,7 +1161,4 @@ class ManagementDataController extends BaseController
             var_dump($e->getMessage());
         }
     }
-
-
-
 }

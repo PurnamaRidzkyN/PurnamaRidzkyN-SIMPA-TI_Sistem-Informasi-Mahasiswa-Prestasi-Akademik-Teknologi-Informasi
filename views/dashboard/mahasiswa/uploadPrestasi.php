@@ -398,34 +398,31 @@ $namaList = array_map(function ($dosen) {
 
 
       <!-- File Surat Tugas, File Sertifikat, Foto Kegiatan, File Poster -->
-      <div class="upload-container">
-        <div class="upload-form-container">
-          <!-- File Surat Tugas -->
-          <label for="fileSuratTugas">File Surat Tugas:</label>
-          <input type="file" id="fileSuratTugas" accept=".pdf,.doc,.docx">
-          <span class="upload-file-name" id="fileSuratTugasName"></span>
+      <div class="upload-form-container">
+        <!-- Cek jika ada error -->
+        
+        <!-- File Surat Tugas -->
+        <label for="fileSuratTugas">File Surat Tugas:</label>
+        <input type="file" id="fileSuratTugas" name="fileSuratTugas" accept=".pdf,.doc,.docx">
+        <span class="upload-file-name" id="fileSuratTugasName"></span>
 
-          <!-- File Sertifikat -->
-          <label for="fileSertifikat">File Sertifikat:</label>
-          <input type="file" id="fileSertifikat" accept=".pdf,.doc,.docx">
-          <span class="upload-file-name" id="fileSertifikatName"></span>
+        <!-- File Sertifikat -->
+        <label for="fileSertifikat">File Sertifikat:</label>
+        <input type="file" id="fileSertifikat" name="fileSertifikat" accept=".pdf,.doc,.docx">
+        <span class="upload-file-name" id="fileSertifikatName"></span>
 
-          <!-- Foto Kegiatan -->
-          <label for="fotoKegiatan">Foto Kegiatan:</label>
-          <input type="file" id="fotoKegiatan" accept="image/*">
-          <span class="upload-file-name" id="fotoKegiatanName"></span>
+        <!-- Foto Kegiatan -->
+        <label for="fotoKegiatan">Foto Kegiatan:</label>
+        <input type="file" id="fotoKegiatan" name="fotoKegiatan" accept="image/*">
+        <span class="upload-file-name" id="fotoKegiatanName"></span>
 
-          <!-- File Poster -->
-          <label for="filePoster">File Poster:</label>
-          <input type="file" id="filePoster" accept="image/*">
-          <span class="upload-file-name" id="filePosterName"></span>
-        </div>
+        <!-- File Poster -->
+        <label for="filePoster">File Poster:</label>
+        <input type="file" id="filePoster" name="filePoster" accept="image/*">
+        <span class="upload-file-name" id="filePosterName"></span>
       </div>
 
-      <div class="text-danger mb-3" id="error-message">
-        <!-- PHP error message will be inserted here -->
-        <?php echo app\cores\View::getData()["error"] ?? "" ?>
-      </div>
+
 
       <button type="submit" class="submit-btn">Kirim</button>
       <button type="button" class="back-btn" onclick="history.back()">Kembali</button>

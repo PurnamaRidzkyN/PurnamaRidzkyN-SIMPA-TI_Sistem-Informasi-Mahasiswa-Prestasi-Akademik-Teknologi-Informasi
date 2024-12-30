@@ -46,10 +46,10 @@ class PrestasiController extends BaseController
         $jumlah_peserta = $body["jumlah-peserta"] ?? "null";
         $no_surat_tugas = $body["no-surat-tugas"] ?? "null";
         $tanggal_surat_tugas = $body["tanggal-surat-tugas"] ?? "null";
-        $file_surat_tugas = $body["file-surat-tugas"] ?? "null";
-        $file_sertifikat = $body["file-sertifikat"] ?? "null";
-        $foto_kegiatan = $body["foto-kegiatan"] ?? "null";
-        $file_poster = $body["file-poster"] ?? "null";
+        $file_surat_tugas = $body["fileSuratTugas"] ?? "null";
+        $file_sertifikat = $body["fileSertifikat"] ?? "null";
+        $foto_kegiatan = $body["fotoKegiatan"] ?? "null";
+        $file_poster = $body["filePoster"] ?? "null";
         $validasi = 0;
         try {
 
@@ -58,7 +58,10 @@ class PrestasiController extends BaseController
             $foto_kegiatan = FileUpload::uploadFile($foto_kegiatan, FileUpload::TARGET_DIR_FOTO);
             $file_poster = FileUpload::uploadFile($file_poster, FileUpload::TARGET_DIR_POSTER);
 
-
+            if ($file_surat_tugas == '001' || $file_sertifikat == '001' || $foto_kegiatan == '001' || $file_poster == '001') {
+            $body ="Tipe file tidak didukung. Hanya gambar (JPG, PNG), PDF, DOC, atau DOCX yang diperbolehkan.";
+            $this->renderWeb($body);
+            }
 
             $data = [
                 "id" => $id,
@@ -85,6 +88,8 @@ class PrestasiController extends BaseController
                 "file_poster" => $file_poster,
                 "validasi" => $validasi
             ];
+
+            
             $dosenlist = $body['dosenList'];
             $dosenlist =explode(",", $dosenlist);
 
@@ -98,7 +103,7 @@ class PrestasiController extends BaseController
                     $dosen[] = $value["result"][0]["id"];
                 
             }
-           
+            
 
             $prestasiData = ArrayFormatter::formatKeyValue($data);
 
@@ -113,13 +118,14 @@ class PrestasiController extends BaseController
                 "null",
                 $prestasiData
             );
+            
 
             $user = Session::get("user");;
             for ($i = 0; $i < count($dosen); $i++) {
                 $data = [];
-                $id = UUID::generate(DosenPembimbing::TABLE, "DP");
+                $idDosen = UUID::generate(DosenPembimbing::TABLE, "DP");
                 $data = ([
-                    DosenPembimbing::ID => $id,
+                    DosenPembimbing::ID => $idDosen,
                     DosenPembimbing::ID_Dosen => $dosen[$i],
                     DosenPembimbing::ID_PRESTASI => $id,
                 ]);
@@ -139,6 +145,7 @@ class PrestasiController extends BaseController
                     $dosenData
                 );
             }
+            
             $user = Session::get("user");
 
             Notifikasi::insert(
@@ -146,12 +153,13 @@ class PrestasiController extends BaseController
                     Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
                     Notifikasi::ID_USER => null,
                     Notifikasi::ROLE => "1",
-                    Notifikasi::PESAN => "Seorang mahasiswa menambahkan prestasi untuk divalidasi.",
+                    Notifikasi::PESAN => $mahasiswa['result'][0]["nama"]."  menambahkan prestasi ".$judul_kompetisi." untuk divalidasi.",
                     Notifikasi::TIPE => "Prestasi Baru",
                     Notifikasi::STATUS => "Belum dilihat",
                     Notifikasi::DIBUAT => date("Y-m-d H:i:s")
                 ]
             );
+           
 
             $res->redirect("/dashboard/mahasiswa/{$user}/prestasi");
         } catch (\PDOException $e) {
@@ -159,19 +167,29 @@ class PrestasiController extends BaseController
         }
     }
 
-    public function renderWeb(): void
+    public function renderWeb($body): void
     {
         $JenisLomba = JenisLomba::displayJenisLomba();
         $tingkatLomba = TingkatLomba::displayTingkatLomba();
         $peringkat = Peringkat::displayPeringkat();
         $dosen = Dosen::displayDosen();
-
-        $data = [
-            'JenisLomba' => $JenisLomba['result'],
-            'TingkatLomba' => $tingkatLomba['result'],
-            'Peringkat' => $peringkat['result'],
-            'Dosen' => $dosen['result']
-        ];
+        if(!is_null($body)){
+            $data = [
+                'JenisLomba' => $JenisLomba['result'],
+                'TingkatLomba' => $tingkatLomba['result'],
+                'Peringkat' => $peringkat['result'],
+                'Dosen' => $dosen['result'],
+                'error' => $body
+            ];    
+        }else{
+            $data = [
+                'JenisLomba' => $JenisLomba['result'],
+                'TingkatLomba' => $tingkatLomba['result'],
+                'Peringkat' => $peringkat['result'],
+                'Dosen' => $dosen['result'],
+            ];  
+        }
+        
         $this->view("dashboard/mahasiswa/uploadPrestasi", "Upload Prestasi", $data);
     }
     public function renderListPrestasi(Request $req, response $res)
@@ -230,8 +248,7 @@ class PrestasiController extends BaseController
         $body = $request->Body();
         $user = Session::get("user");
         $mahasiswa = $body["mahasiswa_id"];
-
-
+       
         try {
             // Validasi input
 
@@ -250,9 +267,9 @@ class PrestasiController extends BaseController
                     $idPrestasi,
                     Prestasi::TABLE,
                     "update",
-                    "validasi",
-                    "0",
-                    "1"
+                    "validasi, id_admin",
+                    "0,null",
+                    "1".$admin['result'][0]["id_user"]
                 );
                 Notifikasi::insert(
                     [
@@ -266,8 +283,36 @@ class PrestasiController extends BaseController
                     ]
                 );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
-            } else {
-                $response->redirect("/dashboard/admin/{$user}/prestasi");
+            } else if($validasiStatus == "0"){
+                Prestasi::deleteData($idPrestasi);
+
+                $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
+                $admin = Admin::findNip(Session::get("user"));
+
+                LogData::insert(
+                    UUID::generate(LogData::TABLE, "LD"),
+                    $admin['result'][0]["id_user"],
+                    $idPrestasi,
+                    Prestasi::TABLE,
+                    "update",
+                    " id_admin",
+                    "null",
+                    $admin['result'][0]["id_user"]
+                );
+
+                Notifikasi::insert(
+                    [
+                        Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
+                        Notifikasi::ID_USER => $mahasiswa,
+                        Notifikasi::ROLE => 2,
+                        Notifikasi::PESAN => "Prestasi " . $body['judul_kompetisi'] . " di tolak validasi oleh " . $admin['result'][0]['nama'],
+                        Notifikasi::TIPE => "Tolak",
+                        Notifikasi::STATUS => "Belum dilihat",
+                        Notifikasi::DIBUAT => date("d-m-Y H:i:s")
+                    ]
+                );
+                $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
+
             }
         } catch (\PDOException $e) {
             var_dump($e->getMessage());

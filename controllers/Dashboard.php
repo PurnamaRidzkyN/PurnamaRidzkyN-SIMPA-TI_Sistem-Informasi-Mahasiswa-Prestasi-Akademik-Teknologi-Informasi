@@ -83,7 +83,7 @@ class Dashboard extends BaseController
 
         }
         $notif = array_filter($data, function($item) {
-            return ($item['id_user'] === null)||($item['id_user'] === Mahasiswa::findNim(Session::get("user"))['result'][0]['id_user']) && $item['role'] === '2';
+            return (($item['id_user'] === null)||($item['id_user'] === Mahasiswa::findNim(Session::get("user"))['result'][0]['id_user'])) && ($item['role'] == '2');
         }); 
         usort($notif, function($a, $b) {
             // Mengonversi tanggal ke format timestamp untuk perbandingan

@@ -455,6 +455,8 @@ $manipulate = $data["data"]["edit"];
                                         <?php if ($manipulate !== 'add'): ?>
                                             <p>Current: <?= htmlspecialchars($currentData[$keyField]) ?></p>
                                         <?php endif; ?>
+                                    <?php elseif ($keyField === 'tanggal_akhir_pendaftaran'): ?>
+                                        <input type="date" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>" required>
                                     <?php else: ?>
                                         <input type="text" name="<?= $keyField ?>" value="<?= htmlspecialchars($currentData[$keyField]) ?>" required>
                                     <?php endif; ?>

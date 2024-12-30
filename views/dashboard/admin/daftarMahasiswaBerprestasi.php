@@ -9,49 +9,7 @@ $mahasiswa = View::getData()["result"];
 
 	
 	<style>
-		.navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 30px;
-            background-color: #0039C8;
-            color: white;
-            align-items: center;
-        }
-
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar .logo img {
-            width: 80px;
-            height: 80px;
-            margin-right: 15px;
-        }
-
-        .navbar .logo h1 {
-            font-size: 30px;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 0.5px;
-        }
-
-        .navbar .menu {
-            display: flex;
-            gap: 20px;
-        }
-
-        .navbar .menu a {
-            text-decoration: none;
-            color: white;
-            font-size: 20px;
-            font-weight: 500;
-        }
-
-        .navbar .menu a:hover {
-            color: #AFFA08;
-        }
-
+		
         /* Custom style for Daftar Mahasiswa */
         .daftar-mahasiswa-title {
             font-size: 5vw;
@@ -90,19 +48,6 @@ $mahasiswa = View::getData()["result"];
 	</style>
 
 	
-	<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <img src="../../../public/component/logoHijau.png" alt="Logo">
-        <h1>SIMPA-TI</h1>
-    </div>
-    <div class="menu">
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") ?>>Home</a>
-        <a href=<?php echo '/dashboard/admin/' . Session::get("user") . '/daftar-mahasiswa' ?>>Prestasi</a>
-        <a href="#">Leaderboard</a>
-        <a href="<?php echo '/dashboard/admin/' . Session::get("user") . '/manajemen-data' ?>">Management Data</a>
-    </div>
-</div>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4 daftar-mahasiswa-title">Daftar Mahasiswa</h2>

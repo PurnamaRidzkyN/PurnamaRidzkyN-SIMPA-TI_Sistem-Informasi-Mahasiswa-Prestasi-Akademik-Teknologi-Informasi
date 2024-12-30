@@ -90,7 +90,10 @@ class Prestasi extends BaseModel
             $table->update(self::ID_ADMIN, $value, $columnWhere, $where);
         });
     }
-
+    public static function deleteData($id): array
+    {
+        return Schema::query("DELETE FROM " . self::TABLE . " WHERE " . self::ID . " = '$id';");
+    }
 
     public static function deleteAll(): array
     {  
