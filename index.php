@@ -82,6 +82,8 @@ $app::post("/dashboard/admin/:nip/manajemen-data/manipulate-data", [ManagementDa
 
 $app::get("/leaderboard", [Leaderboard::class,"renderLeaderboard"]);
 $app::get("/leaderboard/all", [Leaderboard::class,"renderLeaderboardAll"]);
+$app::get("/leaderboard/LeaderboardSIB", [Leaderboard::class,"renderLeaderboardSIB"]);
+$app::get("/leaderboard/LeadearboardTI", [Leaderboard::class,"renderLeaderboardTI"]);
 
 
 $app::get("/logout", [Auth::class, "logout"]);

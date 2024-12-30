@@ -135,12 +135,12 @@ $leaderboard = View::getData();
             </a>
         </div>
         <div class="table-link">
-            <a href="leaderboardTI.php">
+            <a href="/leaderboard/LeadearboardTI">
                 <p class="table-title">TI</p>
             </a>
         </div>
         <div class="table-link">
-            <a href="leaderboardSIB.php">
+            <a href="/leaderboard/LeaderboardSIB">
                 <p class="table-title">SIB</p>
             </a>
         </div>

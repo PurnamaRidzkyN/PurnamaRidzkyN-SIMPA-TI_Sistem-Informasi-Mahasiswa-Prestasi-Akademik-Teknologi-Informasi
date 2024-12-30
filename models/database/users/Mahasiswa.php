@@ -85,6 +85,19 @@ class Mahasiswa extends BaseModel
         });
     }
 
+    public static function getLeaderboardFilter($filter): array
+    {
+        return Schema::selectWhereFrom(self::VIEW, function (Blueprint $table) use ($filter){
+            $table->selectWhere(
+                ["prodi" => $filter], // Kondisi where
+                [self::ID, self::NIM, self::PRODI, self::NAMA, self::TOTAL_SKOR] // Kolom yang akan diambil
+            );
+        });
+    }
+
+
+
+
     public static function updateData($body): array
     {
 
