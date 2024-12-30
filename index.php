@@ -55,9 +55,6 @@ $app::get("/dashboard/mahasiswa/:nim/profil", [Dashboard::class, "renderProfilMa
 $app::get("/dashboard/dosen/:nidn/profil", [Dashboard::class, "renderProfilDosen"], [DosenMiddleware::class]);
 
 
-$app::get("/dashboard/admin/:nip/log-data",[AuditLog::class,"renderWeb"],[AdminMiddleware::class]);
-$app::post("/dashboard/admin/:nip/log-data",[AuditLog::class,"getFilteredLog"],[AdminMiddleware::class]);
-
 $app::get("/dashboard/admin/:nip/daftar-mahasiswa",[PrestasiController::class,"renderDaftarMahasiswa"],[AdminMiddleware::class]);
 
 
