@@ -26,7 +26,7 @@ class NewPassword extends BaseController
     public function handleForgotPassword(Request $req, Response $res): void
     {
         $body = $req->body();
-        Dump::out($body);
+        
         $username = $body["username"];
         $email = $body["email"];
         $gmail = Config::getEmail();
@@ -45,7 +45,7 @@ class NewPassword extends BaseController
                     $admin = Admin::findEmail($email)["result"][0];
 
                     if (($email == $admin['email']) && ($admin["id_user"] == $user['id'])) {
-                        $this->sendPassword($gmail, $user, $admin);
+                        $this->sendPassword($gmail, $user, $admin,$email);
                         $res->redirect("/login");
                     }
                     break;
@@ -53,7 +53,7 @@ class NewPassword extends BaseController
                 case "2":
                     $mahasiswa = Mahasiswa::findEmail($email)["result"][0];
                     if (($email == $mahasiswa['email']) && ($mahasiswa["id_user"] == $user['id'])) {
-                        $this->sendPassword($gmail, $user, $mahasiswa);
+                        $this->sendPassword($gmail, $user, $mahasiswa,$email);
                         $res->redirect("/login");
                     }
                     break;
@@ -71,9 +71,10 @@ class NewPassword extends BaseController
     {
         $this->view("login/forgotPassword", "forgot Password");
     }
-    private function sendPassword(array $gmail, $user, $role): void
+    private function sendPassword(array $gmail, $user, $role,$email): void
     {
         try {
+            
             $mail = new PHPMailer(true);
             $password = bin2hex(random_bytes(5));
             $hashpassword = password_hash($password, PASSWORD_BCRYPT);
@@ -93,7 +94,7 @@ class NewPassword extends BaseController
 
 
             $mail->setFrom($gmail['email'], 'SIMPA-TI');  // Email dan nama pengirim
-            $mail->addAddress('naotomori220405@gmail.com');
+            $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'Pemberitahuan Perubahan Password SIMPA-TI';
             $mail->Body    = 'Halo ' . $role['nama'] . ', <br><br>Dengan hormat,<br><br>Kami menerima permintaan untuk mereset password akun Anda di website SIMPA-TI . Password Anda telah berhasil diperbarui.<br><br>

@@ -855,8 +855,8 @@ class ManagementDataController extends BaseController
             $oldValues = implode(', ', $oldValues);
             $newValues = implode(', ', $newValues);
 
-            // Update data peringkat
-            Peringkat::updatePeringkat($newData[Peringkat::SKOR], Peringkat::ID, $id);
+           
+            Peringkat::updatedata($newData);
 
             // Masukkan log
             LogData::insert(

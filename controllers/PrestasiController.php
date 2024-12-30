@@ -27,7 +27,7 @@ class PrestasiController extends BaseController
     {
         $body = $req->body();
         $mahasiswa = Mahasiswa::findNim(Session::get("user"));
-        
+
         $id = UUID::generate("prestasi", "P");
         $id_jenis_kompetisi = $body["jenis-kompetisi"] ?? "null";
         $id_tingkat_kompetisi = $body["tingkat-kompetisi"] ?? "null";
@@ -59,8 +59,8 @@ class PrestasiController extends BaseController
             $file_poster = FileUpload::uploadFile($file_poster, FileUpload::TARGET_DIR_POSTER);
 
             if ($file_surat_tugas == '001' || $file_sertifikat == '001' || $foto_kegiatan == '001' || $file_poster == '001') {
-            $body ="Tipe file tidak didukung. Hanya gambar (JPG, PNG), PDF, DOC, atau DOCX yang diperbolehkan.";
-            $this->renderWeb($body);
+                $body = "Tipe file tidak didukung. Hanya gambar (JPG, PNG), PDF, DOC, atau DOCX yang diperbolehkan.";
+                $this->renderWeb($body);
             }
 
             $data = [
@@ -89,21 +89,20 @@ class PrestasiController extends BaseController
                 "validasi" => $validasi
             ];
 
-            
+
             $dosenlist = $body['dosenList'];
-            $dosenlist =explode(",", $dosenlist);
+            $dosenlist = explode(",", $dosenlist);
 
             $dosen = [];
 
             // Loop melalui data POST untuk mendapatkan setiap dosen
-            foreach ($dosenlist as $key ) {
+            foreach ($dosenlist as $key) {
                 // Menyaring hanya yang dimulai dengan 'dosen-pembimbing-'
-                 
-                    $value = Dosen::findName($key);
-                    $dosen[] = $value["result"][0]["id"];
-                
+
+                $value = Dosen::findName($key);
+                $dosen[] = $value["result"][0]["id"];
             }
-            
+
 
             $prestasiData = ArrayFormatter::formatKeyValue($data);
 
@@ -118,7 +117,7 @@ class PrestasiController extends BaseController
                 "null",
                 $prestasiData
             );
-            
+
 
             $user = Session::get("user");;
             for ($i = 0; $i < count($dosen); $i++) {
@@ -145,7 +144,7 @@ class PrestasiController extends BaseController
                     $dosenData
                 );
             }
-            
+
             $user = Session::get("user");
 
             Notifikasi::insert(
@@ -153,13 +152,13 @@ class PrestasiController extends BaseController
                     Notifikasi::ID => UUID::generate(Notifikasi::TABLE, "N"),
                     Notifikasi::ID_USER => null,
                     Notifikasi::ROLE => "1",
-                    Notifikasi::PESAN => $mahasiswa['result'][0]["nama"]."  menambahkan prestasi ".$judul_kompetisi." untuk divalidasi.",
+                    Notifikasi::PESAN => $mahasiswa['result'][0]["nama"] . "  menambahkan prestasi " . $judul_kompetisi . " untuk divalidasi.",
                     Notifikasi::TIPE => "Prestasi Baru",
                     Notifikasi::STATUS => "Belum dilihat",
                     Notifikasi::DIBUAT => date("Y-m-d H:i:s")
                 ]
             );
-           
+
 
             $res->redirect("/dashboard/mahasiswa/{$user}/prestasi");
         } catch (\PDOException $e) {
@@ -173,23 +172,23 @@ class PrestasiController extends BaseController
         $tingkatLomba = TingkatLomba::displayTingkatLomba();
         $peringkat = Peringkat::displayPeringkat();
         $dosen = Dosen::displayDosen();
-        if(!is_null($body)){
+        if (!is_null($body)) {
             $data = [
                 'JenisLomba' => $JenisLomba['result'],
                 'TingkatLomba' => $tingkatLomba['result'],
                 'Peringkat' => $peringkat['result'],
                 'Dosen' => $dosen['result'],
                 'error' => $body
-            ];    
-        }else{
+            ];
+        } else {
             $data = [
                 'JenisLomba' => $JenisLomba['result'],
                 'TingkatLomba' => $tingkatLomba['result'],
                 'Peringkat' => $peringkat['result'],
                 'Dosen' => $dosen['result'],
-            ];  
+            ];
         }
-        
+
         $this->view("dashboard/mahasiswa/uploadPrestasi", "Upload Prestasi", $data);
     }
     public function renderListPrestasi(Request $req, response $res)
@@ -216,13 +215,24 @@ class PrestasiController extends BaseController
     }
     public function renderListPrestasiDosen()
     {
-        $data = Prestasi::listPrestasiDisplay();
+        $data = Prestasi::listPrestasiDisplay()["result"];
+        $dosen = DosenPembimbing::displayDosenPembimbing();
         if ((Session::get("role") == "3")) {
-            $id = Dosen::findNidn(Session::get("user"))["result"][0]["id"];
-            $filtered_data = array_filter($data["result"], function ($item) use ($id) {
-                return $item["id_dosen"] === $id;
+            $nama_dosen = Dosen::findNidn(Session::get("user"))["result"][0]["nama"];
+            // Filter array utama berdasarkan ID dosen
+            $filteredData = array_filter($dosen["result"], function ($item) use ($nama_dosen) {
+                return $item["nama"] == $nama_dosen;
             });
-            $this->view("dashboard/listPrestasi", "list prestasi", $filtered_data);
+            
+            $idDicari = array_column($filteredData, "id");
+            
+            // Mencari prestasi berdasarkan ID
+            $data = array_filter($data, function ($item) use ($idDicari) {
+                return in_array($item["id"], $idDicari);
+            });
+            
+        
+            $this->view("dashboard/listPrestasi", "list prestasi", $data);
         }
     }
 
@@ -248,7 +258,7 @@ class PrestasiController extends BaseController
         $body = $request->Body();
         $user = Session::get("user");
         $mahasiswa = $body["mahasiswa_id"];
-       
+
         try {
             // Validasi input
 
@@ -269,7 +279,7 @@ class PrestasiController extends BaseController
                     "update",
                     "validasi, id_admin",
                     "0,null",
-                    "1".$admin['result'][0]["id_user"]
+                    "1" . $admin['result'][0]["id_user"]
                 );
                 Notifikasi::insert(
                     [
@@ -283,7 +293,7 @@ class PrestasiController extends BaseController
                     ]
                 );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
-            } else if($validasiStatus == "0"){
+            } else if ($validasiStatus == "0") {
                 Prestasi::deleteData($idPrestasi);
 
                 $updateAdmin = Prestasi::updateIdAdmin($admin['result'][0]["id"], Prestasi::ID, $idPrestasi);
@@ -312,7 +322,6 @@ class PrestasiController extends BaseController
                     ]
                 );
                 $response->redirect("/dashboard/admin/{$user}/daftar-mahasiswa");
-
             }
         } catch (\PDOException $e) {
             var_dump($e->getMessage());

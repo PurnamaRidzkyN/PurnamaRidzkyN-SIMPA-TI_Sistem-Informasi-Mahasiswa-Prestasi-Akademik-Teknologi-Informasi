@@ -4,6 +4,7 @@ namespace app\models\database\prestasiLomba;
 
 use app\cores\Blueprint;
 use app\cores\Schema;
+use app\helpers\Dump;
 use app\models\BaseModel;
 
 class Peringkat extends BaseModel
@@ -26,12 +27,21 @@ class Peringkat extends BaseModel
         });
     }
 
-    public static function updatePeringkat($value, string $columnWhere, string $where): array
+    public static function updateData($body): array
     {
-    return Schema::update(self::TABLE, function (Blueprint $table) use ($value, $columnWhere, $where) {
-        $table->update(self::SKOR, $value, $columnWhere, $where);
-    });
+
+        $id = $body['id'];
+        $peringkat = $body["peringkat"];
+        $skor = $body["skor"];
+        return Schema::query(
+            "UPDATE peringkat SET 
+        peringkat = '$peringkat',
+        skor = '$skor'
+        WHERE id = '$id';
+        "
+        );
     }
+
 
     public static function findPeringkat(string $column, $value): array
     {
@@ -49,5 +59,4 @@ class Peringkat extends BaseModel
     {
         return Schema::deleteFrom(self::TABLE);
     }
-
 }
